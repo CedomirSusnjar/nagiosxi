@@ -13,6 +13,15 @@ const Container = styled(Flex)`
     background-color: gainsboro;
 `;
 
+const Space = styled(Flex)`
+
+`;
+
+const SignInOut = styled(NavigationLink)`
+position: absolute;
+top:0;
+`;
+
 const Toolbar = ({strings}) => {
 
     let history = useHistory();
@@ -26,6 +35,8 @@ const Toolbar = ({strings}) => {
             <NavigationLink onClick={() => {onClickHandler("/")}} text={strings.page.toolbar.homepage} />
             <NavigationLink onClick={() => {onClickHandler("/hosts")}} text={strings.page.toolbar.hosts}/>
             <NavigationLink onClick={() => {onClickHandler("/services")}} text={strings.page.toolbar.services}/>
+            <Space />
+            <SignInOut onClick={() => {onClickHandler("/login")}} text="Odjava"/>
         </Container>
     );
     

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 import Signals from '../signal/Signals';
+import { useHistory } from 'react-router';
 
 const Container = styled(Flex)`
     border-radius: 20px;
@@ -20,8 +21,16 @@ console.log('Host');
 
 
 const Host = (props) => {
+
+    const history = useHistory();
+
+    const onClickHandler = () => {
+        history.push("/service");
+    }
+
+
     return (
-        <Container>
+        <Container onClick={onClickHandler}>
             <div style={{'height': '80%'}}></div>
             <Signals/>
         </Container>
