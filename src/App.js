@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+import Host from '../src/components/host/Host';
+import { Flex } from 'reflexbox/styled-components';
+import Toolbar from './components/navigation/toolbar/Toolbar';
+import { BrowserRouter } from "react-router-dom";
+import MRouter from '../src/router/MRouter';
+
+const Dashboard = styled(Flex)`
+  position: absolute;
+  flex-wrap: wrap;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Toolbar></Toolbar>
+      <BrowserRouter>
+        <MRouter />
+      </BrowserRouter>
     </div>
   );
 }
