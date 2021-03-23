@@ -1,0 +1,24 @@
+{
+  "sr": {
+    "page": {
+      "services": {
+        
+      },
+      "hosts": {
+        
+      },
+      "home": {
+        
+      },
+      "toolbar": {
+       "homepage": "Početna",
+       "hosts": "Mašine",
+       "services": "Servisi"
+      }
+    },
+    "buttons": {
+      
+    }
+  }
+}
+
