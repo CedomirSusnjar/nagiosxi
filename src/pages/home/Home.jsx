@@ -4,9 +4,6 @@ import Host from '../../components/host/Host';
 
 const Home = (props) => {
 
-
-    console.log('Home');
-
     return (
         <Dashboard>
             <Host></Host>

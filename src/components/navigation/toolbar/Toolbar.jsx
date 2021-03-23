@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import {Flex} from 'reflexbox/styled-components';
 import NavigationLink from '../navigationLink/NavigationLink';
+import { useHistory } from 'react-router-dom';
+import {withLocalizeStrings} from '../../../languages/Localize';
 
 const Container = styled(Flex)`
     position: fixed;
@@ -11,16 +13,22 @@ const Container = styled(Flex)`
     background-color: gainsboro;
 `;
 
-const Toolbar = (props) => {
+const Toolbar = ({strings}) => {
+
+    let history = useHistory();
+
+    const onClickHandler = (path) => {
+        history.push(path);
+    }
     
     return (
         <Container>
-            <NavigationLink text="Pocetna" />
-            <NavigationLink text="Masine"/>
-            <NavigationLink text="Servisi"/>
+            <NavigationLink onClick={() => {onClickHandler("/")}} text={strings.page.toolbar.homepage} />
+            <NavigationLink onClick={() => {onClickHandler("/hosts")}} text={strings.page.toolbar.hosts}/>
+            <NavigationLink onClick={() => {onClickHandler("/services")}} text={strings.page.toolbar.services}/>
         </Container>
     );
     
 };
 
-export default Toolbar;
+export default withLocalizeStrings(Toolbar);

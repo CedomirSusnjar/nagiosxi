@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+
 const StyledNavigationLink = styled.a`
     margin-left: 20px;
     margin: right: 20px;
@@ -14,10 +15,10 @@ const StyledNavigationLink = styled.a`
     
 `;
 
-const NavigationLink = ({text}) => {
+const NavigationLink = ({text, onClick}) => {
 
     return (
-        <StyledNavigationLink>{text}</StyledNavigationLink>
+        <StyledNavigationLink onClick={onClick}>{text}</StyledNavigationLink>
     );
 
 };
