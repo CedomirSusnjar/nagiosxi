@@ -2,17 +2,13 @@ import React, {useState} from 'react';
 import {withLocalizeStrings} from '../languages/Localize';
 
 const defaultState = {
-    data: null,
-    code: null,
-    authorized: null,
+    backdrop: null,
     loading: null,
-    hisCodeVerified: null
+    authorized: null
 }
 
 const defaultActions = {
-    setHisCodeVerified: () => {},
-    setData: () => {},
-    setCode: () => {},
+    setBackdrop: () => {},
     setAuthorized: () => {},
     setLoading: () => {}
 }
@@ -28,12 +24,15 @@ const ApplicationProvider = ({strings, children}) => {
 
     const [authorized,setAuthorized] = useState(false);
     const [loading,setLoading] = useState(false);
+    const [backdrop,setBackdrop] = useState(false);
 
     const state = {
         authorized,
         loading,
+        backdrop,
         setAuthorized,
         setLoading,
+        setBackdrop
     };
 
     return (

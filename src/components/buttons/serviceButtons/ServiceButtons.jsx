@@ -4,10 +4,11 @@ import ServiceButton from './serviceButton/ServiceButton';
 
 const Container = styled(Flex)`
     flex-direction: row;
-    width: 100%;
+    width: 90%;
     height: 10%;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    margin: 0 auto;
 `;
 
 const LeftServiceButton = styled(ServiceButton)`

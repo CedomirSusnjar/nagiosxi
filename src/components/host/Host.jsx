@@ -65,8 +65,8 @@ const Host = (props) => {
     }
 
     return (
-        <Content onMouseLeave={onMouseLeaveHandler}>
-            <Container onMouseOver={onMouseOverHandler} onClick={onClickHandler}>
+        <Content onMouseOver={onMouseOverHandler} onMouseLeave={onMouseLeaveHandler}>
+            <Container  onClick={onClickHandler}>
                 <HostName>192.168.70.14 - Windows</HostName>
                 <Status color='green'>Aktivan</Status>
                 <HostInformation text="Vrijeme rada: " value="10h 25min" />
