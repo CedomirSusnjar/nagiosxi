@@ -6,8 +6,8 @@ const Container = styled(Flex)`
     flex-direction: row;
     height: 10%;
     justify-content: center;
+    width: 100%;
 `;
-console.log('Signals');
 
 const Signals = (props) => {
 

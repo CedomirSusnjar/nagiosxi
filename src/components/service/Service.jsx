@@ -11,10 +11,11 @@ const Container = styled(Flex)`
     min-width: 120px;
     margin: 20px;
     cursor: pointer;
-    box-shadow: 0px 5px 37px -12px rgba(0,0,0,0.75);
+    box-shadow: none;
+    border: .5px solid gainsboro;
     &: hover {
-        box-shadow: none;
         border: .5px solid gainsboro;
+        box-shadow: 0px 5px 37px -12px rgba(0,0,0,0.75);
     }
 `;
 

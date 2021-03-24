@@ -4,7 +4,6 @@ import { Flex } from 'reflexbox/styled-components';
 const StyledButton = styled(Flex)`
     align-items: center;
     width: 33.33%;
-
 `;
 
 const Icon = styled(Flex)`
@@ -13,9 +12,6 @@ const Icon = styled(Flex)`
     width: 50%;
     height: 100%;
     margin: 0 auto;
-    &: hover {
-        box-shadow: 0px 5px 37px -12px rgba(0,0,0,0.75);
-    }
 `;
 
 
