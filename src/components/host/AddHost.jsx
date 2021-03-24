@@ -20,7 +20,7 @@ const Container = styled(Flex)`
 const AddButton = styled(Flex)`
     height: 40%;
     width: 45%;
-    background-image: url("images/plus.png") ;
+    background-image: url("images/plus.png");
     background-repeat: no-repeat;
 `;
 

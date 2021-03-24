@@ -4,7 +4,7 @@ import { Flex } from 'reflexbox/styled-components';
 
 const Container = styled(Flex)`
     flex-direction: row;
-    height: 15%;
+    height: 10%;
     justify-content: center;
 `;
 console.log('Signals');

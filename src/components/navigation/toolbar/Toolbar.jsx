@@ -3,6 +3,7 @@ import {Flex} from 'reflexbox/styled-components';
 import NavigationLink from '../navigationLink/NavigationLink';
 import { useHistory } from 'react-router-dom';
 import {withLocalizeStrings} from '../../../languages/Localize';
+import { useApplicationStateValue } from '../../../application/Application';
 
 const Container = styled(Flex)`
     position: fixed;
@@ -11,6 +12,7 @@ const Container = styled(Flex)`
     height: 40px;
     align-items: center;
     background-color: gainsboro;
+    z-index: 100;
 `;
 
 const Space = styled(Flex)`
@@ -24,19 +26,29 @@ top:0;
 
 const Toolbar = ({strings}) => {
 
+    let {authorized, setAuthorized} = useApplicationStateValue();
+
     let history = useHistory();
 
     const onClickHandler = (path) => {
         history.push(path);
     }
-    
+
+    const onLogOut = () => {
+        setAuthorized(false);
+        history.push("/login");
+    }
+
     return (
-        <Container>
-            <NavigationLink onClick={() => {onClickHandler("/")}} text={strings.page.toolbar.homepage} />
+        <Container> 
+            {
+             authorized &&   <>
+             <NavigationLink onClick={() => {onClickHandler("/home")}} text={strings.page.toolbar.homepage} />
             <NavigationLink onClick={() => {onClickHandler("/hosts")}} text={strings.page.toolbar.hosts}/>
             <NavigationLink onClick={() => {onClickHandler("/services")}} text={strings.page.toolbar.services}/>
-            <Space />
-            <SignInOut onClick={() => {onClickHandler("/login")}} text="Odjava"/>
+            <Space /> 
+            <SignInOut onClick={onLogOut} text="Odjava"/>
+            </>}
         </Container>
     );
     

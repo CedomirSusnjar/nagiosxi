@@ -3,11 +3,11 @@ import { Flex } from 'reflexbox/styled-components';
 
 const Container = styled(Flex)`
     height: 100%;
-    width: 15%;
-    border-radius: 50%;
+    width: 20%;
+    border-radius: 5px;
     margin-left: 5px;
     margin-right: 5px;
-    background-color: ${props => props.color}
+    background-color: ${props => props.color};
 `;
 
 console.log('Signal');

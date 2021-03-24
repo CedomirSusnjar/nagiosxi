@@ -11,8 +11,7 @@ const StyledNavigationLink = styled.a`
     cursor: pointer;
     &: hover {
         text-decoration: underline;
-    }
-    
+    } 
 `;
 
 const NavigationLink = ({text, onClick}) => {
