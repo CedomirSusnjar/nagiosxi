@@ -43,7 +43,7 @@ const Toolbar = ({strings}) => {
         <Container> 
             {
              authorized &&   <>
-             <NavigationLink onClick={() => {onClickHandler("/home")}} text={strings.page.toolbar.homepage} />
+            <NavigationLink onClick={() => {onClickHandler("/home")}} text={strings.page.toolbar.homepage} />
             <NavigationLink onClick={() => {onClickHandler("/hosts")}} text={strings.page.toolbar.hosts}/>
             <NavigationLink onClick={() => {onClickHandler("/services")}} text={strings.page.toolbar.services}/>
             <Space /> 

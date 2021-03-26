@@ -9,7 +9,7 @@ const Container = styled(Flex)`
     height: 30%;
     width: 10%;
     min-width: 120px;
-    margin: 20px;
+    margin-left: 20px;
     cursor: pointer;
     box-shadow: none;
     border: .5px solid gainsboro;
@@ -20,27 +20,34 @@ const Container = styled(Flex)`
 `;
 
 const ServiceName = styled(Flex)`
-    padding-top: 8px;
-    height: 20%;
+    height: 40%;
     width: 100%;
     justify-content: center;
+    word-wrap: normal;
+    align-items: center;
+    text-align: center;
+    padding-left: 4px;
+    padding-right: 4px;
 `;
 
 const Description = styled(Flex)`
-    padding-top: 8px;
-    height: 30%;
+    height: 20%;
     width: 100%;
     justify-content: center;
     font-size: 12px;
+    align-items: center;
+    text-align: center;
+    padding-left: 4px;
+    padding-right: 4px;
 `;
 
 const Status = styled(Flex)`
     justify-content: center;
     color: ${props => props.color};
     font-weight: bold;
-    height: 35%;
+    height: 25%;
     font-size: 14px;
-    padding-top: 12px;
+    padding-top: 4px;
 `;
 
 const Buttons = styled(ServiceButtons)`
@@ -51,7 +58,7 @@ const Buttons = styled(ServiceButtons)`
 `;
 
 
-const Service = (props) => {
+const Service = ({serviceName, description, status, onDelete}) => {
 
     // const history = useHistory();
 
@@ -61,10 +68,10 @@ const Service = (props) => {
 
     return (
         <Container>
-            <ServiceName>HTTP</ServiceName>
-            <Description>protokol</Description>
-            <Status color='green'>Aktivan</Status>
-            <Buttons />
+            <ServiceName>{serviceName}</ServiceName>
+            <Description>{description}</Description>
+            <Status color='green'>{status}</Status>
+            <Buttons onDelete={onDelete}/>
         </Container>
     );
 }

@@ -6,12 +6,18 @@ const Container = styled(Flex)`
     justify-content: left;
     height: 5%;
     padding-left: 14px;
+    padding-top: 4px;
+`;
+
+const Text = styled.label`
+    font-weight: bold;
+    margin-right: 8px;
 `;
 
 const HostInformation = ({text, value}) => {
 
     return (
-        <Container>{text} {value}</Container>
+        <Container><Text>{text}</Text> {value}</Container>
     );
 
 };

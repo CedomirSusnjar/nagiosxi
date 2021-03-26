@@ -20,10 +20,10 @@ const Icon = styled(Flex)`
 `;
 
 
-const ServiceButton = ({icon}) => {
+const ServiceButton = ({icon, onClick}) => {
     return (
         <StyledButton>
-            <Icon icon={icon}/>
+            <Icon onClick={onClick} icon={icon}/>
         </StyledButton>
     );
 };

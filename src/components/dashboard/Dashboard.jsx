@@ -5,7 +5,7 @@ const Dashboard = styled(Flex)`
   flex-wrap: wrap;
   position: absolute;
   top: 40px;
-  bottom: 0;
+  bottom: 40px;
   left: 0;
   right: 0;
 `;

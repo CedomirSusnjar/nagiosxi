@@ -3,8 +3,10 @@ import { Flex } from 'reflexbox/styled-components';
 import Signals from '../signal/Signals';
 import { useHistory } from 'react-router';
 import HostInformation from '../hostInformation/HostInformation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HostButtons from '../buttons/hostButtons/HostButtons';
+import axios from 'axios';
+import BounceLoader from "react-spinners/BounceLoader";
 
 const Container = styled(Flex)`
     border-radius: 20px;
@@ -47,10 +49,18 @@ const Content = styled(Flex)`
     border: .5px solid gainsboro;
 `;
 
-const Host = (props) => {
+const SpinnerBlock = styled(Flex)`
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+`;
+
+const Host = ({host}) => {
 
     const history = useHistory();
     const [action, setActions] = useState(false);
+    const [services, setServices] = useState(null);
 
     const onClickHandler = () => {
         history.push("/services");
@@ -66,22 +76,19 @@ const Host = (props) => {
 
     return (
         <Content onMouseOver={onMouseOverHandler} onMouseLeave={onMouseLeaveHandler}>
-            <Container  onClick={onClickHandler}>
-                <HostName>192.168.70.14 - Windows</HostName>
+            <Container onClick={onClickHandler}>
+                <HostName>{host.host_name}</HostName>
                 <Status color='green'>Aktivan</Status>
-                <HostInformation text="Vrijeme rada: " value="10h 25min" />
-                <HostInformation text="Zadnja provjera: " value="10h 25min" />
-                <HostInformation text="Status info: " value="OK - 10.198.8.73 rta 196ms lost 0%" />
+                <HostInformation text="Zadnja provjera:" value={host.last_check} />
+                <HostInformation text="Sljedeca provjera:" value={host.next_check} />
+                <HostInformation text="Status info:" value={host.output} />
                 <div style={{ 'height': '50%' }}></div>
                 <Signals />
             </Container>
-            {action &&
-                <ActionsContainer>
-                    <HostButtons />
-                </ActionsContainer>}
-        </Content>
-
-
+            {action && (<ActionsContainer>
+                <HostButtons />
+            </ActionsContainer>)}
+        </Content >
     );
 }
 

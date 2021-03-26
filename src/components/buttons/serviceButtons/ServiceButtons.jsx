@@ -19,12 +19,12 @@ const RightServiceButton = styled(ServiceButton)`
     border-bottom-right-radius: 20px;
 `;
 
-const ServiceButtons = (props) => {
+const ServiceButtons = ({onDelete}) => {
     return (
         <Container>
             <LeftServiceButton icon="images/pencil.png"/>
-            <ServiceButton icon="images/delete.png"/>
-            <RightServiceButton icon="images/delete.png"/>
+            <ServiceButton icon="images/settings.png"/>
+            <RightServiceButton onClick={onDelete} icon="images/delete.png"/>
         </Container>
     );
 

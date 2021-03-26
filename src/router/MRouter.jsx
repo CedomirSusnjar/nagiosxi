@@ -13,12 +13,9 @@ const MRouter = (props) => {
     return (
         <Switch>
             <Route path="/login" component={Login} />
-            {authorized &&
-                <>
-                    <Route path="/hosts" component={Hosts} />
-                    <Route path="/services" component={Services} />
-                    <Route path="/home" component={Home} />
-                </>}
+            <Route path="/hosts" component={Hosts} />
+            <Route path="/services" component={Services} />
+            <Route path="/home" component={Home} />
             <Route path="/" component={Login} />
         </Switch>
     );

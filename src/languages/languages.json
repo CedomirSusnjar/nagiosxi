@@ -18,6 +18,9 @@
     },
     "buttons": {
       
+    },
+    "footer": {
+      "text": "Razvoj grafičkog okruženja za Nagios XI. Nadzor mrežnih servisa."
     }
   }
 }

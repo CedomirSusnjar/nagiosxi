@@ -18,10 +18,12 @@ const Container = styled(Flex)`
 `;
 
 const AddButton = styled(Flex)`
-    height: 40%;
-    width: 45%;
+    height: 64px;
+    width: 64px;
     background-image: url("images/plus.png");
     background-repeat: no-repeat;
+    align-items: center;
+    justify-content: center;
 `;
 
 const AddHost = (props) => {
