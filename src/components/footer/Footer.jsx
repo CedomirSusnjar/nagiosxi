@@ -6,12 +6,12 @@ const StyledFooter = styled(Flex)`
     position: fixed;
     bottom: 0;
     z-index: 100;
-    height: 40px;
+    height: 4rem;
     width: 100%;
     background-color: gainsboro;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 1.2rem;
 `;
 
 const Footer = ({strings}) => {

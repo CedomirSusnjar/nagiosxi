@@ -6,24 +6,25 @@ import { useApplicationStateValue } from '../../application/Application';
 
 const Form = styled(Flex)`
     flex-direction: column;
-    box-shadow: 0px 5px 37px -12px rgba(0,0,0,0.75);
-    height: 50%;
-    width: 40%;
-    min-width: 280px;
+    box-shadow: 0 .5rem 3.7rem -1.2rem rgba(0,0,0,0.75);
+    height: 40rem;
+    width: 80rem;
+    min-width: 28rem;
     align-items: center;
-    margin: 100px auto;
+    margin: 10rem auto;
     position: relative;
 `;
 
 const LoginButton = styled(Flex)`
-    width: 60%;
-    height: 30px;
-    border-radius: 50px;
-    border: 2px solid gainsboro;
+    width: 40rem;
+    height: 3rem;
+    border-radius: 5rem;
+    border: .2rem solid gainsboro;
     position: absolute;
-    bottom: 60px;
+    bottom: 6rem;
     justify-content: center;
     cursor: pointer;
+    font-size: 1.8rem;
 `;
 
 const Login = (props) => {

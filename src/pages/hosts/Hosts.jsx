@@ -6,6 +6,8 @@ import axios from 'axios';
 import BounceLoader from "react-spinners/BounceLoader";
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
+import { getAllHosts } from '../../application/application-service';
+
 
 const SpinnerBlock = styled(Flex)`
     position: absolute;
@@ -17,13 +19,12 @@ const SpinnerBlock = styled(Flex)`
 
 const Hosts = (props) => {
 
-
     const [hosts, setHosts] = useState(null);
     const [loading, setLoading] = useState(true);
     let [color, setColor] = useState("gainsboro");
 
     useEffect(() => {
-        axios.get("http://192.168.17.128/nagiosxi/api/v1/objects/hoststatus?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1").
+        getAllHosts().
             then(res => {
                 console.log(res.data.hoststatus);
                 setHosts(res.data.hoststatus);
@@ -35,21 +36,19 @@ const Hosts = (props) => {
     }, []);
 
     return (
-        loading ? (
+       loading ? (
             <SpinnerBlock>
                 <BounceLoader color={color} loading={loading} size={120} />
             </SpinnerBlock>
         ) : (
             <Dashboard>
-                {hosts.map(host => {
-                    return <Host host={host}/>
+                {hosts.map(data => {
+                    return <Host key={data.host_object_id} data={data}/>//data
                 })}
                 <AddHost />
             </Dashboard>
         )
-
     );
-
 };
 
 export default Hosts;

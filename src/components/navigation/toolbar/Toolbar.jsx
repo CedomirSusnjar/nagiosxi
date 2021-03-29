@@ -9,26 +9,26 @@ const Container = styled(Flex)`
     position: fixed;
     top: 0;
     width: 100%;
-    height: 40px;
+    height: 4rem;
     align-items: center;
     background-color: gainsboro;
     z-index: 100;
 `;
 
 const Space = styled(Flex)`
-
+    flex-grow: 1;
 `;
 
 const SignInOut = styled(NavigationLink)`
-position: absolute;
-top:0;
+    position: absolute;
+    top:0;
 `;
 
 const Toolbar = ({strings}) => {
 
-    let {authorized, setAuthorized} = useApplicationStateValue();
+    let { authorized, setAuthorized} = useApplicationStateValue();
 
-    let history = useHistory();
+    let history = useHistory();//text underline sa history location pathname includes 
 
     const onClickHandler = (path) => {
         history.push(path);

@@ -19,7 +19,6 @@ const Icon = styled(Flex)`
     height: 100%;
 `;
 
-
 const ServiceButton = ({icon, onClick}) => {
     return (
         <StyledButton>

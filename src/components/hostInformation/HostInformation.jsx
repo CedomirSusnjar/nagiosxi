@@ -2,16 +2,17 @@ import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 
 const Container = styled(Flex)`
-    font-size: 10px;
+    font-size: 1rem;
     justify-content: left;
     height: 5%;
-    padding-left: 14px;
-    padding-top: 4px;
+    padding-left: 1.4rem;
+    padding-top: .4rem;
 `;
 
 const Text = styled.label`
     font-weight: bold;
-    margin-right: 8px;
+    margin-right: .8rem;
+    font-size: 1.1rem;
 `;
 
 const HostInformation = ({text, value}) => {

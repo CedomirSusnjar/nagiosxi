@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import HostButton from './hostButton/HostButton';
 import { Flex } from 'reflexbox/styled-components';
-import { useApplicationStateValue } from '../../../application/Application';
 
 const Container = styled(Flex)`
     flex-direction: column;

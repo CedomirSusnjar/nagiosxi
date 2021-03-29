@@ -1,35 +1,41 @@
 import styled from 'styled-components';
 import {Flex} from 'reflexbox/styled-components';
+import { useHistory } from 'react-router';
 
 const Container = styled(Flex)`
-    border-radius: 20px;
+    border-radius: 2rem;
     flex-direction: column;
-    height: 45%;
-    min-width: 20%;
-    margin: 20px;
+    height: 30rem;
+    min-width: 30rem;
+    margin: 2rem;
     cursor: pointer;
-    border: .5px solid gainsboro;
+    border: .05rem solid gainsboro;
     box-shadow: none;
     &: hover {
-        box-shadow: 0px 5px 37px -12px rgba(0,0,0,0.75);
+        box-shadow: 0 .5rem 3.7rem -1.2rem rgba(0,0,0,0.75);
     }
     align-items: center;
     justify-content: center;
 `;
 
 const AddButton = styled(Flex)`
-    height: 64px;
-    width: 64px;
+    height: 6.4rem;
+    width: 6.4rem;
     background-image: url("images/plus.png");
-    background-repeat: no-repeat;
     align-items: center;
     justify-content: center;
 `;
 
 const AddHost = (props) => {
+    const history = useHistory();
+
+    const onClickHandler = () => {
+        history.push("/hosts/add");
+    }
+    
     return (
-        <Container>
-            <AddButton/>
+        <Container onClick={onClickHandler}>
+            <AddButton />
         </Container>
     );
 

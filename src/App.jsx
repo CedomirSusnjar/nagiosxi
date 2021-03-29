@@ -3,11 +3,13 @@ import { BrowserRouter } from "react-router-dom";
 import MRouter from './router/MRouter';
 import ApplicationProvider, { useApplicationStateValue } from './application/Application';
 import Footer from './components/footer/Footer';
+import GlobalStyle from './components/global-styles/GlobalStyle';
 const App = () => {
 
   return (
 
     <BrowserRouter>
+    <GlobalStyle />
       <ApplicationProvider>
         <Toolbar />
         <MRouter />

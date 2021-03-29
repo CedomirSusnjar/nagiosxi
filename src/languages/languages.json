@@ -5,7 +5,9 @@
         
       },
       "hosts": {
-        
+        "lastCheck": "Zadnja provjera: ",
+        "nextCheck": "Sljedeća provjera: ",
+        "statusInfo": "Status info: "
       },
       "home": {
         
@@ -14,10 +16,13 @@
        "homepage": "Početna",
        "hosts": "Mašine",
        "services": "Servisi"
+      },
+      "addNewHost": {
+        "title": "Dodavanje nove mašine"
       }
     },
     "buttons": {
-      
+      "add": "Dodaj"
     },
     "footer": {
       "text": "Razvoj grafičkog okruženja za Nagios XI. Nadzor mrežnih servisa."
