@@ -9,7 +9,7 @@ import { useHistory, useParams } from 'react-router';
 
 const Title = styled(Flex)`
     width: 100%;
-    height: 10rem;
+    height: 6rem;
     font-size: 2.4rem;
     padding-top: 1.2rem;
     position: relative;

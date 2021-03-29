@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {Flex} from 'reflexbox/styled-components';
 import { useHistory } from 'react-router';
+import plus from '../../assets/plus.png';
 
 const Container = styled(Flex)`
     border-radius: 2rem;
@@ -21,7 +22,7 @@ const Container = styled(Flex)`
 const AddButton = styled(Flex)`
     height: 6.4rem;
     width: 6.4rem;
-    background-image: url("images/plus.png");
+    background-image: url(${plus});
     align-items: center;
     justify-content: center;
 `;

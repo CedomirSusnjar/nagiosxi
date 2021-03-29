@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 import ServiceButton from './serviceButton/ServiceButton';
+import deleteIcon from '../../../assets/delete.png';
+import pencilIcon from '../../../assets/pencil.png';
+import settingIcon from '../../../assets/settings.png';
 
 const Container = styled(Flex)`
     flex-direction: row;
@@ -22,9 +25,9 @@ const RightServiceButton = styled(ServiceButton)`
 const ServiceButtons = ({onDelete}) => {
     return (
         <Container>
-            <LeftServiceButton icon="images/pencil.png"/>
-            <ServiceButton icon="images/settings.png"/>
-            <RightServiceButton onClick={onDelete} icon="images/delete.png"/>
+            <LeftServiceButton icon={pencilIcon} />
+            <ServiceButton icon={settingIcon} />
+            <RightServiceButton onClick={onDelete} icon={deleteIcon} />
         </Container>
     );
 

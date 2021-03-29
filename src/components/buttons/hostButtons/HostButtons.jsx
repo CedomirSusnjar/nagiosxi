@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import HostButton from './hostButton/HostButton';
 import { Flex } from 'reflexbox/styled-components';
+import deleteIcon from '../../../assets/delete.png';
+import pencilIcon from '../../../assets/pencil.png';
 
 const Container = styled(Flex)`
     flex-direction: column;
@@ -19,9 +21,9 @@ const HostButtons = (props) => {
 
     return (
         <Container>
-            <HostButton onClick={onDeleteHandler} icon="images/delete.png" />
-            <HostButton onClick={onUpdateHandler} icon="images/pencil.png" />
-            <HostButton onClick={onDeleteHandler} icon="images/delete.png" />
+            <HostButton onClick={onDeleteHandler} icon={deleteIcon} />
+            <HostButton onClick={onUpdateHandler} icon={pencilIcon} />
+            <HostButton onClick={onDeleteHandler} icon={deleteIcon} />
         </Container>
     );
 };
