@@ -1,6 +1,4 @@
-import Login from '../pages/login/Login';
 import { Route, useHistory } from 'react-router';
-import { render } from '@testing-library/react';
 
 const SecureRoute = ({authorized, path, component:Component, exact}) => {
 

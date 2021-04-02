@@ -5,7 +5,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 import ServicesList from './ServicesList';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useHistory, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 const Title = styled(Flex)`
     width: 100%;

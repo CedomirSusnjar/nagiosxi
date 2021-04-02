@@ -3,10 +3,8 @@ import { Flex } from 'reflexbox/styled-components';
 import Signals from '../signal/Signals';
 import { useHistory } from 'react-router';
 import HostInformation from '../hostInformation/HostInformation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import HostButtons from '../buttons/hostButtons/HostButtons';
-import axios from 'axios';
-import BounceLoader from "react-spinners/BounceLoader";
 import { withLocalizeStrings } from '../../languages/Localize';
 
 const Container = styled(Flex)`
@@ -83,7 +81,7 @@ const Host = ({ strings, data }) => {
                 <div style={{ 'height': '50%' }}></div>
                 <Signals />
             </Container>
-            {true &&
+            {action &&
                 (<ActionsContainer>
                     <HostButtons />
                 </ActionsContainer>)}

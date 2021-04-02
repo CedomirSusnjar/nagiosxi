@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 import Service from '../../components/service/Service';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 
 const Container = styled(Flex)`
     flex-wrap: wrap;

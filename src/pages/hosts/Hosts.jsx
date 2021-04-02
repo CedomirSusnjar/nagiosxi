@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Dashboard from '../../components/dashboard/Dashboard';
 import AddHost from '../../components/host/AddHost';
 import Host from '../../components/host/Host';
-import axios from 'axios';
 import BounceLoader from "react-spinners/BounceLoader";
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';

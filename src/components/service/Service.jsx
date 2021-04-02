@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
-import { useHistory } from 'react-router';
 import ServiceButtons from '../buttons/serviceButtons/ServiceButtons';
 
 const Container = styled(Flex)`
