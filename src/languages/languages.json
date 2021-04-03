@@ -7,7 +7,9 @@
       "hosts": {
         "lastCheck": "Zadnja provjera: ",
         "nextCheck": "Sljedeća provjera: ",
-        "statusInfo": "Status info: "
+        "statusInfo": "Status info: ",
+        "yes": "Da",
+        "no": "Ne"
       },
       "home": {
         
@@ -18,7 +20,8 @@
        "services": "Servisi"
       },
       "addNewHost": {
-        "title": "Dodavanje nove mašine"
+        "title": "Dodavanje nove mašine",
+        "waitingForConfigDone": "Dodavanje hosta u Nagios XI sistem za nadzor..."
       }
     },
     "buttons": {
@@ -26,6 +29,10 @@
     },
     "footer": {
       "text": "Razvoj grafičkog okruženja za Nagios XI. Nadzor mrežnih servisa."
+    },
+    "modalQuestions": {
+      "deleteHost": "Da li ste sigurni da želite obrisati odabranu mašinu?",
+      "deleteService": "Da li ste sigurni da želite obrisati odabrani servis?"
     }
   }
 }

@@ -9,9 +9,10 @@ const Container = styled(Flex)`
     width: 15rem;
     min-width: 12rem;
     margin: 2rem;
-    cursor: pointer;
     box-shadow: none;
     border: .2rem solid gainsboro;
+    position: relative;  
+    overflow: hidden;
 `;
 
 const ServiceName = styled(Flex)`
@@ -21,8 +22,6 @@ const ServiceName = styled(Flex)`
     word-wrap: normal;
     align-items: center;
     text-align: center;
-    padding-left: .4rem;
-    padding-right: .4rem;
     font-size: 1.5rem;
 `;
 
@@ -33,8 +32,6 @@ const Description = styled(Flex)`
     font-size: 1.2rem;
     align-items: center;
     text-align: center;
-    padding-left: .4rem;
-    padding-right: .4rem;
 `;
 
 const Status = styled(Flex)`
@@ -43,16 +40,7 @@ const Status = styled(Flex)`
     font-weight: bold;
     height: 5rem;
     font-size: 1.4rem;
-    padding-top: .4rem;
 `;
-
-const Buttons = styled(ServiceButtons)`
-    position: absolute;
-    bottom: .4rem;
-    background-color: blue;
-    height: 2rem;
-`;
-
 
 const Service = ({serviceName, description, status, onDelete}) => {
 
@@ -61,7 +49,7 @@ const Service = ({serviceName, description, status, onDelete}) => {
             <ServiceName>{serviceName}</ServiceName>
             <Description>{description}</Description>
             <Status color='green'>{status}</Status>
-            <Buttons onDelete={onDelete}/>
+            <ServiceButtons onDelete={onDelete}/>
         </Container>
     );
 }

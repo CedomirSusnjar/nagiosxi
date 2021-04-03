@@ -6,6 +6,10 @@ import ServicesList from './ServicesList';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
+import Modal from '../../components/modal/Modal';
+import {withLocalizeStrings} from '../../languages/Localize';
+import Service from '../../components/service/Service';
+
 
 const Title = styled(Flex)`
     width: 100%;
@@ -28,17 +32,48 @@ const SpinnerBlock = styled(Flex)`
 const Board = styled(Flex)`
     width: 100%;
     height: 100%;
-    flex-direction: column;
+    flex-wrap: wrap;
 `;
 
-const Services = (props) => {
+const Services = ({strings}) => {
 
 
     let [services, setServices] = useState(null);
     let [loading, setLoading] = useState(true);
     let [color, setColor] = useState("gainsboro");
+    let [serviceToDelete, setServiceToDelete] = useState('');
+    const [showModal, setShowModal] = useState(false);
 
-    const {id} = useParams();
+    const { id } = useParams();
+
+    const showDeleteModal = (service) => {
+        setServiceToDelete(service);
+        setShowModal(true);
+    }
+
+    const deleteService = () => {
+        onDeleteHandler(serviceToDelete);
+    }
+
+    const doNotDeleteService = () => {
+        setShowModal(false);
+    }
+
+    const onDeleteHandler = (service) => {
+        // removeHost(hostName).then(res => {
+        //     console.log(res);
+        //     setHosts(hosts.filter(host => host.host_name !== hostName));
+        //     setShowModal(false);
+        // });
+        removeService(service);
+        setShowModal(false);
+        console.log(service);
+    }
+
+    const removeService = (id) => {
+        let servicesTemp = services.filter(e => e.service_object_id != id);
+        setServices(servicesTemp);
+    }
 
 
     useEffect(() => {
@@ -61,9 +96,23 @@ const Services = (props) => {
             </SpinnerBlock>
         ) : (
             <Dashboard>
+                 <Modal
+                    question={strings.modalQuestions.deleteService}
+                    show={showModal}
+                    confirm={deleteService}
+                    decline={doNotDeleteService}
+                />
                 <Board>
                     <Title>{services[0].host_name + " - " + services[0].host_address}</Title >
-                    <ServicesList setServices={setServices} services={services}/>
+                    {/* <ServicesList setServices={setServices} services={services}/> */}
+                    {services.map(service => {
+                        return <Service
+                            status={service.state_type === "1" ? "Aktivan" : "Neaktivan"}
+                            serviceName={service.display_name}
+                            description={service.service_description}
+                            onDelete={() => showDeleteModal(service.service_object_id)}
+                        />
+                    })}
                 </Board >
             </Dashboard >
         )
@@ -71,4 +120,4 @@ const Services = (props) => {
     );
 };
 
-export default Services;
+export default withLocalizeStrings(Services);

@@ -13,7 +13,7 @@ const Container = styled(Flex)`
     border: .05rem solid gainsboro;
     box-shadow: none;
     &: hover {
-        box-shadow: 0 .5rem 3.7rem -1.2rem rgba(0,0,0,0.75);
+        box-shadow: 0 .5rem 2.2rem -1.2rem rgba(0,0,0,0.75);
     }
     align-items: center;
     justify-content: center;

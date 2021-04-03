@@ -4,21 +4,30 @@ import { Flex } from 'reflexbox/styled-components';
 const Container = styled(Flex)`
     font-size: 1rem;
     justify-content: left;
-    height: 5%;
     padding-left: 1.4rem;
-    padding-top: .4rem;
+    margin-top: .1rem;
 `;
 
-const Text = styled.label`
+const Property = styled.label`
     font-weight: bold;
     margin-right: .8rem;
     font-size: 1.1rem;
+    width: 50%;
 `;
 
-const HostInformation = ({text, value}) => {
+const Value = styled.label`
+    margin-right: .8rem;
+    font-size: 1.1rem;
+    width: 50%;
+`;
+
+const HostInformation = ({ text, value }) => {
 
     return (
-        <Container><Text>{text}</Text> {value}</Container>
+        <Container>
+            <Property>{text}</Property>
+            <Value>{value}</Value>
+        </Container>
     );
 
 };

@@ -6,12 +6,14 @@ import HostInformation from '../hostInformation/HostInformation';
 import { useState } from 'react';
 import HostButtons from '../buttons/hostButtons/HostButtons';
 import { withLocalizeStrings } from '../../languages/Localize';
+import { deleteHost } from '../../application/application-service';
 
 const Container = styled(Flex)`
     border-radius: 2rem;
     flex-direction: column;
     height: 100%;
     width: 90%;
+    position: relative;
 `;
 
 const HostName = styled(Flex)`
@@ -24,7 +26,7 @@ const HostName = styled(Flex)`
 `;
 
 const Status = styled(Flex)`
-    color: ${props => props.color};
+    color: ${props => props.color === "" ? "red" : "green"};
     font-weight: bold;
     height: 10%;
     padding-top: .4rem;
@@ -48,11 +50,13 @@ const Content = styled(Flex)`
     margin: 2rem;
     border-radius: 2rem;
     cursor: pointer;
-    box-shadow: none;
     border: .05rem solid gainsboro;
+    &:hover {
+        box-shadow: 0 .5rem 2.2rem -1.2rem rgba(0,0,0,0.75);
+    }
 `;
 
-const Host = ({ strings, data }) => {
+const Host = ({ strings, data, onDeleteHandler }) => {
 
     const history = useHistory();
     const [action, setActions] = useState(false);
@@ -71,19 +75,18 @@ const Host = ({ strings, data }) => {
     }
 
     return (
-        <Content onMouseOver={onMouseOverHandler} onMouseLeave={onMouseLeaveHandler}>
+        <Content status={data.output} onMouseOver={onMouseOverHandler} onMouseLeave={onMouseLeaveHandler}>
             <Container onClick={onClickHandler}>
-                <HostName>{data.host_name}</HostName>
-                <Status color='green'>Aktivan</Status>
+                <HostName>{data.host_name} - {data.address}</HostName>
+                <Status color={data.output}>{data.output === "" ? "Neaktivan" : "Aktivan"}</Status>
                 <HostInformation text={strings.page.hosts.lastCheck} value={data.last_check} />
                 <HostInformation text={strings.page.hosts.nextCheck} value={data.next_check} />
                 <HostInformation text={strings.page.hosts.statusInfo} value={data.output} />
-                <div style={{ 'height': '50%' }}></div>
                 <Signals />
             </Container>
             {action &&
                 (<ActionsContainer>
-                    <HostButtons />
+                    <HostButtons onDeleteHandler={onDeleteHandler}/>
                 </ActionsContainer>)}
         </Content >
     );

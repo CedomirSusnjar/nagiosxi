@@ -25,6 +25,9 @@ const LoginButton = styled(Flex)`
     justify-content: center;
     cursor: pointer;
     font-size: 1.8rem;
+    &: hover {
+        background-color: gainsboro;
+    }
 `;
 
 const Login = (props) => {

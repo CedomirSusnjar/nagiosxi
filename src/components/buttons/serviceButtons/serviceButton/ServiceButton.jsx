@@ -3,20 +3,21 @@ import { Flex } from 'reflexbox/styled-components';
 
 const StyledButton = styled(Flex)`
     align-items: center;
-    width: 33%;
-    padding-left: 12px;
-    padding-top: 2px;
-    &:hover{
-        box-shadow: -1px 2px 13px -2px rgba(0,0,0,0.75);
+    width: 34%;
+    justify-content: center;
+    align-items: center;
+    background-color: gainsboro;
+    &:hover {
+        background-color: silver;
     }
-    border-radius: 20px;
+    cursor: pointer;
 `;
 
 const Icon = styled(Flex)`
     background-image: url(${props => props.icon});
     background-repeat: no-repeat;
-    width: 100%;
-    height: 100%;
+    width: 16px;
+    height: 16px;
 `;
 
 const ServiceButton = ({icon, onClick}) => {

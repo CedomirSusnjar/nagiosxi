@@ -7,27 +7,20 @@ import settingIcon from '../../../assets/settings.png';
 
 const Container = styled(Flex)`
     flex-direction: row;
-    width: 90%;
-    height: 10%;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    width: 100%;
+    height: 2.5rem;
     margin: 0 auto;
-`;
-
-const LeftServiceButton = styled(ServiceButton)`
-    border-bottom-left-radius: 20px;
-`;
-
-const RightServiceButton = styled(ServiceButton)`
-    border-bottom-right-radius: 20px;
+    overflow: hidden;
+    position: absolute;
+    bottom: 0;
 `;
 
 const ServiceButtons = ({onDelete}) => {
     return (
         <Container>
-            <LeftServiceButton icon={pencilIcon} />
+            <ServiceButton icon={pencilIcon} />
             <ServiceButton icon={settingIcon} />
-            <RightServiceButton onClick={onDelete} icon={deleteIcon} />
+            <ServiceButton onClick={onDelete} icon={deleteIcon} />
         </Container>
     );
 

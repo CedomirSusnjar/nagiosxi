@@ -3,6 +3,8 @@ import Signal from './Signal';
 import { Flex } from 'reflexbox/styled-components';
 
 const Container = styled(Flex)`
+    position: absolute;
+    bottom: 1rem;
     flex-direction: row;
     height: 10%;
     justify-content: center;
