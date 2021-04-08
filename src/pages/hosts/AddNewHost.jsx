@@ -75,7 +75,7 @@ const AddNewHost = ({ strings }) => {
 
     const history = useHistory();
     const [loading, setLoading] = useState(false);
-    let [color, setColor] = useState("gainsboro");
+    let [color] = useState("gainsboro");
     const { formState, control, handleSubmit } = useForm({
         resolver: yupResolver(validationSchema),
         mode: "onChange"

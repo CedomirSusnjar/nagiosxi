@@ -16,10 +16,6 @@ const HostButtons = ({onDeleteHandler, onShowInfoHandler}) => {
         console.log('update host');
     }
 
-    const onInfoHandler = () => {
-        console.log('host info');
-    }
-
     return (
         <Container>
             <HostButton onClick={onDeleteHandler} icon={deleteIcon} />

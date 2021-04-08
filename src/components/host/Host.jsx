@@ -6,7 +6,6 @@ import HostInformation from '../hostInformation/HostInformation';
 import { useState } from 'react';
 import HostButtons from '../buttons/hostButtons/HostButtons';
 import { withLocalizeStrings } from '../../languages/Localize';
-import { deleteHost } from '../../application/application-service';
 
 const Container = styled(Flex)`
     border-radius: 2rem;
@@ -60,7 +59,6 @@ const Host = ({ strings, data, onDeleteHandler, onShowInfoHandler }) => {
 
     const history = useHistory();
     const [action, setActions] = useState(false);
-    const [services, setServices] = useState(null);
 
     const onClickHandler = (hostname) => {
         history.push(`/services/${hostname}`);

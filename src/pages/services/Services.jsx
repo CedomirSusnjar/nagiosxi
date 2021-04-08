@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import Dashboard from '../../components/dashboard/Dashboard';
 import { Flex } from 'reflexbox/styled-components';
 import BounceLoader from "react-spinners/BounceLoader";
-import ServicesList from './ServicesList';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
