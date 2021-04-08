@@ -8,6 +8,9 @@ import { addHost } from '../../application/application-service';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import BounceLoader from "react-spinners/BounceLoader";
+import { useForm, Controller } from 'react-hook-form';
+import { object, string } from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const Board = styled(Flex)`
     width: 100%;
@@ -58,60 +61,54 @@ const AddMessage = styled(Flex)`
     height: 6rem;
 `;
 
+const Form = styled.form`
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    `;
+
+const validationSchema = object().shape({
+    hostname: string().required().max(10)
+});
+
 const AddNewHost = ({ strings }) => {
 
-    let [hostname, setHostname] = useState('');
-    let [hostAddress, setHostAddress] = useState(null);
-    let [checkCommand, setCheckCommand] = useState(null);
-    let [maxCheckAttempts, setMaxCheckAttempts] = useState(null);
-    let [checkPeriod, setCheckPeriod] = useState(null);
-    let [contact, setContact] = useState("nagiosadmin");
-    let [notificationInterval, setNotificationInterval] = useState(null);
-    let [notificationPeriod, setNotificationPeriod] = useState(null);
-    let [applyConfig, setApplyConfig] = useState(1);
     const history = useHistory();
     const [loading, setLoading] = useState(false);
     let [color, setColor] = useState("gainsboro");
-
-    const onHostnameChangeHandler = (event) => {
-        setHostname(event.target.value);
-        console.log('hostname' + hostname);
-    }
+    const { formState, control, handleSubmit } = useForm({
+        resolver: yupResolver(validationSchema),
+        mode: "onChange"
+    });
 
     const waitForNagiosConfigDone = () => {
         return new Promise(setTimeout(function () { history.push("/hosts"); }, 5000));
     }
 
-    const onClickHandler = () => {
+    const { isValid } = formState;
+
+    const onSubmit = (host) => {//axios get params
         setLoading(true);
-        const hostObj = {
-            host_name: "TestHost",
-            address: "192.168.17.129",
-            max_check_attempts: "2",
-            check_period: "24x7",
-            notification_interval: "5",
-            notification_period: "24x7",
-            applyconfig: "1"
-        }
+        const obj = `host_name=${host.hostname}`
+            + `&address=${host.address}`
+            + `&check_command=${host.checkCommand}`
+            + `&max_check_attempts=${host.max_check_attempts}`
+            + `&check_period=${host.check_period}`
+            + `&contacts=${host.contacts}`
+            + `&notification_interval=${host.notification_interval}`
+            + `&notification_period=${host.notification_period}`
+            + `&applyconfig=1`;
 
-        const obj = `host_name=${hostObj.host_name}`
-            + `&address=${hostObj.address}`
-            + `&max_check_attempts=${hostObj.max_check_attempts}`
-            + `&check_period=${hostObj.check_period}`
-            + `&contacts=${contact}`
-            + `&notification_interval=${hostObj.notification_interval}`
-            + `&notification_period=${hostObj.notification_period}`
-            + `&applyconfig=${hostObj.applyconfig}`;
-
-        // console.log(hostObj);
-
-        addHost(obj).
-            then(res => {
+        (async function () {
+            try {
+                const res = await addHost(obj);
                 console.log(res);
-                waitForNagiosConfigDone().then(setLoading(false));
-            }).catch(err => {
+                setTimeout(function () { history.push("/hosts"); }, 5000)
+            } catch (err) {
                 console.log(err);
-            });
+                setLoading(false);
+            }
+        })();
     }
 
     return (
@@ -126,17 +123,18 @@ const AddNewHost = ({ strings }) => {
                                 <BounceLoader color={color} loading={loading} size={120} />
                             </SpinnerBlock>
                         ) : (
-                            <>
-                                <Input text="Ime: " value={hostname} onChange={(event) => { onHostnameChangeHandler(event) }} />
-                                <Input text="Adresa: " value="192.168.17.129" />
-                                <Input text="Check komanda:" value="check_ping\!3000,80%\!5000,100%" />
-                                <Input text="Maksimalan broj pokusaja: " value="2" />
-                                <Input text="Period provjere: " value="24x7" />
-                                <Input text="Kontakt:" value="nagiosadmin" />
-                                <Input text="Interval obavjestenja: " value="5" />
-                                <Input text="Period notifikacija: " value="24x7" />
-                                <PageAddHostButton onClickHandler={onClickHandler} />
-                            </>
+                            <Form onSubmit={handleSubmit(onSubmit)}>
+                                <Controller name="hostname" defaultValue="TestHost" control={control} render={() => (<Input text={strings.page.addNewHost.hostname} />)} />
+                                <Controller name="address" defaultValue="192.168.17.129" control={control} render={() => (<Input text={strings.page.addNewHost.address} />)} />
+                                <Controller name="checkCommand" defaultValue="check-host-alive" control={control} render={() => (<Input text={strings.page.addNewHost.checkCommand} />)} />
+                                <Controller name="max_check_attempts" defaultValue="2" control={control} render={() => (<Input text={strings.page.addNewHost.max_check_attempts} />)} />
+                                <Controller name="check_period" defaultValue="24x7" control={control} render={() => (<Input text={strings.page.addNewHost.check_period} />)} />
+                                <Controller name="contacts" defaultValue="nagiosadmin" control={control} render={() => (<Input text={strings.page.addNewHost.contacts} />)} />
+                                <Controller name="notification_interval" defaultValue="1" control={control} render={() => (<Input text={strings.page.addNewHost.notification_interval} />)} />
+                                <Controller name="notification_period" defaultValue="24x7" control={control} render={() => (<Input text={strings.page.addNewHost.notification_period} />)} />
+                                <Controller name="applyconfig" defaultValue="1" control={control} render={() => (<Input text={strings.page.addNewHost.applyconfig} />)} />
+                                <PageAddHostButton htmlType="submit" />
+                            </Form>
                         )}
 
                     </AddSpace>

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 import { withLocalizeStrings } from '../../../languages/Localize';
 
-const StyledButton = styled(Flex)`
+const StyledButton = styled.button`
     width: 28rem;
     border: .1rem solid gainsboro;
     border-radius: 1rem;
@@ -16,11 +16,12 @@ const StyledButton = styled(Flex)`
         background-color: gray;
         color: white;
     }
+    outline: none;
 
 `;
 
 const Space = styled(Flex)`
-    width: 17.5rem;
+    width: 21.5rem;
 `;
 
 const Container = styled(Flex)`
@@ -28,12 +29,12 @@ const Container = styled(Flex)`
     width: 100%;
 `;
 
-const PageAddHostButton = ({strings, onClickHandler}) => {
+const PageAddHostButton = ({strings, onClickHandler, disabled}) => {
 
     return (
         <Container>
             <Space />
-            <StyledButton onClick={onClickHandler}>{strings.buttons.add}</StyledButton>
+            <StyledButton disabled={disabled} onClick={onClickHandler}>{strings.buttons.add}</StyledButton>
         </Container>
     );
 };

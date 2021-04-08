@@ -49,7 +49,7 @@ const Backdrop = styled(Flex)`
     height: 100%;
     justify-content: center;
     align-items: center;
-    z-index: 500;
+    z-index: 400;
     click: pointer;
 `;
 
@@ -81,13 +81,11 @@ const Button = styled(Flex)`
 
 const Modal = ({strings, show, confirm, decline, question}) => {
 
-    console.log('prikazi modal i backdrop'+show);
-
     return (
-        show && <>
-            <Backdrop onClick={decline}/>{//nece da se klikne pozadina, mozda nesto oko z-indexa, nez
+        show && ( <>
+            <Backdrop />{//nece da se klikne pozadina, mozda nesto oko z-indexa, nez
             }
-            <Container>
+            <Container onClick={decline}>
                 <ModalContainer>
                     <Question>{question}</Question>
                     <Buttons>
@@ -97,6 +95,7 @@ const Modal = ({strings, show, confirm, decline, question}) => {
                 </ModalContainer>
             </Container>
         </>
+        )
     );
 
 };

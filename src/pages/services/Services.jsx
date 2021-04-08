@@ -7,8 +7,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import Modal from '../../components/modal/Modal';
-import {withLocalizeStrings} from '../../languages/Localize';
+import { withLocalizeStrings } from '../../languages/Localize';
 import Service from '../../components/service/Service';
+import { getHostServices } from '../../application/application-service';
 
 
 const Title = styled(Flex)`
@@ -33,18 +34,33 @@ const Board = styled(Flex)`
     width: 100%;
     height: 100%;
     flex-wrap: wrap;
+    position: relative;
 `;
 
-const Services = ({strings}) => {
+const Message = styled(Flex)`
+    margin-left: 2rem;
+    position: absolute;
+    top: 6rem;
+    font-size: 1.8rem;
+    border: .05rem solid gainsboro;
+    border-radius: 1rem;
+    height: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    align-items: center;
+`;
+
+const Services = ({ strings }) => {
 
 
     let [services, setServices] = useState(null);
     let [loading, setLoading] = useState(true);
     let [color, setColor] = useState("gainsboro");
     let [serviceToDelete, setServiceToDelete] = useState('');
+    let [servicesExist, setServicesExist] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
-    const { id } = useParams();
+    const { hostname } = useParams();
 
     const showDeleteModal = (service) => {
         setServiceToDelete(service);
@@ -71,22 +87,26 @@ const Services = ({strings}) => {
     }
 
     const removeService = (id) => {
-        let servicesTemp = services.filter(e => e.service_object_id != id);
+        let servicesTemp = services.filter(e => e.service_object_id !== id);
         setServices(servicesTemp);
     }
 
-
     useEffect(() => {
 
-        console.log(id);
-        axios.get("http://192.168.17.128/nagiosxi/api/v1/objects/servicestatus?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1")
-            .then(res => {
-                console.log(res.data.servicestatus);
+        (async function () {
+            try {
+                const res = await getHostServices(hostname);
+                console.log(res.data);
                 setServices(res.data.servicestatus);
+                if (res.data.servicestatus.length !== 0) {
+                    setServicesExist(true);
+                }
                 setLoading(false);
-            }).catch(err => {
+            } catch (err) {
                 console.log(err);
-            });
+                setLoading(false);
+            }
+        })();
     }, []);
 
     return (
@@ -96,23 +116,14 @@ const Services = ({strings}) => {
             </SpinnerBlock>
         ) : (
             <Dashboard>
-                 <Modal
-                    question={strings.modalQuestions.deleteService}
-                    show={showModal}
-                    confirm={deleteService}
-                    decline={doNotDeleteService}
-                />
+                <Modal question={strings.modalQuestions.deleteService} show={showModal} confirm={deleteService} decline={doNotDeleteService} />
                 <Board>
-                    <Title>{services[0].host_name + " - " + services[0].host_address}</Title >
-                    {/* <ServicesList setServices={setServices} services={services}/> */}
-                    {services.map(service => {
-                        return <Service
-                            status={service.state_type === "1" ? "Aktivan" : "Neaktivan"}
-                            serviceName={service.display_name}
-                            description={service.service_description}
-                            onDelete={() => showDeleteModal(service.service_object_id)}
-                        />
-                    })}
+                    <Title>{hostname + (servicesExist ? ' - ' + services[0].host_address : "")}</Title>
+                    {servicesExist ? (services.map(service => {
+                        return <Service key={service.service_object_id} data={service} onDelete={() => showDeleteModal(service.service_object_id)} />
+                    })) : (
+                        <Message>{strings.page.services.noServices}</Message>
+                    )}
                 </Board >
             </Dashboard >
         )

@@ -16,7 +16,7 @@ const MRouter = () => {
         <Switch>
             <SecureRoute exact authorized={authorized} path="/hosts/add" component={AddNewHost} />
             <SecureRoute authorized={authorized} path="/hosts" component={Hosts} />
-            <SecureRoute authorized={authorized} path="/services/:id" component={Services} />
+            <SecureRoute authorized={authorized} path="/services/:hostname" component={Services} />
             <SecureRoute authorized={authorized} path="/home" component={Home} />
             <Route path="/" component={Login} />
         </Switch>

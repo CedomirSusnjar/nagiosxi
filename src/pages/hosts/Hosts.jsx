@@ -8,6 +8,7 @@ import { Flex } from 'reflexbox/styled-components';
 import { getAllHosts, removeHost } from '../../application/application-service';
 import Modal from '../../components/modal/Modal';
 import { withLocalizeStrings } from '../../languages/Localize';
+import HostModal from '../../components/modal/HostModal';
 
 const SpinnerBlock = styled(Flex)`
     position: absolute;
@@ -23,11 +24,20 @@ const Hosts = ({ strings }) => {
     const [loading, setLoading] = useState(true);
     let [color, setColor] = useState("gainsboro");
     const [showModal, setShowModal] = useState(false);
+    const [showInfoModal, setShowInfoModal] = useState(false);
     let [hostnameToDelete, setHostnameToDelete] = useState('');
 
     const showDeleteModal = (hostname) => {
         setHostnameToDelete(hostname);
         setShowModal(true);
+    }
+
+    const onShowInfoModal = (hostname) => {
+        setShowInfoModal(true);
+    }
+
+    const closeInfoModal = () => {
+        setShowInfoModal(false);
     }
 
     const deleteHost = () => {
@@ -47,14 +57,17 @@ const Hosts = ({ strings }) => {
     }
 
     useEffect(() => {
-        getAllHosts().
-            then(res => {
+        (async function () {
+            try {
+                const res = await getAllHosts();
                 console.log(res.data.hoststatus);
                 setHosts(res.data.hoststatus);
                 setLoading(false);
-            }).catch(err => {
+            } catch (err) {
                 console.log(err);
-            })
+                setLoading(false);
+            }
+        })();
     }, []);
 
     return (
@@ -64,17 +77,14 @@ const Hosts = ({ strings }) => {
             </SpinnerBlock>
         ) : (
             <Dashboard>
-                <Modal
-                    question={strings.modalQuestions.deleteHost}
-                    show={showModal}
-                    confirm={deleteHost}
-                    decline={doNotDeleteHost}
-                />
+                {showModal && <Modal question={strings.modalQuestions.deleteHost} show={showModal} confirm={deleteHost} decline={doNotDeleteHost} />}
+                {showInfoModal && <HostModal show={showInfoModal} decline={closeInfoModal} />}
                 {hosts.map(data => {
                     return <Host
                         key={data.host_object_id}
                         data={data}
                         onDeleteHandler={() => { showDeleteModal(data.host_name) }}
+                        onShowInfoHandler={() => { onShowInfoModal(data.host_name) }}
                     />
                 })}
                 <AddHost />

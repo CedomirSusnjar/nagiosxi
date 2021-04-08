@@ -7,6 +7,7 @@ const StyledInput = styled.input`
     height: 3.5rem;
     outline: none;
     border: .1rem solid gainsboro;
+    padding-left: 1rem;
 `;
 
 const Container = styled(Flex)`
@@ -17,7 +18,7 @@ const Container = styled(Flex)`
 
 const Text = styled(Flex)`
     font-size: 1.4rem;
-    width: 16rem;
+    width: 20rem;
     vertical-align: center;
 `;
 

@@ -15,3 +15,7 @@ export const addHost = async obj => {
 export const removeHost = async host => {
     return api.service().delete(`config/host/${host}?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1&applyconfig=1`);
 }
+
+export const getHostServices = async (hostname) => {
+    return api.service().get(`objects/servicestatus?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1&host_name=${hostname}`)
+};

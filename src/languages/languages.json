@@ -2,7 +2,7 @@
   "sr": {
     "page": {
       "services": {
-        
+        "noServices": "Ne postoje konfigurisani servisi za ovu mašinu."
       },
       "hosts": {
         "lastCheck": "Zadnja provjera: ",
@@ -21,7 +21,16 @@
       },
       "addNewHost": {
         "title": "Dodavanje nove mašine",
-        "waitingForConfigDone": "Dodavanje hosta u Nagios XI sistem za nadzor..."
+        "waitingForConfigDone": "Dodavanje hosta u Nagios XI sistem za nadzor...",
+        "hostname": "Ime: ",
+        "address": "Adresa: ",
+        "checkCommand": "Check komanda: ",
+        "max_check_attempts": "Maksimalan broj pokušaja: ",
+        "check_period": "Period provjere: ",
+        "contacts": "Kontakti: ",
+        "notification_interval": "Interval obavještenja: ",
+        "notification_period": "Period obavještenja: ",
+        "applyconfig": "Primjeni konfiguraciju: "
       }
     },
     "buttons": {

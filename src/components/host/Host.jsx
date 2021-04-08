@@ -56,14 +56,14 @@ const Content = styled(Flex)`
     }
 `;
 
-const Host = ({ strings, data, onDeleteHandler }) => {
+const Host = ({ strings, data, onDeleteHandler, onShowInfoHandler }) => {
 
     const history = useHistory();
     const [action, setActions] = useState(false);
     const [services, setServices] = useState(null);
 
-    const onClickHandler = () => {
-        history.push("/services/2");
+    const onClickHandler = (hostname) => {
+        history.push(`/services/${hostname}`);
     }
 
     const onMouseOverHandler = () => {
@@ -76,7 +76,7 @@ const Host = ({ strings, data, onDeleteHandler }) => {
 
     return (
         <Content status={data.output} onMouseOver={onMouseOverHandler} onMouseLeave={onMouseLeaveHandler}>
-            <Container onClick={onClickHandler}>
+            <Container onClick={() => {onClickHandler(data.host_name)}}>
                 <HostName>{data.host_name} - {data.address}</HostName>
                 <Status color={data.output}>{data.output === "" ? "Neaktivan" : "Aktivan"}</Status>
                 <HostInformation text={strings.page.hosts.lastCheck} value={data.last_check} />
@@ -86,7 +86,7 @@ const Host = ({ strings, data, onDeleteHandler }) => {
             </Container>
             {action &&
                 (<ActionsContainer>
-                    <HostButtons onDeleteHandler={onDeleteHandler}/>
+                    <HostButtons onDeleteHandler={onDeleteHandler} onShowInfoHandler={onShowInfoHandler}/>
                 </ActionsContainer>)}
         </Content >
     );
