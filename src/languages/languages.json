@@ -2,12 +2,16 @@
   "sr": {
     "page": {
       "services": {
-        "noServices": "Ne postoje konfigurisani servisi za ovu mašinu."
+        "noServices": "Ne postoje konfigurisani servisi za ovu mašinu.",
+        "title": "Mašina - "
       },
       "hosts": {
         "lastCheck": "Zadnja provjera: ",
         "nextCheck": "Sljedeća provjera: ",
         "statusInfo": "Status info: ",
+        "checkCommand": "Check komanda: ",
+        "hostAlias": "Alias: ",
+        "displayName": "Ime za prikaz: ",
         "yes": "Da",
         "no": "Ne"
       },
@@ -25,11 +29,27 @@
         "hostname": "Ime: ",
         "address": "Adresa: ",
         "checkCommand": "Check komanda: ",
-        "max_check_attempts": "Maksimalan broj pokušaja: ",
-        "check_period": "Period provjere: ",
+        "maxCheckAttempts": "Maksimalan broj pokušaja: ",
+        "checkPeriod": "Period provjere: ",
         "contacts": "Kontakti: ",
-        "notification_interval": "Interval obavještenja: ",
-        "notification_period": "Period obavještenja: ",
+        "notificationInterval": "Interval obavještenja: ",
+        "notificationPeriod": "Period obavještenja: ",
+        "applyconfig": "Primjeni konfiguraciju: ",
+        "hostnameErr": ""
+      },
+      "addNewService":{
+        "title": "Dodavanje novog servisa",
+        "waitingForConfigDone": "Dodavanje servisa u Nagios XI sistem za nadzor...",
+        "hostname": "Ime: ",
+        "serviceDesc": "Opis: ",
+        "checkCommand": "Check komanda: ",
+        "checkInterval": "Interval provjere: ",
+        "retryInterval": "Interval retry: ",
+        "maxCheckAttempts": "Maksimalan broj pokusaja: ",
+        "checkPeriod": "Period provjere: ",
+        "contacts": "Kontakti: ",
+        "notificationInterval": "Interval obavještenja: ",
+        "notificationPeriod": "Period obavještenja: ",
         "applyconfig": "Primjeni konfiguraciju: "
       }
     },

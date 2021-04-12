@@ -10,14 +10,17 @@ const StyledButton = styled.button`
     justify-content: center;
     align-items: center;
     background-color: gainsboro;
-    cursor: pointer;
     font-size: 1.5rem;
+    cursor: pointer;
     &: hover {
         background-color: gray;
         color: white;
     }
+    &: hover[disabled] {
+        cursor: no-drop;
+        background-color: gainsboro;
+    }
     outline: none;
-
 `;
 
 const Space = styled(Flex)`

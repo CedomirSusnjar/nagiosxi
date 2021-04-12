@@ -17,5 +17,21 @@ export const removeHost = async host => {
 }
 
 export const getHostServices = async (hostname) => {
-    return api.service().get(`objects/servicestatus?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1&host_name=${hostname}`)
+    return api.service().get(`objects/servicestatus?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1&host_name=${hostname}`);
 };
+
+export const getServiceByName = async (serviceName, hostname) => {
+    return api.service().get(`objects/servicestatus?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1&host_name=${hostname}&service_description=${serviceName}`);
+}
+
+export const addService = async obj => {
+    return api.service().post('config/service?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1', obj, {
+        headers : {
+            'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+    }
+)};
+
+export const removeService = async (service, host) => {
+    return api.service().delete(`config/service?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1&host_name=${host}&service_description=${service}&applyconfig=1`);
+}

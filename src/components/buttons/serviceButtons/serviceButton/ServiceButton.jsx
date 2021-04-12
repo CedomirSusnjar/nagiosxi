@@ -22,8 +22,8 @@ const Icon = styled(Flex)`
 
 const ServiceButton = ({icon, onClick}) => {
     return (
-        <StyledButton>
-            <Icon onClick={onClick} icon={icon}/>
+        <StyledButton onClick={onClick}>
+            <Icon icon={icon}/>
         </StyledButton>
     );
 };

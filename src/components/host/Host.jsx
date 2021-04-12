@@ -77,14 +77,17 @@ const Host = ({ strings, data, onDeleteHandler, onShowInfoHandler }) => {
             <Container onClick={() => {onClickHandler(data.host_name)}}>
                 <HostName>{data.host_name} - {data.address}</HostName>
                 <Status color={data.output}>{data.output === "" ? "Neaktivan" : "Aktivan"}</Status>
+                <HostInformation text={strings.page.hosts.displayName} value={data.display_name} />
+                <HostInformation text={strings.page.hosts.hostAlias} value={data.host_alias} />
                 <HostInformation text={strings.page.hosts.lastCheck} value={data.last_check} />
                 <HostInformation text={strings.page.hosts.nextCheck} value={data.next_check} />
+                <HostInformation text={strings.page.hosts.checkCommand} value={data.check_command} />
                 <HostInformation text={strings.page.hosts.statusInfo} value={data.output} />
-                <Signals />
+                <Signals hostname={data.host_name}/>
             </Container>
             {action &&
                 (<ActionsContainer>
-                    <HostButtons onDeleteHandler={onDeleteHandler} onShowInfoHandler={onShowInfoHandler}/>
+                    <HostButtons onDeleteHandler={onDeleteHandler} onShowInfoHandler={onShowInfoHandler} data={data}/>
                 </ActionsContainer>)}
         </Content >
     );

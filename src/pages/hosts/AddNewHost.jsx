@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Dashboard from '../../components/dashboard/Dashboard';
 import { Flex } from 'reflexbox/styled-components';
 import { withLocalizeStrings } from '../../languages/Localize';
-import Input from '../../components/inputs/Input';
+import InputField from '../../components/inputs/InputField';
 import PageAddHostButton from '../../components/buttons/hostButtons/PageAddHostButton';
 import { addHost } from '../../application/application-service';
 import { useState } from 'react';
@@ -68,7 +68,13 @@ const Form = styled.form`
     `;
 
 const validationSchema = object().shape({
-    hostname: string().required().max(10)
+    hostname: string().required().max(30),
+    address: string().required().max(15),
+    checkCommand: string().required().max(30),
+    max_check_attempts: string().required().max(2),
+    check_period: string().required().max(30),
+    contacts: string().required().max(30),
+    notification_interval: string().required().max(30)
 });
 
 const AddNewHost = ({ strings }) => {
@@ -76,18 +82,17 @@ const AddNewHost = ({ strings }) => {
     const history = useHistory();
     const [loading, setLoading] = useState(false);
     let [color] = useState("gainsboro");
+    const [badInput, setBadInput] = useState(false);
     const { formState, control, handleSubmit } = useForm({
         resolver: yupResolver(validationSchema),
         mode: "onChange"
     });
 
-    const waitForNagiosConfigDone = () => {
-        return new Promise(setTimeout(function () { history.push("/hosts"); }, 5000));
-    }
-
     const { isValid } = formState;
 
     const onSubmit = (host) => {//axios get params
+        setBadInput(false);
+        console.log('asdas');
         setLoading(true);
         const obj = `host_name=${host.hostname}`
             + `&address=${host.address}`
@@ -103,12 +108,16 @@ const AddNewHost = ({ strings }) => {
             try {
                 const res = await addHost(obj);
                 console.log(res);
-                setTimeout(function () { history.push("/hosts"); }, 5000)
+                setTimeout(function () { history.push("/hosts"); }, 5000);
             } catch (err) {
                 console.log(err);
                 setLoading(false);
             }
         })();
+    }
+
+    const onError = (err) => {
+        console.log(err);
     }
 
     return (
@@ -123,20 +132,19 @@ const AddNewHost = ({ strings }) => {
                                 <BounceLoader color={color} loading={loading} size={120} />
                             </SpinnerBlock>
                         ) : (
-                            <Form onSubmit={handleSubmit(onSubmit)}>
-                                <Controller name="hostname" defaultValue="TestHost" control={control} render={() => (<Input text={strings.page.addNewHost.hostname} />)} />
-                                <Controller name="address" defaultValue="192.168.17.129" control={control} render={() => (<Input text={strings.page.addNewHost.address} />)} />
-                                <Controller name="checkCommand" defaultValue="check-host-alive" control={control} render={() => (<Input text={strings.page.addNewHost.checkCommand} />)} />
-                                <Controller name="max_check_attempts" defaultValue="2" control={control} render={() => (<Input text={strings.page.addNewHost.max_check_attempts} />)} />
-                                <Controller name="check_period" defaultValue="24x7" control={control} render={() => (<Input text={strings.page.addNewHost.check_period} />)} />
-                                <Controller name="contacts" defaultValue="nagiosadmin" control={control} render={() => (<Input text={strings.page.addNewHost.contacts} />)} />
-                                <Controller name="notification_interval" defaultValue="1" control={control} render={() => (<Input text={strings.page.addNewHost.notification_interval} />)} />
-                                <Controller name="notification_period" defaultValue="24x7" control={control} render={() => (<Input text={strings.page.addNewHost.notification_period} />)} />
-                                <Controller name="applyconfig" defaultValue="1" control={control} render={() => (<Input text={strings.page.addNewHost.applyconfig} />)} />
-                                <PageAddHostButton htmlType="submit" />
+                            <Form onSubmit={handleSubmit(onSubmit, onError)}>
+                                <Controller name="hostname" defaultValue="" control={control} render={({ field }) => (<InputField type="text" value={field.value} onChange={field.onChange} onBlur={field.onBlur} text={strings.page.addNewHost.hostname} />)} />
+                                <Controller name="address" defaultValue="" control={control} render={({ field }) => (<InputField  type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.address} />)} />
+                                <Controller name="checkCommand" defaultValue="" control={control} render={({ field }) => (<InputField  type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.checkCommand} />)} />
+                                <Controller name="max_check_attempts" defaultValue="2" control={control} render={({ field }) => (<InputField type="text" value="2" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.maxCheckAttempts} />)} />
+                                <Controller name="check_period" defaultValue="24x7" control={control} render={({ field }) => (<InputField value="24x7" type="combobox" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.checkPeriod} />)} />
+                                <Controller name="contacts" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.contacts} />)} />
+                                <Controller name="notification_interval" defaultValue="" control={control} render={({ field }) => (<InputField  type="text"onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.notificationInterval} />)} />
+                                <Controller name="notification_period" defaultValue="" control={control} render={({ field }) => (<InputField type="combobox" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.notificationPeriod} />)} />
+                                <Controller name="applyconfig" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.applyconfig} />)} />
+                                <PageAddHostButton disabled={false} htmlType="submit" />
                             </Form>
                         )}
-
                     </AddSpace>
                 </AddBoard>
             </Board >

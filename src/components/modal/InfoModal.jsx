@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 import closeImg from '../../assets/close.png';
+import HostModalInfo from '../hostInformation/HostModalInfo';
 
 const ModalContainer = styled(Flex)`
     flex-direction: column;
     position: fixed;
     margin: 0 auto;
     top: 8rem;
-    width: 80rem;
+    width: 120rem;
     height: 60rem;
     background-color: white;
     z-index: 500;
@@ -64,21 +65,41 @@ const CloseImg = styled(Flex)`
     background-repeat: no-repeat;
 `;
 
-const HostModal = ({strings, show, confirm, decline, question}) => {
+const InfoBlock = styled(Flex)`
+    position: absolute;
+    top: 5rem;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    border: .05rem solid gainsboro;
+    border-radius: 2rem;
+    flex-direction: row;
+`;
+
+const InfoColumn = styled(Flex)`
+    flex-direction: column;
+    width: 40rem;
+`;
+
+const InfoModal = ({ strings, show, confirm, decline, question, data }) => {
+
+    data = Object.entries(data);
 
     return (
         show && <>
             <Backdrop />
             <Container onClick={decline}>
                 <ModalContainer>
-                    <Close onClick={decline}>
-                        <CloseImg />
-                    </Close>
+                    <Close onClick={decline}><CloseImg /></Close>
+                    <InfoBlock>
+                        <InfoColumn>{data.slice(0, (data.length / 3)).map(info => { return <HostModalInfo text={info[0]} value={info[1]} /> })}</InfoColumn>
+                        <InfoColumn>{data.slice((data.length / 3), 2 * (data.length / 3)).map(info => { return <HostModalInfo text={info[0]} value={info[1]} /> })}</InfoColumn>
+                        <InfoColumn>{data.slice(2 * (data.length / 3), 3 * (data.length / 3)).map(info => { return <HostModalInfo text={info[0]} value={info[1]} /> })}</InfoColumn>
+                    </InfoBlock>
                 </ModalContainer>
             </Container>
         </>
     );
-
 };
 
-export default HostModal;
+export default InfoModal;

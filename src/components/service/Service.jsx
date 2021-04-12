@@ -49,14 +49,14 @@ const Status = styled(Flex)`
     font-size: 1.4rem;
 `;
 
-const Service = ({data, onDelete}) => {
+const Service = ({data, onDelete, onShowInfo}) => {
 
     return (
         <Container>
             <ServiceName>{data.service_description}</ServiceName>
             <Description>{data.output}</Description>
             <Status color='green'>{data.state_type}</Status>
-            <ServiceButtons onDelete={onDelete}/>
+            <ServiceButtons onDelete={onDelete} onShowInfo={onShowInfo}/>
         </Container>
     );
 }

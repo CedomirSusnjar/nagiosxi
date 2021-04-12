@@ -3,13 +3,13 @@ import Dashboard from '../../components/dashboard/Dashboard';
 import { Flex } from 'reflexbox/styled-components';
 import BounceLoader from "react-spinners/BounceLoader";
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router';
 import Modal from '../../components/modal/Modal';
 import { withLocalizeStrings } from '../../languages/Localize';
 import Service from '../../components/service/Service';
-import { getHostServices } from '../../application/application-service';
-
+import { getHostServices, removeService } from '../../application/application-service';
+import AddService from '../../components/service/AddService';
+import InfoModal from '../../components/modal/InfoModal';
 
 const Title = styled(Flex)`
     width: 100%;
@@ -23,10 +23,12 @@ const Title = styled(Flex)`
 
 const SpinnerBlock = styled(Flex)`
     position: absolute;
-    top: 40rem;
+    top: 10rem;
     justify-content: center;
     width: 100%;
-    height: 100%;
+    height: 12rem%;
+    top: 35rem;
+    margin: 0 auto;
 `;
 
 const Board = styled(Flex)`
@@ -49,8 +51,9 @@ const Message = styled(Flex)`
     align-items: center;
 `;
 
-const Services = ({ strings }) => {
+let serviceData = null;
 
+const Services = ({ strings }) => {
 
     let [services, setServices] = useState(null);
     let [loading, setLoading] = useState(true);
@@ -58,6 +61,7 @@ const Services = ({ strings }) => {
     let [serviceToDelete, setServiceToDelete] = useState('');
     let [servicesExist, setServicesExist] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    let [showInfoModal, setShowInfoModal] = useState(false);
 
     const { hostname } = useParams();
 
@@ -66,41 +70,43 @@ const Services = ({ strings }) => {
         setShowModal(true);
     }
 
-    const deleteService = () => {
-        onDeleteHandler(serviceToDelete);
+    const deleteService = () => { onDeleteHandler(serviceToDelete);}
+
+    const doNotDeleteService = () => {setShowModal(false);}
+
+    const onShowInfoModal = (data) => {
+        serviceData = {...data};
+        setShowInfoModal(true);
     }
 
-    const doNotDeleteService = () => {
-        setShowModal(false);
-    }
+    const closeInfoModal = () => { setShowInfoModal(false); }
 
     const onDeleteHandler = (service) => {
-        // removeHost(hostName).then(res => {
-        //     console.log(res);
-        //     setHosts(hosts.filter(host => host.host_name !== hostName));
-        //     setShowModal(false);
-        // });
-        removeService(service);
-        setShowModal(false);
-        console.log(service);
-    }
 
-    const removeService = (id) => {
-        let servicesTemp = services.filter(e => e.service_object_id !== id);
-        setServices(servicesTemp);
+        (async function(){
+            try{
+                const response = await removeService(service, hostname);
+                console.log(response);
+                let servicesTemp = services.filter(e => e.service_description !== service);
+                setServices(servicesTemp);
+                setShowModal(false);
+                console.log(service);
+            }catch(err){
+                console.error(err);
+            }
+        })();
     }
 
     useEffect(() => {
 
         (async function () {
             try {
+                setServicesExist(false);
                 const res = await getHostServices(hostname);
                 console.log(res.data);
                 setServices(res.data.servicestatus);
-                if (res.data.servicestatus.length !== 0) {
-                    setServicesExist(true);
-                }
-                setLoading(false);
+                if (res.data.servicestatus.length !== 0) { setServicesExist(true);}
+                setTimeout(function () { setLoading(false); }, 1000);
             } catch (err) {
                 console.log(err);
                 setLoading(false);
@@ -116,13 +122,20 @@ const Services = ({ strings }) => {
         ) : (
             <Dashboard>
                 <Modal question={strings.modalQuestions.deleteService} show={showModal} confirm={deleteService} decline={doNotDeleteService} />
+                {showInfoModal && <InfoModal show={showInfoModal} decline={closeInfoModal} data={serviceData}/>}
                 <Board>
-                    <Title>{hostname + (servicesExist ? ' - ' + services[0].host_address : "")}</Title>
-                    {servicesExist ? (services.map(service => {
-                        return <Service key={service.service_object_id} data={service} onDelete={() => showDeleteModal(service.service_object_id)} />
-                    })) : (
-                        <Message>{strings.page.services.noServices}</Message>
-                    )}
+                    <Title>{strings.page.services.title + hostname}</Title>
+                    {servicesExist ?
+                        (services.map(service => {
+                            return <Service
+                                key={service.service_object_id}
+                                data={service}
+                                onDelete={() => showDeleteModal(service.service_description)} 
+                                onShowInfo={() => { onShowInfoModal(service) }}
+                                />
+                        })) :
+                        (<Message>{strings.page.services.noServices}</Message>)}
+                    <AddService />
                 </Board >
             </Dashboard >
         )

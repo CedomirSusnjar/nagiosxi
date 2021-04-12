@@ -15,11 +15,11 @@ const Container = styled(Flex)`
     bottom: 0;
 `;
 
-const ServiceButtons = ({onDelete}) => {
+const ServiceButtons = ({onDelete, onShowInfo}) => {
     return (
         <Container>
             <ServiceButton icon={pencilIcon} />
-            <ServiceButton icon={settingIcon} />
+            <ServiceButton onClick={onShowInfo}icon={settingIcon} />
             <ServiceButton onClick={onDelete} icon={deleteIcon} />
         </Container>
     );

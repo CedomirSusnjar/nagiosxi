@@ -5,20 +5,20 @@ import { Flex } from 'reflexbox/styled-components';
 const Container = styled(Flex)`
     position: absolute;
     bottom: 1rem;
-    flex-direction: row;
-    height: 10%;
+    flex-wrap: wrap;
+    height: 20%;
     justify-content: center;
     width: 100%;
 `;
 
-const Signals = (props) => {
+const Signals = ({hostname}) => {
 
     return (
         <Container>
-            <Signal color="red"/>
-            <Signal color="green"/>
-            <Signal color="yellow"/>
-            <Signal color="orange"/>
+            <Signal service="Memory Usage" color="#D62839" hostname={hostname}/>
+            <Signal service="Root Partition" color="#BA324F" hostname={hostname}/>
+            <Signal service="PING" color="#175676" hostname={hostname}/>
+            <Signal service="Swap Usage" color="#4BA3C3" hostname={hostname}/>
         </Container>
     );
 
