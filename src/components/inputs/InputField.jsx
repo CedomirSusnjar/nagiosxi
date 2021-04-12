@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 import { Input } from 'antd';
 import { Select } from 'antd';
+import { css } from '@emotion/css';
 
 const StyledInput = styled(Input)`
     border-radius: 1rem;
@@ -83,12 +84,27 @@ const Combobox = styled(Flex)`
 
 const { Option } = Select;
 
-const OptionC = styled(Option)`
-    
+const DropDownClass = css`
+    background-color: white;
+    border: .05rem solid gainsboro;
+    border-radius: 1rem;
+`;
+
+const OptionClass = css`
+    cursor: pointer;
+    border-bottom: .05rem solid gainsboro;
+    &: hover {
+        background-color: red;
+    }
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    padding-left: 1.5rem;
+
 `;
 
 
-function onChange(value) {
+function onChange({value}) {
   console.log(`selected ${value}`);
 }
 
@@ -104,6 +120,14 @@ function onSearch(val) {
   console.log('search:', val);
 }
 
+const onOptionClick = (value) => {
+    console.log(value);
+}
+
+const onOptionSelect = ({value}) => {
+    console.log(value);
+}
+
 const InputField = ({ text, value, onChange, onBlur, type }) => {
 
     let input = null;
@@ -112,7 +136,7 @@ const InputField = ({ text, value, onChange, onBlur, type }) => {
         case "text":
             input = <StyledInput type="text" value={value} onChange={onChange} onBlur={onBlur} />;
             break;
-        case "combobox":
+        case "select":
             input = <SelectS
                 showSearch
                 optionFilterProp="children"
@@ -120,13 +144,15 @@ const InputField = ({ text, value, onChange, onBlur, type }) => {
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onSearch={onSearch}
-                // filterOption={(input, option) =>
-                //     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                // }
+                dropdownClassName={DropDownClass}
+                onSelect={onOptionSelect}
+                filterOption={(input, option) =>
+                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
             >
-                <OptionC value="jack">Jack</OptionC>
-                <OptionC value="lucy">Lucy</OptionC>
-                <OptionC value="tom">Tom</OptionC>
+                <Option className={OptionClass} value="jack">Jack</Option>
+                <Option className={OptionClass} value="lucy">Lucy</Option>
+                <Option className={OptionClass} value="tom">Tom</Option>
             </SelectS>
     }
 

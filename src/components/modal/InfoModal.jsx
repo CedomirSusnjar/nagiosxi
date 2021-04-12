@@ -46,14 +46,14 @@ const Close = styled(Flex)`
     width: 3rem;
     height: 3rem;
     border-radius: 20rem;
-    background-color: crimson;
+    background-color: white;
     position: absolute;
     top: 1rem;
     right: 1rem;
     justify-content: center;
     align-items: center;
     &: hover {
-        background-color: red;
+        border: .2rem solid red;
     }
     cursor: pointer;
 `;

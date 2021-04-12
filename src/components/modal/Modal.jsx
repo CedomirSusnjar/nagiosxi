@@ -56,12 +56,12 @@ const Backdrop = styled(Flex)`
 const Buttons = styled(Flex)`
     flex-direction: row;
     width: 100%;
-    height: 20%;
+    height: 15%;
     justify-content: center;
 `;
 
 const Button = styled(Flex)`
-    width: 40%;
+    width: 30%;
     background-color: white;
     color: gray;
     font-weight: bold;
@@ -70,7 +70,7 @@ const Button = styled(Flex)`
     border-radius: 2rem;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
+    font-size: 1.4rem;
     border: 2px solid gray;
     cursor: pointer;
     &:hover {
