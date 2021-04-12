@@ -8,7 +8,6 @@ const defaultState = {
 }
 
 const defaultActions = {
-    setBackdrop: () => {},
     setAuthorized: () => {},
     setLoading: () => {}
 }
@@ -24,15 +23,12 @@ const ApplicationProvider = ({strings, children}) => {
 
     const [authorized,setAuthorized] = useState(false);
     const [loading,setLoading] = useState(false);
-    const [backdrop,setBackdrop] = useState(false);
 
     const state = {
         authorized,
         loading,
-        backdrop,
         setAuthorized,
-        setLoading,
-        setBackdrop
+        setLoading
     };
 
     return (

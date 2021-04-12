@@ -22,7 +22,7 @@ const SpinnerBlock = styled(Flex)`
 
 let hostData = null;
 
-const Hosts = ({ strings }) => {
+const HostPage = ({ strings }) => {
 
     const [hosts, setHosts] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -99,4 +99,4 @@ const Hosts = ({ strings }) => {
     );
 };
 
-export default withLocalizeStrings(Hosts);
+export default withLocalizeStrings(HostPage);

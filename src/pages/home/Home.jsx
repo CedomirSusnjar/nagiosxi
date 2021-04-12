@@ -1,10 +1,10 @@
 import React from 'react';
-import Hosts from '../hosts/Hosts';
+import HostPage from '../hostPage/HostPage';
 
 const Home = (props) => {
 
     return (
-        <Hosts/>
+        <HostPage/>
     );
 
 };
