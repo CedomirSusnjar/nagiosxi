@@ -135,7 +135,7 @@ const Services = ({ strings }) => {
                                 />
                         })) :
                         (<Message>{strings.page.services.noServices}</Message>)}
-                    <AddService />
+                    <AddService hostname={hostname}/>
                 </Board >
             </Dashboard >
         )

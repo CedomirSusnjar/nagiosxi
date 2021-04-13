@@ -3,7 +3,9 @@
     "page": {
       "services": {
         "noServices": "Ne postoje konfigurisani servisi za ovu mašinu.",
-        "title": "Mašina - "
+        "title": "Mašina - ",
+        "lastCheck": "Zadnja provjera: ",
+        "nextCheck": "Sljedeća provjera: "
       },
       "hosts": {
         "lastCheck": "Zadnja provjera: ",
@@ -22,6 +24,10 @@
        "homepage": "Početna",
        "hosts": "Mašine",
        "services": "Servisi"
+      },
+      "login": {
+        "username": "korisničko ime:",
+        "password": "lozinka:"
       },
       "addNewHost": {
         "title": "Dodavanje nove mašine",
@@ -52,6 +58,8 @@
         "notificationPeriod": "Period obavještenja: ",
         "applyconfig": "Primjeni konfiguraciju: "
       }
+    },"common": {
+      "details": "Detalji"
     },
     "buttons": {
       "add": "Dodaj"

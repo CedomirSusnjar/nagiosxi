@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
-import { Input } from 'antd';
-import { Select } from 'antd';
 import { css } from '@emotion/css';
+import { Select, Input } from 'antd';
+
+const { Option } = Select;
 
 const StyledInput = styled(Input)`
     border-radius: 1rem;
@@ -82,12 +83,12 @@ const Combobox = styled(Flex)`
     padding-left: 1rem;
 `;
 
-const { Option } = Select;
+
 
 const DropDownClass = css`
     background-color: white;
     border: .05rem solid gainsboro;
-    border-radius: 1rem;
+    z-index: 1000;
 `;
 
 const OptionClass = css`
@@ -100,37 +101,57 @@ const OptionClass = css`
     display: flex;
     align-items: center;
     padding-left: 1.5rem;
-
+    position: relative;
+    
 `;
 
 
-function onChange({value}) {
-  console.log(`selected ${value}`);
+function onChange({ value }) {
+    console.log(`selected ${value}`);
 }
 
 function onBlur() {
-  console.log('blur');
+    console.log('blur');
 }
 
 function onFocus() {
-  console.log('focus');
+    console.log('focus');
 }
 
 function onSearch(val) {
-  console.log('search:', val);
+    console.log('search:', val);
 }
 
 const onOptionClick = (value) => {
     console.log(value);
 }
 
-const onOptionSelect = ({value}) => {
+const onOptionSelect = ({ value }) => {
     console.log(value);
 }
 
-const InputField = ({ text, value, onChange, onBlur, type }) => {
+const InputField = ({ name, text, value, onChange, onBlur, type }) => {
 
     let input = null;
+
+    const opt = [
+        {
+            label: "Jack",
+            value: "jack"
+        },
+        {
+            label: "afaf",
+            value: "afaf"
+        },
+        {
+            label: "sss",
+            value: "sss"
+        },
+        {
+            label: "24x7",
+            value: "24x7"
+        },
+    ]
 
     switch (type) {
         case "text":
@@ -138,21 +159,14 @@ const InputField = ({ text, value, onChange, onBlur, type }) => {
             break;
         case "select":
             input = <SelectS
-                showSearch
+                name={name}
                 optionFilterProp="children"
-                onChange={onChange}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                onSearch={onSearch}
+                value={value}
                 dropdownClassName={DropDownClass}
-                onSelect={onOptionSelect}
-                filterOption={(input, option) =>
-                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                }
+                dropdownMatchSelectWidth={true}
+                onChange={onChange}
+                options={opt}
             >
-                <Option className={OptionClass} value="jack">Jack</Option>
-                <Option className={OptionClass} value="lucy">Lucy</Option>
-                <Option className={OptionClass} value="tom">Tom</Option>
             </SelectS>
     }
 

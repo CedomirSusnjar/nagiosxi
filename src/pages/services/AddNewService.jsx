@@ -6,7 +6,7 @@ import InputField from '../../components/inputs/InputField';
 import PageAddHostButton from '../../components/buttons/hostButtons/PageAddHostButton';
 import { addHost, addService } from '../../application/application-service';
 import { useState } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import BounceLoader from "react-spinners/BounceLoader";
 import { useForm, Controller } from 'react-hook-form';
 import { object, string } from "yup";
@@ -90,12 +90,14 @@ const AddNewService = ({ strings }) => {
 
     const { isValid } = formState;
 
+    const { hostname } = useParams();
+
     const onSubmit = (service) => {//axios get params
         setBadInput(false);
         setLoading(true);
         const obj = `host_name=Duc`
-            + `&service_description=PING`
-            + `&check_command=check_ping\!3000,80%\!5000,100%`
+            + `&service_description=Memory Usage`
+            + `&check_command=check_local_mem\!30!20`
             + `&max_check_attempts=2`
             + `&check_period=24x7`
             + `&contacts=nagiosadmin`
@@ -108,7 +110,7 @@ const AddNewService = ({ strings }) => {
         (async function () {
             try {
                 const res = await addService(obj);
-                setTimeout(function () { history.push("/services/Duc"); }, 5000);
+                setTimeout(function () { history.push(`/services/${hostname}`); }, 5000);
             } catch (err) {
                 console.log(err);
                 setLoading(false);
@@ -131,13 +133,13 @@ const AddNewService = ({ strings }) => {
                             </SpinnerBlock>
                         ) : (
                             <Form onSubmit={handleSubmit(onSubmit, onError)}>
-                                <Controller name="hostname" defaultValue="localhost" control={control} render={({ field }) => (<InputField type="text" value="localhost" onChange={field.onChange} onBlur={field.onBlur} text={strings.page.addNewService.hostname} />)} />
+                                <Controller name="hostname" defaultValue="" control={control} render={({ field }) => (<InputField type="text" value={field.value} onChange={field.onChange} onBlur={field.onBlur} text={strings.page.addNewService.hostname} />)} />
                                 <Controller name="service_description" defaultValue="" control={control} render={({ field }) => (<InputField  type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewService.serviceDesc} />)} />
-                                <Controller name="check_command" defaultValue="check_ping\!3000,80%\!5000,100%" control={control} render={({ field }) => (<InputField  type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewService.checkCommand} />)} />
+                                <Controller name="check_command" defaultValue="" control={control} render={({ field }) => (<InputField  type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewService.checkCommand} />)} />
                                 <Controller name="check_interval" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewService.checkInterval} />)} />
                                 <Controller name="retry_interval" defaultValue="" control={control} render={({ field }) => (<InputField  type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewService.retryInterval} />)} />
                                 <Controller name="max_check_attempts" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewService.maxCheckAttempts} />)} />
-                                <Controller name="check_period" defaultValue="" control={control} render={({ field }) => (<InputField  type="select"onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewService.checkPeriod} />)} />
+                                <Controller name="check_period" defaultValue="" control={control} render={({ field }) => (<InputField  type="text"onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewService.checkPeriod} />)} />
                                 <Controller name="contacts" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewService.contacts} />)} />
                                 <Controller name="notification_interval" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewService.notificationInterval} />)} />
                                 <Controller name="notification_period" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewService.notificationPeriod} />)} />

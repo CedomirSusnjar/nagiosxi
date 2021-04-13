@@ -27,11 +27,11 @@ const AddButton = styled(Flex)`
     justify-content: center;
 `;
 
-const AddService = () => {
+const AddService = ({hostname}) => {
    
     const history = useHistory();
 
-    const onClickHandler = () => { history.push("/services/add");}
+    const onClickHandler = () => { history.push(`/${hostname}/services/add`);}
     
     return (
         <Container onClick={onClickHandler}>

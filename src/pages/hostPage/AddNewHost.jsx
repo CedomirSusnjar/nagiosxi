@@ -11,6 +11,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 import { useForm, Controller } from 'react-hook-form';
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Select } from 'antd';
 
 const Board = styled(Flex)`
     width: 100%;
@@ -44,6 +45,40 @@ const AddSpace = styled(Flex)`
     flex-direction: column;
 `;
 
+
+const SelectS = styled(Select)`
+
+    &.ant-select { 
+        width: 28rem;
+        border: .05rem solid gainsboro;
+        border-radius: 1rem;
+        display: flex;
+        flex-direction: row;
+        height: 3.5rem;
+        .ant-select-selector {
+            width: 90%;
+            .ant-select-selection-search {
+                position: relative;
+                .ant-select-selection-search-input {
+                    width: 24rem;
+                    height: 2.5rem;
+                    outline: none;
+                    border: none;
+                    position: absolute;
+                    top: .5rem;
+                    left: .5rem;
+                }
+        }
+    }
+    .ant-select-arrow {
+        width: 3.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+   
+`;
+
 const SpinnerBlock = styled(Flex)`
     flex-direction: column;
     width: 100%;
@@ -65,16 +100,23 @@ const Form = styled.form`
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-    `;
+`;
+
+const opt = [
+    {
+        label: "Jack",
+        value: "jack"
+    }
+]
 
 const validationSchema = object().shape({
-    hostname: string().required().max(30),
-    address: string().required().max(15),
-    checkCommand: string().required().max(30),
-    max_check_attempts: string().required().max(2),
-    check_period: string().required().max(30),
-    contacts: string().required().max(30),
-    notification_interval: string().required().max(30)
+    // hostname: string().required().max(30),
+    // address: string().required().max(15),
+    // checkCommand: string().required().max(30),
+    // max_check_attempts: string().required().max(2),
+    // check_period: string().required().max(30),
+    // contacts: string().required().max(30),
+    // notification_interval: string().required().max(30)
 });
 
 const AddNewHost = ({ strings }) => {
@@ -134,13 +176,13 @@ const AddNewHost = ({ strings }) => {
                         ) : (
                             <Form onSubmit={handleSubmit(onSubmit, onError)}>
                                 <Controller name="hostname" defaultValue="" control={control} render={({ field }) => (<InputField type="text" value={field.value} onChange={field.onChange} onBlur={field.onBlur} text={strings.page.addNewHost.hostname} />)} />
-                                <Controller name="address" defaultValue="" control={control} render={({ field }) => (<InputField  type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.address} />)} />
-                                <Controller name="checkCommand" defaultValue="" control={control} render={({ field }) => (<InputField  type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.checkCommand} />)} />
+                                <Controller name="address" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.address} />)} />
+                                <Controller name="checkCommand" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.checkCommand} />)} />
                                 <Controller name="max_check_attempts" defaultValue="2" control={control} render={({ field }) => (<InputField type="text" value="2" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.maxCheckAttempts} />)} />
-                                <Controller name="check_period" defaultValue="24x7" control={control} render={({ field }) => (<InputField value="24x7" type="select" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.checkPeriod} />)} />
+                                <Controller name="check_period" defaultValue="24x7" control={control} render={({ field }) => (<InputField value="24x7" type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.checkPeriod} />)} />
                                 <Controller name="contacts" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.contacts} />)} />
-                                <Controller name="notification_interval" defaultValue="" control={control} render={({ field }) => (<InputField  type="text"onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.notificationInterval} />)} />
-                                <Controller name="notification_period" defaultValue="" control={control} render={({ field }) => (<InputField type="select" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.notificationPeriod} />)} />
+                                <Controller name="notification_interval" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.notificationInterval} />)} />
+                                <Controller name="notification_period"  control={control} render={({ field }) => (<InputField name="notification_period" type="text" onChange={field.onChange} value={field.value}  text={strings.page.addNewHost.notificationPeriod} />)} />
                                 <Controller name="applyconfig" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.addNewHost.applyconfig} />)} />
                                 <PageAddHostButton disabled={false} htmlType="submit" />
                             </Form>

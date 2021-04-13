@@ -10,7 +10,7 @@ const ModalContainer = styled(Flex)`
     margin: 0 auto;
     top: 16rem;
     width: 120rem;
-    height: 65rem;
+    height: 60rem;
     background-color: white;
     z-index: 500;
     border-radius: 2rem;
@@ -91,7 +91,7 @@ const Header = styled(Flex)`
     font-size: 1.8rem;
 `;
 
-const InfoModal = ({ strings, show, confirm, decline, question, data }) => {
+const UpdateModal = ({ strings, show, confirm, decline, question, data }) => {
 
     data = Object.entries(data);
 
@@ -113,4 +113,4 @@ const InfoModal = ({ strings, show, confirm, decline, question, data }) => {
     );
 };
 
-export default withLocalizeStrings(InfoModal);
+export default withLocalizeStrings(UpdateModal);

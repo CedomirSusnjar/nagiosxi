@@ -7,6 +7,19 @@ import { useState } from 'react';
 import HostButtons from '../buttons/hostButtons/HostButtons';
 import { withLocalizeStrings } from '../../languages/Localize';
 
+const getColorByServiceStatus = (status) => {
+    switch(status){
+        case "OK":
+            return "green";
+        case "CRITICAL":
+            return "red";
+        case "WARNING":
+            return "orange";
+        default:
+            return "black";
+    }
+}
+
 const Container = styled(Flex)`
     border-radius: 2rem;
     flex-direction: column;
@@ -25,7 +38,7 @@ const HostName = styled(Flex)`
 `;
 
 const Status = styled(Flex)`
-    color: ${props => props.color === "" ? "red" : "green"};
+    color: ${props => getColorByServiceStatus(props.color)};
     font-weight: bold;
     height: 10%;
     padding-top: .4rem;
@@ -55,7 +68,7 @@ const Content = styled(Flex)`
     }
 `;
 
-const Host = ({ strings, data, onDeleteHandler, onShowInfoHandler }) => {
+const Host = ({ strings, data, onDeleteHandler, onShowInfoHandler, onShowUpdateHandler }) => {
 
     const history = useHistory();
     const [action, setActions] = useState(false);
@@ -72,11 +85,17 @@ const Host = ({ strings, data, onDeleteHandler, onShowInfoHandler }) => {
         setActions(false);
     }
 
+    const trimServiceStatus = (message) => {
+        return message.substring(0, message.indexOf('-')).trim();
+    }
+
+    let status = trimServiceStatus(data.output);
+
     return (
         <Content status={data.output} onMouseOver={onMouseOverHandler} onMouseLeave={onMouseLeaveHandler}>
             <Container onClick={() => {onClickHandler(data.host_name)}}>
                 <HostName>{data.host_name} - {data.address}</HostName>
-                <Status color={data.output}>{data.output === "" ? "Neaktivan" : "Aktivan"}</Status>
+                <Status color={status}>{status}</Status>
                 <HostInformation text={strings.page.hosts.displayName} value={data.display_name} />
                 <HostInformation text={strings.page.hosts.hostAlias} value={data.host_alias} />
                 <HostInformation text={strings.page.hosts.lastCheck} value={data.last_check} />
@@ -87,7 +106,7 @@ const Host = ({ strings, data, onDeleteHandler, onShowInfoHandler }) => {
             </Container>
             {action &&
                 (<ActionsContainer>
-                    <HostButtons onDeleteHandler={onDeleteHandler} onShowInfoHandler={onShowInfoHandler} data={data}/>
+                    <HostButtons onUpdateHandler={onShowUpdateHandler} onDeleteHandler={onDeleteHandler} onShowInfoHandler={onShowInfoHandler} data={data}/>
                 </ActionsContainer>)}
         </Content >
     );

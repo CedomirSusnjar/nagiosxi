@@ -68,7 +68,7 @@ const Signal = ({ color, hostname, service }) => {
                 setTimeout(function () { setLoading(false); }, 1000);
             } catch (err) {
                 console.log(err);
-                setText('No service');
+                setText('Not configured');
                 setTimeout(function () { setLoading(false); }, 1000);           
             }
 

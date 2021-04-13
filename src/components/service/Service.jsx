@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 import ServiceButtons from '../buttons/serviceButtons/ServiceButtons';
+import ServiceInformation from '../hostInformation/ServiceInformation';
+import { withLocalizeStrings } from '../../languages/Localize';
 
 const Container = styled(Flex)`
     border-radius: 2rem;
@@ -10,31 +12,31 @@ const Container = styled(Flex)`
     min-width: 12rem;
     margin: 1.5rem;
     box-shadow: none;
-    border: .2rem solid gainsboro;
+    border: .1rem solid gainsboro;
     position: relative;  
     overflow: hidden;
     justify-content: center;
 `;
 
 const ServiceName = styled(Flex)`
-    height: 2.5rem;
+    height: 2rem;
     width: 100%;
     justify-content: center;
-    align-items: center;
-    text-align: center;
     font-size: 1.5rem;
     position: absolute;
-    top: 1.5rem;
+    top: .5rem;
     padding-left: 1rem;
     padding-right: 1rem;
 `;
 
 const Description = styled(Flex)`
-    height: 10rem;
+    position: absolute;
+    top: 3rem;
+    height: 6rem;
     width: 100%;
     justify-content: center;
-    font-size: 1rem;
     align-items: center;
+    font-size: 1rem;
     text-align: center;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -49,16 +51,27 @@ const Status = styled(Flex)`
     font-size: 1.4rem;
 `;
 
-const Service = ({data, onDelete, onShowInfo}) => {
+const InfoBlock = styled(Flex)`
+    flex-direction: column;
+    position: absolute;
+    top: 9.5rem;
+    justify-content: center;
+    width: 100%;
+`;
+
+const Service = ({ data, onDelete, onShowInfo, strings }) => {
 
     return (
         <Container>
             <ServiceName>{data.service_description}</ServiceName>
             <Description>{data.output}</Description>
-            <Status color='green'>{data.state_type}</Status>
-            <ServiceButtons onDelete={onDelete} onShowInfo={onShowInfo}/>
+            <InfoBlock>
+                <ServiceInformation text={strings.page.services.lastCheck} value={data.last_check} />
+                <ServiceInformation text={strings.page.services.nextCheck} value={data.next_check} />
+            </InfoBlock> 
+            <ServiceButtons onDelete={onDelete} onShowInfo={onShowInfo} />
         </Container>
     );
 }
 
-export default Service;
+export default withLocalizeStrings(Service);

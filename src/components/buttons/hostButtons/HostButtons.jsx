@@ -10,11 +10,7 @@ const Container = styled(Flex)`
     width: 100%;
 `;
 
-const HostButtons = ({onDeleteHandler, onShowInfoHandler}) => {
-
-    const onUpdateHandler = () => {
-        console.log('update host');
-    }
+const HostButtons = ({onDeleteHandler, onShowInfoHandler, onUpdateHandler}) => {
 
     return (
         <Container>
@@ -25,4 +21,4 @@ const HostButtons = ({onDeleteHandler, onShowInfoHandler}) => {
     );
 };
 
-export default HostButtons;
+export default HostButtons;  
