@@ -3,6 +3,8 @@ import { Flex } from 'reflexbox/styled-components';
 import { css } from '@emotion/css';
 import { Select, Input } from 'antd';
 import Check from '../../components/checks/Check';
+import { Radio } from 'antd';
+import { useState } from 'react';
 
 const { Option } = Select;
 
@@ -105,57 +107,45 @@ const OptionClass = css`
     
 `;
 
-const CheckContainer = styled(Flex)`
-    flex-direction: row;
+const RadioS = styled(Radio)`
+        &.ant-radio-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-radius: 1rem;
+            height: 2rem;
+            margin-right: 1.5rem;
+            .ant-radio {
+                margin-right: .3rem;
+            }
+
+            cursor: pointer;
+
+            span {
+                &:last-child {
+                    padding-bottom: .25rem;
+                }
+            }
+        }
 `;
 
+const RadioG = styled(Radio.Group)`
+    &.ant-radio-group {
+        display: flex;
+    }
+`;
 
-function onChange({ value }) {
-    console.log(`selected ${value}`);
-}
+const InputField = ({ name, text, onBlur, onChange, value, type, checks, manageCheckClick }) => {
 
-function onBlur() {
-    console.log('blur');
-}
 
-function onFocus() {
-    console.log('focus');
-}
+    //const [value, setValue] = useState(1);
 
-function onSearch(val) {
-    console.log('search:', val);
-}
-
-const onOptionClick = (value) => {
-    console.log(value);
-}
-
-const onOptionSelect = ({ value }) => {
-    console.log(value);
-}
-
-const InputField = ({ name, text, value, onChange, onBlur, type, checks }) => {
+    // const onChange = e => {
+    //     console.log('radio checked', e.target.value);
+    //     setValue(e.target.value);
+    // };
 
     let input = null;
-
-    const opt = [
-        {
-            label: "Jack",
-            value: "jack"
-        },
-        {
-            label: "afaf",
-            value: "afaf"
-        },
-        {
-            label: "sss",
-            value: "sss"
-        },
-        {
-            label: "24x7",
-            value: "24x7"
-        },
-    ]
 
     switch (type) {
         case "text":
@@ -169,15 +159,18 @@ const InputField = ({ name, text, value, onChange, onBlur, type, checks }) => {
                 dropdownClassName={DropDownClass}
                 dropdownMatchSelectWidth={true}
                 onChange={onChange}
-                options={opt}
             >
             </SelectS>
             break;
         case "check":
-            console.log(checks);
-            input = <CheckContainer>
-                {checks.map(check => { return <Check key={check.key} text={check.value} /> })}
-            </CheckContainer>
+            input = <RadioG onChange={onChange} value={value}>
+                {checks.map(check => {
+                    return <RadioS key={check.key} value={check.key}>{check.value}</RadioS>;
+                })}
+            </RadioG>
+        // input = <CheckContainer>
+        //     {checks.map(check => { return <Check onClick={manageCheckClick} key={check.key} text={check.value} /> })}
+        // </CheckContainer>
 
     }
 

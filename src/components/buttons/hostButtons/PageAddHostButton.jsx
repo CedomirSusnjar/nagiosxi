@@ -3,8 +3,9 @@ import { Flex } from 'reflexbox/styled-components';
 import { withLocalizeStrings } from '../../../languages/Localize';
 
 const StyledButton = styled.button`
+    margin-left: 1.5rem;
+    border: none;
     width: 16rem;
-    border: .1rem solid gainsboro;
     border-radius: 1rem;
     height: 3.5rem;
     justify-content: center;

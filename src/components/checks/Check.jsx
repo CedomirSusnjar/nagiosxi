@@ -20,10 +20,10 @@ const Container = styled(Flex)`
     background-color: ${props => props.clicked ? 'lightblue' : 'white'}
 `;
 
-const Check = ({text}) => {
+const Check = ({text, onClick}) => {
 
     return (
-        <Container clicked={false}>
+        <Container onClick={onClick} clicked={false}>
             {text}
         </Container>
     );

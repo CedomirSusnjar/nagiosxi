@@ -219,14 +219,17 @@ const AddNewHost = ({ strings }) => {
         mode: "onChange"
     });
 
+    const manageCheckClick = () => {
+        console.log('click');
+    }
 
     const [tabIndex, setTabIndex] = useState(0);
 
     const { isValid } = formState;
 
     const onSubmit = (host) => {//axios get params
+        console.log('radiobutton' + host.active_checks_enabled);
         setBadInput(false);
-        console.log('asdas');
         setLoading(true);
         const obj = `host_name=${host.hostname}`
             + `&address=${host.address}`
@@ -280,7 +283,7 @@ const AddNewHost = ({ strings }) => {
                                     </TabPanel>
                                     <TabPanel>
                                         <FormSplit>
-                                            <FormBox control={control} fields={checkSettings1} />
+                                            <FormBox manageCheck={manageCheckClick} control={control} fields={checkSettings1} />
                                             <FormBox control={control} fields={checkSettings2} />
                                         </FormSplit>
                                     </TabPanel>

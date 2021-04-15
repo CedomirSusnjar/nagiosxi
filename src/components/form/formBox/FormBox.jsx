@@ -10,7 +10,7 @@ const Container = styled(Flex)`
     border-radius: 2rem;
 `;
 
-const FormBox = ({control, fields}) => {
+const FormBox = ({control, fields, manageCheck}) => {
 
     return (
         <Container>
@@ -26,6 +26,7 @@ const FormBox = ({control, fields}) => {
                     value={field.value} 
                     onBlur={field.onBlur}
                     checks={inputField.checks}
+                    manageCheckClick={manageCheck}
                     text={inputField.text} />)} />
             })}
         </Container>

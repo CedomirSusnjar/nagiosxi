@@ -178,21 +178,24 @@ const AddNewService = ({ strings }) => {
 
     const { hostname } = useParams();
 
+    const obj = `host_name=Duc`
+    + `&service_description=Memory Usage`
+    + `&check_command=check_local_mem\!30!20`
+    + `&max_check_attempts=2`
+    + `&check_period=24x7`
+    + `&contacts=nagiosadmin`
+    + `&notification_interval=5`
+    + `&notification_period=24x7`
+    + `&retry_interval=5`
+    + `&check_interval=5`
+    + `&applyconfig=1`;
+
+
+
     const onSubmit = (service) => {//axios get params
         setBadInput(false);
         setLoading(true);
-        const obj = `host_name=Duc`
-            + `&service_description=Memory Usage`
-            + `&check_command=check_local_mem\!30!20`
-            + `&max_check_attempts=2`
-            + `&check_period=24x7`
-            + `&contacts=nagiosadmin`
-            + `&notification_interval=5`
-            + `&notification_period=24x7`
-            + `&retry_interval=5`
-            + `&check_interval=5`
-            + `&applyconfig=1`;
-
+        
         (async function () {
             try {
                 const res = await addService(obj);
@@ -227,7 +230,7 @@ const AddNewService = ({ strings }) => {
                                         <Tab>{strings.page.addNewHost.miscSettings}</Tab>
                                     </TabList>
 
-                                    <TabPanel><FormBox control={control} fields={commonFields} /></TabPanel>
+                                    <TabPanel><FormBox  control={control} fields={commonFields} /></TabPanel>
                                     <TabPanel>
                                         <FormSplit>
                                             <FormBox control={control} fields={checkSettings1} />
