@@ -8,7 +8,7 @@ const ModalContainer = styled(Flex)`
     flex-direction: column;
     position: fixed;
     margin: 0 auto;
-    top: 16rem;
+    top: 6rem;
     width: 120rem;
     height: 65rem;
     background-color: white;

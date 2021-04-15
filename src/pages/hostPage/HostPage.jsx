@@ -14,11 +14,10 @@ import { Menu, Dropdown, Button } from 'antd';
 
 const SpinnerBlock = styled(Flex)`
     position: absolute;
-    top: 10rem;
     justify-content: center;
     width: 100%;
     height: 12rem%;
-    top: 35rem;
+    top: 30rem;
     margin: 0 auto;
 `;
 

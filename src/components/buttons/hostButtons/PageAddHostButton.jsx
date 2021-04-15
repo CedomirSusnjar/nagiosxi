@@ -3,7 +3,7 @@ import { Flex } from 'reflexbox/styled-components';
 import { withLocalizeStrings } from '../../../languages/Localize';
 
 const StyledButton = styled.button`
-    width: 28rem;
+    width: 16rem;
     border: .1rem solid gainsboro;
     border-radius: 1rem;
     height: 3.5rem;
@@ -21,22 +21,17 @@ const StyledButton = styled.button`
         background-color: gainsboro;
     }
     outline: none;
-`;
-
-const Space = styled(Flex)`
-    width: 21.5rem;
+    height: 3rem;
 `;
 
 const Container = styled(Flex)`
-    margin-top: 1.2rem;
-    width: 100%;
+    margin-left: 1rem;
 `;
 
 const PageAddHostButton = ({strings, onClickHandler, disabled}) => {
 
     return (
         <Container>
-            <Space />
             <StyledButton disabled={disabled} onClick={onClickHandler}>{strings.buttons.add}</StyledButton>
         </Container>
     );

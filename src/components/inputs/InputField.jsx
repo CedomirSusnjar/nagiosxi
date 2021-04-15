@@ -2,13 +2,14 @@ import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 import { css } from '@emotion/css';
 import { Select, Input } from 'antd';
+import Check from '../../components/checks/Check';
 
 const { Option } = Select;
 
 const StyledInput = styled(Input)`
     border-radius: 1rem;
     width: 28rem;
-    height: 3.5rem;
+    height: 2.5rem;
     outline: none;
     border: .1rem solid gainsboro;
     padding-left: 1rem;
@@ -16,13 +17,12 @@ const StyledInput = styled(Input)`
 
 const Container = styled(Flex)`
     flex-direction: row;
-    margin-left: 1.6rem;
     margin-top: 1.2rem;
     position: relative;
 `;
 
 const Text = styled(Flex)`
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     width: 20rem;
     vertical-align: center;
 `;
@@ -105,6 +105,10 @@ const OptionClass = css`
     
 `;
 
+const CheckContainer = styled(Flex)`
+    flex-direction: row;
+`;
+
 
 function onChange({ value }) {
     console.log(`selected ${value}`);
@@ -130,7 +134,7 @@ const onOptionSelect = ({ value }) => {
     console.log(value);
 }
 
-const InputField = ({ name, text, value, onChange, onBlur, type }) => {
+const InputField = ({ name, text, value, onChange, onBlur, type, checks }) => {
 
     let input = null;
 
@@ -168,6 +172,13 @@ const InputField = ({ name, text, value, onChange, onBlur, type }) => {
                 options={opt}
             >
             </SelectS>
+            break;
+        case "check":
+            console.log(checks);
+            input = <CheckContainer>
+                {checks.map(check => { return <Check key={check.key} text={check.value} /> })}
+            </CheckContainer>
+
     }
 
 

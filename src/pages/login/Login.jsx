@@ -8,7 +8,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputField from '../../components/inputs/InputField';
-import {Select } from 'antd';
+import { Select } from 'antd';
 
 const Form = styled(Flex)`
     flex-direction: column;
@@ -30,6 +30,7 @@ const Container = styled(Dashboard)`
 const LoginButton = styled(Flex)`
     width: 48rem;
     height: 3rem;
+    margin-left: 2rem;
     border-radius: 5rem;
     border: .1rem solid gainsboro;
     position: absolute;
@@ -120,16 +121,13 @@ const Login = ({ strings }) => {
     ]
 
     return (
-        <div>
-            <Container>
-                <Form>
-                    <Controller name="username" defaultValue="" control={control} render={({ field }) => (<InputField type="text" value={field.value} onChange={field.onChange} onBlur={field.onBlur} text={strings.page.login.username} />)} />
-                    <Controller name="password" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.login.password} />)} />
-                    <LoginButton onClick={onClickHandler}>Prijavi se</LoginButton>
-                </Form>
-            </Container>
-        </div>
-
+        <Container>
+            <Form>
+                <Controller name="username" defaultValue="" control={control} render={({ field }) => (<InputField type="text" value={field.value} onChange={field.onChange} onBlur={field.onBlur} text={strings.page.login.username} />)} />
+                <Controller name="password" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.login.password} />)} />
+                <LoginButton onClick={onClickHandler}>Prijavi se</LoginButton>
+            </Form>
+        </Container>
     );
 
 };
