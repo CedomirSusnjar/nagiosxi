@@ -2,11 +2,10 @@ import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 import { css } from '@emotion/css';
 import { Select, Input } from 'antd';
-import Check from '../../components/checks/Check';
 import { Radio } from 'antd';
 import { useState } from 'react';
 
-const { Option } = Select;
+//const { Option } = Select;
 
 const StyledInput = styled(Input)`
     border-radius: 1rem;
@@ -27,20 +26,6 @@ const Text = styled(Flex)`
     font-size: 1.2rem;
     width: 20rem;
     vertical-align: center;
-`;
-
-const ErrorMessage = styled(Flex)`
-    color: red;
-    position: relative;
-    width: 30rem;
-`;
-
-const ErrMsgText = styled(Flex)`
-    position: absolute;
-    top: .8rem;
-    width: 100%;
-    font-size: 1rem;
-    padding-left: 2rem;
 `;
 
 const SelectS = styled(Select)`
@@ -76,15 +61,6 @@ const SelectS = styled(Select)`
    
 `;
 
-const Combobox = styled(Flex)`
-    border-radius: 1rem;
-    width: 28rem;
-    height: 3.5rem;
-    outline: none;
-    border: .1rem solid gainsboro;
-    padding-left: 1rem;
-`;
-
 
 
 const DropDownClass = css`
@@ -93,26 +69,11 @@ const DropDownClass = css`
     z-index: 1000;
 `;
 
-const OptionClass = css`
-    cursor: pointer;
-    border-bottom: .05rem solid gainsboro;
-    &: hover {
-        background-color: red;
-    }
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    padding-left: 1.5rem;
-    position: relative;
-    
-`;
-
 const RadioS = styled(Radio)`
         &.ant-radio-wrapper {
             display: flex;
             flex-direction: row;
             align-items: center;
-            border-radius: 1rem;
             height: 2rem;
             margin-right: 1.5rem;
             .ant-radio {
@@ -138,12 +99,12 @@ const RadioG = styled(Radio.Group)`
 const InputField = ({ name, text, onBlur, onChange, value, type, checks, manageCheckClick }) => {
 
 
-    //const [value, setValue] = useState(1);
+    const [radioGValue, setRadioGValue] = useState(parseInt(value));
 
-    // const onChange = e => {
-    //     console.log('radio checked', e.target.value);
-    //     setValue(e.target.value);
-    // };
+    const onRadioChange = (event) => {
+        console.log('radio checked', event.target.value);
+        setRadioGValue(event.target.value);
+    };
 
     let input = null;
 
@@ -163,11 +124,14 @@ const InputField = ({ name, text, onBlur, onChange, value, type, checks, manageC
             </SelectS>
             break;
         case "check":
-            input = <RadioG onChange={onChange} value={value}>
+            input = <RadioG onChange={onRadioChange} value={radioGValue}>
                 {checks.map(check => {
                     return <RadioS key={check.key} value={check.key}>{check.value}</RadioS>;
                 })}
             </RadioG>
+            break;
+        default:
+            break;
         // input = <CheckContainer>
         //     {checks.map(check => { return <Check onClick={manageCheckClick} key={check.key} text={check.value} /> })}
         // </CheckContainer>

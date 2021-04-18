@@ -10,7 +10,6 @@ import Modal from '../../components/modal/Modal';
 import { withLocalizeStrings } from '../../languages/Localize';
 import InfoModal from '../../components/modal/InfoModal';
 import UpdateModal from '../../components/modal/UpdateModal';
-import { Menu, Dropdown, Button } from 'antd';
 
 const SpinnerBlock = styled(Flex)`
     position: absolute;
@@ -21,33 +20,13 @@ const SpinnerBlock = styled(Flex)`
     margin: 0 auto;
 `;
 
-const menu = (
-    <Menu>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-          1st menu item
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-          2nd menu item
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-          3rd menu item
-        </a>
-      </Menu.Item>
-    </Menu>
-  );
-
 let hostData = null;
 
 const HostPage = ({ strings }) => {
 
     const [hosts, setHosts] = useState(null);
     const [loading, setLoading] = useState(true);
-    let [color, setColor] = useState("gainsboro");
+    let [color] = useState("gainsboro");
     const [showModal, setShowModal] = useState(false);
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -92,25 +71,6 @@ const HostPage = ({ strings }) => {
             setShowModal(false);
         });
     }
-
-    const opt = [
-        {
-            label: "Jack",
-            value: "jack"
-        },
-        {
-            label: "afaf",
-            value: "afaf"
-        },
-        {
-            label: "sss",
-            value: "sss"
-        },
-        {
-            label: "24x7",
-            value: "24x7"
-        },
-    ]
 
     useEffect(() => {
         (async function () {

@@ -42,15 +42,6 @@ const Description = styled(Flex)`
     padding-right: 1rem;
 `;
 
-const Status = styled(Flex)`
-    justify-content: center;
-    align-items: center;
-    color: ${props => props.color};
-    font-weight: bold;
-    height: 2.5rem;
-    font-size: 1.4rem;
-`;
-
 const InfoBlock = styled(Flex)`
     flex-direction: column;
     position: absolute;

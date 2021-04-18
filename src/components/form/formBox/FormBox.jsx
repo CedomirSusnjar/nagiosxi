@@ -27,11 +27,11 @@ const FormBox = ({control, fields, manageCheck}) => {
                     onBlur={field.onBlur}
                     checks={inputField.checks}
                     manageCheckClick={manageCheck}
-                    text={inputField.text} />)} />
+                    text={inputField.text} />)} 
+                    key={Math.random()}/>
             })}
         </Container>
     );
-
 };
 
 export default FormBox;

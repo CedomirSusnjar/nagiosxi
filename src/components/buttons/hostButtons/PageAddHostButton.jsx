@@ -29,11 +29,11 @@ const Container = styled(Flex)`
     margin-left: 1rem;
 `;
 
-const PageAddHostButton = ({strings, onClickHandler, disabled}) => {
+const PageAddHostButton = ({strings, disabled}) => {
 
     return (
         <Container>
-            <StyledButton disabled={disabled} onClick={onClickHandler}>{strings.buttons.add}</StyledButton>
+            <StyledButton disabled={disabled}>{strings.buttons.add}</StyledButton>
         </Container>
     );
 };

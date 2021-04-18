@@ -57,7 +57,7 @@ const Services = ({ strings }) => {
 
     let [services, setServices] = useState(null);
     let [loading, setLoading] = useState(true);
-    let [color, setColor] = useState("gainsboro");
+    let [color] = useState("gainsboro");
     let [serviceToDelete, setServiceToDelete] = useState('');
     let [servicesExist, setServicesExist] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -112,7 +112,7 @@ const Services = ({ strings }) => {
                 setLoading(false);
             }
         })();
-    }, []);
+    }, [hostname]);
 
     return (
         loading ? (

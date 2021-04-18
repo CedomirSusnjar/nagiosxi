@@ -1,16 +1,20 @@
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 import closeImg from '../../assets/close.png';
-import HostModalInfo from '../hostInformation/HostModalInfo';
-import { withLocalizeStrings } from '../../languages/Localize'
+import { withLocalizeStrings } from '../../languages/Localize';
+import FieldBox from '../../components/form/fieldBox/FieldBox';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { css } from '@emotion/css';
+import { useState } from 'react';
+import { commonFields, checkSettings1, checkSettings2, alertFields, miscSettings1, miscSettings2 } from '../../common/config/nagios-field-names';
 
 const ModalContainer = styled(Flex)`
     flex-direction: column;
     position: fixed;
     margin: 0 auto;
-    top: 6rem;
+    top: 10rem;
     width: 120rem;
-    height: 65rem;
+    height: 50rem;
     background-color: white;
     z-index: 500;
     border-radius: 2rem;
@@ -66,22 +70,6 @@ const CloseImg = styled(Flex)`
     background-repeat: no-repeat;
 `;
 
-const InfoBlock = styled(Flex)`
-    position: absolute;
-    top: 5rem;
-    left: 1rem;
-    right: 1rem;
-    bottom: 1rem;
-    border: .05rem solid gainsboro;
-    border-radius: 2rem;
-    flex-direction: row;
-`;
-
-const InfoColumn = styled(Flex)`
-    flex-direction: column;
-    width: 40rem;
-`;
-
 const Header = styled(Flex)`
     position: relative;
     top: 1.5rem;
@@ -91,22 +79,71 @@ const Header = styled(Flex)`
     font-size: 1.8rem;
 `;
 
+const TabCSS = css`
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+    .react-tabs__tab-list {
+        .react-tabs__tab {
+            bottom: -.1rem;
+            font-size: 1.2rem;
+        }
+        .react-tabs__tab--selected {
+        }
+    }
+    border-bottom: .05rem solid gainsboro;
+    z-index: 1000;
+`;
+
+const FormSplit = styled(Flex)`
+    flex-direction: row;
+`;
+
 const InfoModal = ({ strings, show, confirm, decline, question, data }) => {
 
-    data = Object.entries(data);
+    const [tabIndex, setTabIndex] = useState(0);
+
+    const stopPropagation = (event) => {
+        event.stopPropagation();
+    }
 
     return (
         show && <>
             <Backdrop />
             <Container onClick={decline}>
-                <ModalContainer>
+                <ModalContainer onClick={stopPropagation}>
                     <Close onClick={decline}><CloseImg /></Close>
                     <Header>{strings.common.details}</Header>
-                    <InfoBlock>
-                        <InfoColumn>{data.slice(0, (data.length / 3)).map(info => { return <HostModalInfo text={info[0]} value={info[1]} /> })}</InfoColumn>
-                        <InfoColumn>{data.slice((data.length / 3), 2 * (data.length / 3)).map(info => { return <HostModalInfo text={info[0]} value={info[1]} /> })}</InfoColumn>
-                        <InfoColumn>{data.slice(2 * (data.length / 3), 3 * (data.length / 3)).map(info => { return <HostModalInfo text={info[0]} value={info[1]} /> })}</InfoColumn>
-                    </InfoBlock>
+                    <Tabs className={TabCSS} selectedIndex={tabIndex} onSelect={(index,_,event) => {
+                        event.stopPropagation();
+                        setTabIndex(index);
+                    }}>
+                        <TabList>
+                            <Tab>{strings.page.addNewHost.commonSettings}</Tab>
+                            <Tab>{strings.page.addNewHost.checkSettings}</Tab>
+                            <Tab>{strings.page.addNewHost.alertSettings}</Tab>
+                            <Tab>{strings.page.addNewHost.miscSettings}</Tab>
+                        </TabList>
+                        <TabPanel>
+                            <FieldBox data={data} fields={commonFields} />
+                        </TabPanel>
+                        <TabPanel>
+                            <FormSplit>
+                                <FieldBox data={data} fields={checkSettings1} />
+                                <FieldBox data={data} fields={checkSettings2} />
+                            </FormSplit>
+                        </TabPanel>
+                        <TabPanel>
+                            <FieldBox data={data} fields={alertFields} />
+                        </TabPanel>
+                        <TabPanel>
+                            <FormSplit>
+                                <FieldBox data={data} fields={miscSettings1} />
+                                <FieldBox data={data} fields={miscSettings2} />
+                            </FormSplit>
+                        </TabPanel>
+                    </Tabs>
                 </ModalContainer>
             </Container>
         </>
