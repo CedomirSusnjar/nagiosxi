@@ -6,19 +6,7 @@ import HostInformation from '../hostInformation/HostInformation';
 import { useState } from 'react';
 import HostButtons from '../buttons/hostButtons/HostButtons';
 import { withLocalizeStrings } from '../../languages/Localize';
-
-const getColorByServiceStatus = (status) => {
-    switch(status){
-        case "OK":
-            return "green";
-        case "CRITICAL":
-            return "red";
-        case "WARNING":
-            return "orange";
-        default:
-            return "black";
-    }
-}
+import { trimServiceStatus, getColorByServiceStatus} from '../../application/application-service';
 
 const Container = styled(Flex)`
     border-radius: 2rem;
@@ -83,10 +71,6 @@ const Host = ({ strings, data, onDeleteHandler, onShowInfoHandler, onShowUpdateH
 
     const onMouseLeaveHandler = () => {
         setActions(false);
-    }
-
-    const trimServiceStatus = (message) => {
-        return message.substring(0, message.indexOf('-')).trim();
     }
 
     let status = trimServiceStatus(data.output);

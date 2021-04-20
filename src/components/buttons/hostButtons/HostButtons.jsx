@@ -15,7 +15,7 @@ const HostButtons = ({onDeleteHandler, onShowInfoHandler, onUpdateHandler}) => {
     return (
         <Container>
             <HostButton onClick={onDeleteHandler} icon={deleteIcon} />
-            <HostButton onClick={onUpdateHandler} icon={pencilIcon} />
+            <HostButton onClick={onUpdateHandler} icon={pencilIcon} style={{borderBottom: ".05rem solid silver",borderTop: ".05rem solid silver"}}/>
             <HostButton onClick={onShowInfoHandler} icon={settingIcon} />
         </Container>
     );

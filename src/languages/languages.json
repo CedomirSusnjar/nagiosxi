@@ -5,7 +5,8 @@
         "noServices": "Ne postoje konfigurisani servisi za ovu mašinu.",
         "title": "Mašina - ",
         "lastCheck": "Zadnja provjera: ",
-        "nextCheck": "Sljedeća provjera: "
+        "nextCheck": "Sljedeća provjera: ",
+        "statusInfo": "Status info: "
       },
       "hosts": {
         "lastCheck": "Zadnja provjera: ",
@@ -82,9 +83,9 @@
       "addNewService":{
         "title": "Dodavanje novog servisa",
         "waitingForConfigDone": "Dodavanje servisa u Nagios XI sistem za nadzor...",
-        "hostname": "Ime:",
+        "hostname": "Mašina:",
         "configName": "Ime konfiguracije:",
-        "serviceDescription": "Opis:",
+        "serviceDescription": "Opis servisa:",
         "displayName": "Ime za prikaz:",
         "checkCommand": "Check komanda:",
         "activeChecksEnabled": "Aktivna provjera:",

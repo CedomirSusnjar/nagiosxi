@@ -35,3 +35,31 @@ export const addService = async obj => {
 export const removeService = async (service, host) => {
     return api.service().delete(`config/service?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1&host_name=${host}&service_description=${service}&applyconfig=1`);
 }
+
+export const trimServiceStatus = (message) => {
+    return message.substring(0, message.indexOf('-')).trim();
+}
+
+export const getColorByServiceStatus = (status) => {
+
+    if(status.includes("OK")){
+        return "green";
+    }
+    else if(status.includes("WARNING")){
+        return "orange";
+    }
+    else if(status.includes("CRITICAL")){
+        return "red";
+    }
+
+    switch(status){
+        case "OK":
+            return "green";
+        case "CRITICAL":
+            return "red";
+        case "WARNING":
+            return "orange";
+        default:
+            return "green";
+    }
+}

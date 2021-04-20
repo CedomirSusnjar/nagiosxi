@@ -6,7 +6,7 @@ import FieldBox from '../../components/form/fieldBox/FieldBox';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { css } from '@emotion/css';
 import { useState } from 'react';
-import { commonFields, checkSettings1, checkSettings2, alertFields, miscSettings1, miscSettings2 } from '../../common/config/nagios-field-names';
+import { commonFields, commonServiceFields, checkSettings1, checkSettings2, alertFields, miscSettings1, miscSettings2 } from '../../common/config/nagios-field-names';
 
 const ModalContainer = styled(Flex)`
     flex-direction: column;
@@ -100,7 +100,7 @@ const FormSplit = styled(Flex)`
     flex-direction: row;
 `;
 
-const InfoModal = ({ strings, show, confirm, decline, question, data }) => {
+const InfoModal = ({ strings, show, confirm, isHost, decline, question, data }) => {
 
     const [tabIndex, setTabIndex] = useState(0);
 
@@ -108,13 +108,19 @@ const InfoModal = ({ strings, show, confirm, decline, question, data }) => {
         event.stopPropagation();
     }
 
+    let common = null;
+
+    if(isHost){
+        common = commonFields;
+    }else common = commonServiceFields;
+
     return (
         show && <>
             <Backdrop />
             <Container onClick={decline}>
                 <ModalContainer onClick={stopPropagation}>
                     <Close onClick={decline}><CloseImg /></Close>
-                    <Header>{strings.common.details}</Header>
+                    <Header>{`${data.display_name} - ${strings.common.details}`}</Header>
                     <Tabs className={TabCSS} selectedIndex={tabIndex} onSelect={(index,_,event) => {
                         event.stopPropagation();
                         setTabIndex(index);
@@ -126,7 +132,7 @@ const InfoModal = ({ strings, show, confirm, decline, question, data }) => {
                             <Tab>{strings.page.addNewHost.miscSettings}</Tab>
                         </TabList>
                         <TabPanel>
-                            <FieldBox data={data} fields={commonFields} />
+                            <FieldBox data={data} fields={common} />
                         </TabPanel>
                         <TabPanel>
                             <FormSplit>

@@ -15,7 +15,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { css } from '@emotion/css';
 import FormBox from '../../components/form/formBox/FormBox';
-import { commonFields, checkSettings1, checkSettings2, alertFields, miscSettings1 } from '../../common/config/nagios-field-names';
+import { commonServiceFields, checkSettings1, checkSettings2, alertFields, miscSettings1 } from '../../common/config/nagios-field-names';
 
 const Board = styled(Flex)`
     width: 100%;
@@ -118,9 +118,9 @@ const AddNewService = ({ strings }) => {
 
     const { hostname } = useParams();
 
-    const obj = `host_name=Duc`
-    + `&service_description=Memory Usage`
-    + `&check_command=check_local_mem!30!20`
+    const objj = `host_name=Test`
+    + `&service_description=HTTP`
+    + `&check_command=check_http`
     + `&max_check_attempts=2`
     + `&check_period=24x7`
     + `&contacts=nagiosadmin`
@@ -131,14 +131,30 @@ const AddNewService = ({ strings }) => {
     + `&active_checks_enabled=2`
     + `&applyconfig=1`;
 
+   
+
     const onSubmit = (service) => {//axios get params
         //setBadInput(false);
         setLoading(true);
+
+
+        const obj = `host_name=${hostname}`
+    + `&service_description=${service.service_description}`
+    + `&check_command=${service.check_command}`
+    + `&max_check_attempts=${service.max_check_attempts}`
+    + `&check_period=${service.check_period}`
+    + `&contacts=nagiosadmin`
+    + `&notification_interval=${service.notification_interval}`
+    + `&notification_period=${service.notification_period}`
+    + `&retry_interval=${service.retry_check_interval}`
+    + `&check_interval=${service.normal_check_interval}`
+    + `&applyconfig=1`;
         
         (async function () {
             try {
-                await addService(obj);
+                const res = await addService(obj);
                 setTimeout(function () { history.push(`/services/${hostname}`); }, 5000);
+                console.log(res);
             } catch (err) {
                 console.log(err);
                 setLoading(false);
@@ -169,7 +185,7 @@ const AddNewService = ({ strings }) => {
                                         <Tab>{strings.page.addNewHost.miscSettings}</Tab>
                                     </TabList>
 
-                                    <TabPanel><FormBox  control={control} fields={commonFields} /></TabPanel>
+                                    <TabPanel><FormBox  control={control} fields={commonServiceFields} /></TabPanel>
                                     <TabPanel>
                                         <FormSplit>
                                             <FormBox control={control} fields={checkSettings1} />

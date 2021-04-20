@@ -20,9 +20,9 @@ const Icon = styled(Flex)`
     left: 25%;
 `;
 
-const HostButton = ({icon, onClick}) => {
+const HostButton = ({icon, onClick, style}) => {
     return (
-        <StyledButton onClick={onClick}>
+        <StyledButton onClick={onClick} style={style}>
             <Icon icon={icon}/>
         </StyledButton>
     );

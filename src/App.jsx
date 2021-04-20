@@ -4,6 +4,7 @@ import MRouter from './router/MRouter';
 import ApplicationProvider from './application/Application';
 import Footer from './components/footer/Footer';
 import GlobalStyle from './components/global-styles/GlobalStyle';
+import 'antd/dist/antd.css';
 const App = () => {
 
   return (

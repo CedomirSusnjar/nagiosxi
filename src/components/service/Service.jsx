@@ -3,12 +3,14 @@ import { Flex } from 'reflexbox/styled-components';
 import ServiceButtons from '../buttons/serviceButtons/ServiceButtons';
 import ServiceInformation from '../hostInformation/ServiceInformation';
 import { withLocalizeStrings } from '../../languages/Localize';
+import BounceLoader from "react-spinners/BounceLoader";
+import { trimServiceStatus, getColorByServiceStatus} from '../../application/application-service';
 
 const Container = styled(Flex)`
     border-radius: 2rem;
     flex-direction: column;
     height: 20rem;
-    width: 15rem;
+    width: 20rem;
     min-width: 12rem;
     margin: 1.5rem;
     box-shadow: none;
@@ -20,11 +22,7 @@ const Container = styled(Flex)`
 
 const ServiceName = styled(Flex)`
     height: 2rem;
-    width: 100%;
-    justify-content: center;
     font-size: 1.5rem;
-    position: absolute;
-    top: .5rem;
     padding-left: 1rem;
     padding-right: 1rem;
 `;
@@ -34,10 +32,8 @@ const Description = styled(Flex)`
     top: 3rem;
     height: 6rem;
     width: 100%;
-    justify-content: center;
-    align-items: center;
     font-size: 1rem;
-    text-align: center;
+    text-align: left;
     padding-left: 1rem;
     padding-right: 1rem;
 `;
@@ -45,21 +41,43 @@ const Description = styled(Flex)`
 const InfoBlock = styled(Flex)`
     flex-direction: column;
     position: absolute;
-    top: 9.5rem;
+    top: 5rem;
     justify-content: center;
     width: 100%;
 `;
 
+const SpinnerBlock = styled(Flex)`
+    height: 2rem;
+    align-items: center;
+    padding-top: .25rem;
+`;
+
+const Header = styled(Flex)`
+    position: absolute;
+    top: 1rem;
+    flex-direction: row;
+    width: 100%;
+    height: 2rem;
+`;
+
 const Service = ({ data, onDelete, onShowInfo, strings }) => {
+
+
+    let status = trimServiceStatus(data.output);
 
     return (
         <Container>
-            <ServiceName>{data.service_description}</ServiceName>
-            <Description>{data.output}</Description>
+            <Header>
+                <ServiceName>{data.service_description}</ServiceName>
+                <SpinnerBlock>
+                    <BounceLoader color={getColorByServiceStatus(data.output)} loading={true} size={14} style={{top: "1rem"}}/>
+                </SpinnerBlock>
+            </Header>
             <InfoBlock>
                 <ServiceInformation text={strings.page.services.lastCheck} value={data.last_check} />
                 <ServiceInformation text={strings.page.services.nextCheck} value={data.next_check} />
-            </InfoBlock> 
+                <ServiceInformation text={strings.page.services.statusInfo} value={data.output} />
+            </InfoBlock>
             <ServiceButtons onDelete={onDelete} onShowInfo={onShowInfo} />
         </Container>
     );

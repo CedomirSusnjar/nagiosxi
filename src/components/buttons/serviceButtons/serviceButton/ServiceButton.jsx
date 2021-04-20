@@ -20,9 +20,9 @@ const Icon = styled(Flex)`
     height: 16px;
 `;
 
-const ServiceButton = ({icon, onClick}) => {
+const ServiceButton = ({icon, onClick, style}) => {
     return (
-        <StyledButton onClick={onClick}>
+        <StyledButton onClick={onClick} style={style}>
             <Icon icon={icon}/>
         </StyledButton>
     );

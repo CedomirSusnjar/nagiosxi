@@ -23,9 +23,7 @@ const getValue = (name, data) => {
 
 const FieldBox = ({fields, data}) => {
 
-
     data = Object.entries(data);
-    console.log(data);
 
     return (
         <Container>

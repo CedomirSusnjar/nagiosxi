@@ -19,7 +19,7 @@ const ServiceButtons = ({onDelete, onShowInfo}) => {
     return (
         <Container>
             <ServiceButton icon={pencilIcon} />
-            <ServiceButton onClick={onShowInfo}icon={settingIcon} />
+            <ServiceButton onClick={onShowInfo}icon={settingIcon} style={{borderLeft: ".05rem solid silver",borderRight: ".05rem solid silver"}}/>
             <ServiceButton onClick={onDelete} icon={deleteIcon} />
         </Container>
     );

@@ -9,7 +9,7 @@ import { useHistory } from 'react-router';
 import BounceLoader from "react-spinners/BounceLoader";
 import { useForm } from 'react-hook-form';
 import { object } from "yup";
-//import { string } from "yup";
+import { string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { css } from '@emotion/css';
@@ -73,7 +73,7 @@ const Form = styled.form`
 `;
 
 const validationSchema = object().shape({
-    // hostname: string().required().max(30),
+    //host_name: string().required().max(5)
     // address: string().required().max(15),
     // checkCommand: string().required().max(30),
     // max_check_attempts: string().required().max(2),
@@ -122,18 +122,47 @@ const AddNewHost = ({ strings }) => {
     const { isValid } = formState;
 
     const onSubmit = (host) => {//axios get params
-        console.log('radiobutton' + host.active_checks_enabled);
+       // console.log(host);
         //setBadInput(false);
         setLoading(true);
-        const obj = `host_name=${host.hostname}`
+        const obj = `host_name=${host.host_name}`
             + `&address=${host.address}`
-            + `&check_command=${host.checkCommand}`
+            + `&check_command=${host.check_command}`
+            + `&check_interval=${host.normal_check_interval}`
+            + `&retry_interval=${host.retry_check_interval}`
             + `&max_check_attempts=${host.max_check_attempts}`
             + `&check_period=${host.check_period}`
-            + `&contacts=${host.contacts}`
+            + `&freshness_threshold=${host.freshness_threshold}`
+            + `&event_handler=${host.event_handler}`
+            + `&low_flap_threshold=${host.low_flap_threshold}`
+            + `&high_flap_threshold=${host.high_flap_threshold}`
+            + `&contacts=nagiosadmin`
             + `&notification_interval=${host.notification_interval}`
             + `&notification_period=${host.notification_period}`
+            + `&active_checks_enabled=${host.active_checks_enabled}`
+            + `&passive_checks_enabled=${host.passive_checks_enabled}`
             + `&applyconfig=1`;
+
+        const objj = 
+            `host_name=Malina`
+            + `&host_alias=Malina`
+            + `&address=192.168.17.129`
+            + `&display_name=Malina`
+            + `&check_interval=4`
+            + `&retry_interval=2`
+            + `&check_command=check-host-alive!!!!!!!!`
+            + `&max_check_attempts=5`
+            + `&check_period=24x7`
+            + `&contacts=nagiosadmin`
+            + `&notification_interval=2`
+            + `&notification_period=24x7`
+            + `&flap_detection_enabled=2`
+            + `&freshness_threshold=20`
+            //+ `&active_checks_enabled=2`
+            // + `&passive_checks_enabled=${host.passive_checks_enabled}`
+            + `&applyconfig=1`;
+
+            console.log(obj);
 
         (async function () {
             try {
@@ -191,7 +220,7 @@ const AddNewHost = ({ strings }) => {
                                         </FormSplit>
                                     </TabPanel>
                                 </Tabs>
-                                <PageAddHostButton disabled={!isValid} htmlType="submit"/>
+                                <PageAddHostButton disabled={false} htmlType="submit"/>
                             </Form>
                         )}
                     </AddSpace>

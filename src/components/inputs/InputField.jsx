@@ -5,15 +5,18 @@ import { Select, Input } from 'antd';
 import { Radio } from 'antd';
 import { useState } from 'react';
 
-//const { Option } = Select;
+const { Option } = Select;
 
 const StyledInput = styled(Input)`
-    border-radius: 1rem;
-    width: 28rem;
-    height: 2.5rem;
-    outline: none;
-    border: .1rem solid gainsboro;
-    padding-left: 1rem;
+    &.ant-input {
+        border-radius: 1rem;
+        width: 28rem;
+        height: 2.5rem;
+        outline: none;
+        border: .1rem solid gainsboro;
+        padding-left: 1rem;
+        font-size: 1.2rem;
+    }
 `;
 
 const Container = styled(Flex)`
@@ -61,8 +64,6 @@ const SelectS = styled(Select)`
    
 `;
 
-
-
 const DropDownClass = css`
     background-color: white;
     border: .05rem solid gainsboro;
@@ -71,11 +72,7 @@ const DropDownClass = css`
 
 const RadioS = styled(Radio)`
         &.ant-radio-wrapper {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            height: 2rem;
-            margin-right: 1.5rem;
+            font-size: 1.2rem;
             .ant-radio {
                 margin-right: .3rem;
             }
@@ -108,6 +105,25 @@ const InputField = ({ name, text, onBlur, onChange, value, type, checks, manageC
 
     let input = null;
 
+    const opt = [
+        {
+            value: "Marko",
+            key: 1
+        },
+        {
+            value: "Janko",
+            key: 2
+        },
+        {
+            value: "Zarko",
+            key: 3
+        }
+    ]
+
+    function onChangeS(value) {
+        console.log(`selected ${value}`);
+      }
+
     switch (type) {
         case "text":
             input = <StyledInput type="text" value={value} onChange={onChange} onBlur={onBlur} />;
@@ -119,14 +135,14 @@ const InputField = ({ name, text, onBlur, onChange, value, type, checks, manageC
                 value={value}
                 dropdownClassName={DropDownClass}
                 dropdownMatchSelectWidth={true}
-                onChange={onChange}
-            >
+                onChange={onChangeS}
+                options={opt}>
             </SelectS>
             break;
         case "check":
             input = <RadioG onChange={onRadioChange} value={radioGValue}>
                 {checks.map(check => {
-                    return <RadioS key={check.key} value={check.key}>{check.value}</RadioS>;
+                    return <RadioS onChange={onChange} key={check.key} value={check.key}>{check.value}</RadioS>;
                 })}
             </RadioG>
             break;

@@ -18,7 +18,6 @@ const Title = styled(Flex)`
     padding-top: 1.2rem;
     position: relative;
     padding-left: 2rem;
-    margin-bottom: 0;
 `;
 
 const SpinnerBlock = styled(Flex)`
@@ -33,9 +32,10 @@ const SpinnerBlock = styled(Flex)`
 
 const Board = styled(Flex)`
     width: 100%;
-    height: 100%;
-    flex-wrap: wrap;
-    position: relative;
+    position: absolute;
+    top: 4rem;
+    bottom: 2rem;
+    height: calc(100% - 6rem);
 `;
 
 const Message = styled(Flex)`
@@ -49,6 +49,22 @@ const Message = styled(Flex)`
     padding-left: 1rem;
     padding-right: 1rem;
     align-items: center;
+`;
+
+const BackButton = styled(Flex)`
+    width: 5rem;
+    background-color: red;
+`;
+
+const Header = styled(Flex)`
+    flex-direction: row;
+    width: 100%;
+    height: 6rem;
+`;
+
+const ServiceDashboard = styled(Dashboard)`
+    top: 8rem;
+    bottom: 2rem;
 `;
 
 let serviceData = null;
@@ -70,12 +86,12 @@ const Services = ({ strings }) => {
         setShowModal(true);
     }
 
-    const deleteService = () => { onDeleteHandler(serviceToDelete);}
+    const deleteService = () => { onDeleteHandler(serviceToDelete); }
 
-    const doNotDeleteService = () => {setShowModal(false);}
+    const doNotDeleteService = () => { setShowModal(false); }
 
     const onShowInfoModal = (data) => {
-        serviceData = {...data};
+        serviceData = { ...data };
         setShowInfoModal(true);
     }
 
@@ -83,15 +99,15 @@ const Services = ({ strings }) => {
 
     const onDeleteHandler = (service) => {
 
-        (async function(){
-            try{
+        (async function () {
+            try {
                 const response = await removeService(service, hostname);
                 console.log(response);
                 let servicesTemp = services.filter(e => e.service_description !== service);
                 setServices(servicesTemp);
                 setShowModal(false);
                 console.log(service);
-            }catch(err){
+            } catch (err) {
                 console.error(err);
             }
         })();
@@ -105,7 +121,7 @@ const Services = ({ strings }) => {
                 const res = await getHostServices(hostname);
                 console.log(res.data);
                 setServices(res.data.servicestatus);
-                if (res.data.servicestatus.length !== 0) { setServicesExist(true);}
+                if (res.data.servicestatus.length !== 0) { setServicesExist(true); }
                 setTimeout(function () { setLoading(false); }, 1000);
             } catch (err) {
                 console.log(err);
@@ -115,29 +131,33 @@ const Services = ({ strings }) => {
     }, [hostname]);
 
     return (
+
         loading ? (
             <SpinnerBlock>
                 <BounceLoader color={color} loading={loading} size={120} />
             </SpinnerBlock>
         ) : (
-            <Dashboard>
-                <Modal question={strings.modalQuestions.deleteService} show={showModal} confirm={deleteService} decline={doNotDeleteService} />
-                {showInfoModal && <InfoModal show={showInfoModal} decline={closeInfoModal} data={serviceData}/>}
-                <Board>
+            <Board>
+                <Header>
+                    {/* <BackButton /> */}
                     <Title>{strings.page.services.title + hostname}</Title>
+                </Header>
+                <ServiceDashboard>
+                    <Modal question={strings.modalQuestions.deleteService} show={showModal} confirm={deleteService} decline={doNotDeleteService} />
+                    {showInfoModal && <InfoModal show={showInfoModal} decline={closeInfoModal} data={serviceData} />}
                     {servicesExist ?
                         (services.map(service => {
                             return <Service
                                 key={service.service_object_id}
                                 data={service}
-                                onDelete={() => showDeleteModal(service.service_description)} 
+                                onDelete={() => showDeleteModal(service.service_description)}
                                 onShowInfo={() => { onShowInfoModal(service) }}
-                                />
+                            />
                         })) :
                         (<Message>{strings.page.services.noServices}</Message>)}
-                    <AddService hostname={hostname}/>
-                </Board >
-            </Dashboard >
+                    <AddService hostname={hostname} />
+                </ServiceDashboard >
+            </Board>
         )
 
     );

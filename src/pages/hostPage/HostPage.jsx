@@ -94,7 +94,7 @@ const HostPage = ({ strings }) => {
         ) : (
             <Dashboard>
                 {showModal && <Modal question={strings.modalQuestions.deleteHost} show={showModal} confirm={deleteHost} decline={doNotDeleteHost} />}
-                {showInfoModal && <InfoModal show={showInfoModal} decline={closeInfoModal} data={hostData} />}
+                {showInfoModal && <InfoModal isHost={true} show={showInfoModal} decline={closeInfoModal} data={hostData} />}
                 {showUpdateModal && <UpdateModal show={showUpdateModal} decline={closeUpdateModal} data={hostData} />}
                 {hosts.map(data => {
                     return <Host

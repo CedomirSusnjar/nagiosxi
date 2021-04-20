@@ -30,7 +30,6 @@ const Container = styled(Dashboard)`
 const LoginButton = styled.button`
     width: 48rem;
     height: 3rem;
-    margin-left: 2rem;
     border-radius: 5rem;
     border: .1rem solid gainsboro;
     position: absolute;
@@ -39,6 +38,7 @@ const LoginButton = styled.button`
     cursor: pointer;
     font-size: 1.8rem;
     outline: none;
+    background-color: white;
     &: hover {
         box-shadow: 0px 6px 11px -6px rgba(0,0,0,0.75);
     }
@@ -77,7 +77,7 @@ const Login = ({ strings }) => {
 
     return (
         <Container>
-            <Form onSubmit={handleSubmit(onSubmit, onError)}> 
+            <Form onSubmit={handleSubmit(onSubmit, onError)}>
                 <Controller name="username" defaultValue="" control={control} render={({ field }) => (<InputField type="text" value={field.value} onChange={field.onChange} onBlur={field.onBlur} text={strings.page.login.username} />)} />
                 <Controller name="password" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.login.password} />)} />
                 <LoginButton disabled={!isValid} htmlType="submit">Prijavi se</LoginButton>

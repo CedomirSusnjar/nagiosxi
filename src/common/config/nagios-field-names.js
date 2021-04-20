@@ -2,8 +2,9 @@ import stringJSON from '../../languages/languages.json';
 
 
 const addNewHostLocalize = stringJSON.sr.page.addNewHost;
+const addNewServiceLocalize = stringJSON.sr.page.addNewService;
 
-export const check = [{ value: "On", key: 1 }, { value: "Off", key: 2 }, { value: "Skip", key: 3 }, { value: "Null", key: 4 }];
+export const check = [{ value: "On", key: 1 }, { value: "Off", key: 0 }, { value: "Skip", key: 2 }, { value: "Null", key: 3 }];
 export const check1 = [{ value: "Down", key: 1 }, { value: "Up", key: 2 }, { value: "Unreachable", key: 3 }];
 export const check2 = [{ value: "Down", key: 1 }, { value: "Unreachable", key: 2 }, { value: "Recovery", key: 3 }, { value: "Flapping", key: 4 }, { value: "Scheduled Downtime", key: 5 }];
 export const check3 = [{ value: "Down", key: 1 }, { value: "Up", key: 2 }, { value: "Unreachable", key: 3 }, { value: "Notification", key: 4 }, { value: "None", key: 4 }];
@@ -14,6 +15,14 @@ export const commonFields = [
     { type: "text", name: "address", text: addNewHostLocalize.address },
     { type: "text", name: "display_name", text: addNewHostLocalize.displayName },
     { type: "text", name: "check_command", text: addNewHostLocalize.checkCommand }
+];
+
+export const commonServiceFields = [
+    { type: "text", name: "host_name", text: addNewServiceLocalize.hostname},
+    { type: "text", name: "config_name", text: addNewServiceLocalize.configName},
+    { type: "text", name: "service_description", text: addNewServiceLocalize.serviceDescription },
+    { type: "text", name: "display_name", text: addNewServiceLocalize.displayName },
+    { type: "text", name: "check_command", text: addNewServiceLocalize.checkCommand }
 ];
 
 export const checkSettings1 = [
@@ -29,7 +38,7 @@ export const checkSettings1 = [
 
 
 export const checkSettings2 = [
-    { type: "text", name: "eventHandler", text: addNewHostLocalize.eventHandler },
+    { type: "text", name: "event_handler", text: addNewHostLocalize.eventHandler },
     { type: "check", name: "event_handler_enabled", checks: check, text: addNewHostLocalize.eventHandlerEnabled },
     { type: "text", name: "low_flap_threshold", text: addNewHostLocalize.lowFlapThreshold },
     { type: "text", name: "high_flap_threshold", checks: check, text: addNewHostLocalize.highFlapThreshold },
@@ -37,7 +46,7 @@ export const checkSettings2 = [
     { type: "check", name: "flap_detection_options", checks: check1, text: addNewHostLocalize.flapDetectionOptions },
     { type: "check", name: "retain_status_information", checks: check, text: addNewHostLocalize.retainStatusInformation },
     { type: "check", name: "retain_non_status_information", checks: check, text: addNewHostLocalize.retainNoStatusInformation },
-    { type: "check", name: "process_perf_data", checks: check, text: addNewHostLocalize.processPerfData },
+    { type: "check", name: "process_performance_data", checks: check, text: addNewHostLocalize.processPerfData },
 ];
 
 export const alertFields = [
@@ -45,7 +54,7 @@ export const alertFields = [
     { type: "check", name: "notification_options", checks: check2, text: addNewHostLocalize.notificationOptions },
     { type: "text", name: "notification_interval", text: addNewHostLocalize.notificationInterval },
     { type: "text", name: "first_notification_delay", text: addNewHostLocalize.firstNotificationDelay },
-    { type: "check", name: "notification_enabled", checks: check, text: addNewHostLocalize.notificationEnabled },
+    { type: "check", name: "notifications_enabled", checks: check, text: addNewHostLocalize.notificationEnabled },
     { type: "check", name: "stalking_options", checks: check1, text: addNewHostLocalize.stalkingOptions }
 ];
 

@@ -7,8 +7,8 @@ const Container = styled(Flex)`
     border-radius: 2rem;
     flex-direction: column;
     height: 20rem;
-    width: 15rem;
-    margin: 2rem;
+    width: 20rem;
+    margin: 1.5rem;
     cursor: pointer;
     border: .05rem solid gainsboro;
     box-shadow: none;
