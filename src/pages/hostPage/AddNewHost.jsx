@@ -90,7 +90,7 @@ const TabCSS = css`
     .react-tabs__tab-list {
         .react-tabs__tab {
             bottom: -.1rem;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
         .react-tabs__tab--selected {
         }

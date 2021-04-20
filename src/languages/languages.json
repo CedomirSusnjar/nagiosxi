@@ -4,17 +4,17 @@
       "services": {
         "noServices": "Ne postoje konfigurisani servisi za ovu mašinu.",
         "title": "Mašina - ",
-        "lastCheck": "Zadnja provjera: ",
-        "nextCheck": "Sljedeća provjera: ",
-        "statusInfo": "Status info: "
+        "lastCheck": "Zadnja provjera:",
+        "nextCheck": "Sljedeća provjera:",
+        "statusInfo": "Status info:"
       },
       "hosts": {
-        "lastCheck": "Zadnja provjera: ",
-        "nextCheck": "Sljedeća provjera: ",
-        "statusInfo": "Status info: ",
-        "checkCommand": "Check komanda: ",
-        "hostAlias": "Alias: ",
-        "displayName": "Ime za prikaz: ",
+        "lastCheck": "Zadnja provjera:",
+        "nextCheck": "Sljedeća provjera:",
+        "statusInfo": "Status info:",
+        "checkCommand": "Check komanda:",
+        "hostAlias": "Alias:",
+        "displayName": "Ime za prikaz:",
         "yes": "Da",
         "no": "Ne"
       },
@@ -27,8 +27,10 @@
        "services": "Servisi"
       },
       "login": {
-        "username": "korisničko ime:",
-        "password": "lozinka:"
+        "username": "Korisničko ime:",
+        "password": "Lozinka:",
+        "invalidLoginMessage": "Neuspješna prijava!",
+        "signIn": "Prijavi se"
       },
       "addNewHost": {
         "title": "Dodavanje nove mašine",

@@ -35,6 +35,7 @@ const FieldBox = ({fields, data}) => {
                     text={inputField.text}
                     value={getValue(inputField.name, data)}
                     key={Math.random()}
+                    options={inputField.options}
                     />;
             })}
         </Container>

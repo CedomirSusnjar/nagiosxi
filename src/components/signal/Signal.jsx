@@ -74,7 +74,7 @@ const Signal = ({ color, hostname, service }) => {
 
         })();
 
-    }, [hostname,service]);
+    }, []);
 
     return (
         loading ? (

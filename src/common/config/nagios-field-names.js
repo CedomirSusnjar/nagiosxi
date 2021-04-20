@@ -9,6 +9,8 @@ export const check1 = [{ value: "Down", key: 1 }, { value: "Up", key: 2 }, { val
 export const check2 = [{ value: "Down", key: 1 }, { value: "Unreachable", key: 2 }, { value: "Recovery", key: 3 }, { value: "Flapping", key: 4 }, { value: "Scheduled Downtime", key: 5 }];
 export const check3 = [{ value: "Down", key: 1 }, { value: "Up", key: 2 }, { value: "Unreachable", key: 3 }, { value: "Notification", key: 4 }, { value: "None", key: 4 }];
 
+export const checkPeriodOptions = [{value: "24x7", key: 1}, {value: "24x7_sans_holidays", key: 2},{value: "none", key: 3},{value: "us-holidays", key: 4},{value: "workhours", key: 5},{value:"xi_timeperiod_24x7", key: 6}]
+
 export const commonFields = [
     { type: "text", name: "host_name", text: addNewHostLocalize.hostname},
     { type: "text", name: "host_alias", text: addNewHostLocalize.alias },
@@ -31,11 +33,10 @@ export const checkSettings1 = [
     { type: "text", name: "max_check_attempts", text: addNewHostLocalize.maxCheckAttempts },
     { type: "check", name: "active_checks_enabled", checks: check, text: addNewHostLocalize.activeChecksEnabled },
     { type: "check", name: "passive_checks_enabled", checks: check, text: addNewHostLocalize.passiveChecksEnabled},
-    { type: "text", name: "check_period", text: addNewHostLocalize.checkPeriod },
+    { type: "select", name: "check_period", text: addNewHostLocalize.checkPeriod, options: checkPeriodOptions},
     { type: "text", name: "freshness_threshold", text: addNewHostLocalize.freshnessThreshold },
     { type: "check", name: "check_freshness", checks: check, text: addNewHostLocalize.checkFreshness },
 ];
-
 
 export const checkSettings2 = [
     { type: "text", name: "event_handler", text: addNewHostLocalize.eventHandler },
@@ -50,7 +51,7 @@ export const checkSettings2 = [
 ];
 
 export const alertFields = [
-    { type: "text", name: "notification_period", text: addNewHostLocalize.notificationPeriod },
+    { type: "select", name: "notification_period", text: addNewHostLocalize.notificationPeriod, options: checkPeriodOptions },
     { type: "check", name: "notification_options", checks: check2, text: addNewHostLocalize.notificationOptions },
     { type: "text", name: "notification_interval", text: addNewHostLocalize.notificationInterval },
     { type: "text", name: "first_notification_delay", text: addNewHostLocalize.firstNotificationDelay },

@@ -22,11 +22,10 @@ const Title = styled(Flex)`
 
 const SpinnerBlock = styled(Flex)`
     position: absolute;
-    top: 10rem;
     justify-content: center;
     width: 100%;
-    height: 12rem%;
-    top: 30rem;
+    height: 12rem;
+    top: 40%;
     margin: 0 auto;
 `;
 
@@ -34,8 +33,7 @@ const Board = styled(Flex)`
     width: 100%;
     position: absolute;
     top: 4rem;
-    bottom: 2rem;
-    height: calc(100% - 6rem);
+    flex-direction: column;
 `;
 
 const Message = styled(Flex)`
@@ -62,9 +60,11 @@ const Header = styled(Flex)`
     height: 6rem;
 `;
 
-const ServiceDashboard = styled(Dashboard)`
-    top: 8rem;
-    bottom: 2rem;
+const ServiceDashboard = styled(Flex)`
+    flex-wrap: wrap;
+    position: absolute;
+    top: 6rem;
+    padding-bottom: 3rem;
 `;
 
 let serviceData = null;

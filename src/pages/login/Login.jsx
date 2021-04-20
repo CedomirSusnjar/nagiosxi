@@ -4,10 +4,12 @@ import { useHistory } from 'react-router';
 import { useApplicationStateValue } from '../../application/Application';
 import { withLocalizeStrings } from '../../languages/Localize';
 import { useForm, Controller } from 'react-hook-form';
-import { object } from "yup";
-//import { string } from "yup";
+import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputField from '../../components/inputs/InputField';
+import { login } from '../../application/application-service';
+import { Flex } from 'reflexbox/styled-components';
+import { useState } from 'react';
 
 const Form = styled.form`
     display: flex;
@@ -36,22 +38,33 @@ const LoginButton = styled.button`
     bottom: 6rem;
     justify-content: center;
     cursor: pointer;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     outline: none;
     background-color: white;
+    :disabled {
+        background-color: silver;
+        color: gray;
+    }
     &: hover {
         box-shadow: 0px 6px 11px -6px rgba(0,0,0,0.75);
     }
+    &: hover:disabled {
+        cursor: no-drop;
+        box-shadow: none;
+    }
+`;
+
+const ErrorMessage = styled(Flex)`
+    font-size: 1.4rem;
+    color: red;
+    height: 3rem;
+    position: absolute;
+    bottom: 1rem;
 `;
 
 const validationSchema = object().shape({
-    // hostname: string().required().max(30),
-    // address: string().required().max(15),
-    // checkCommand: string().required().max(30),
-    // max_check_attempts: string().required().max(2),
-    // check_period: string().required().max(30),
-    // contacts: string().required().max(30),
-    // notification_interval: string().required().max(30)
+    username: string().required(),
+    password: string().required(),
 });
 
 const Login = ({ strings }) => {
@@ -64,11 +77,30 @@ const Login = ({ strings }) => {
         mode: "onChange"
     });
 
+    let [invalidMessageHidden, setInvalidMessageHidden] = useState(true);
+
     const { isValid } = formState;
 
-    const onSubmit = () => {
-        setAuthorized(true);
-        history.push("/home");
+    const onSubmit = (user) => {
+        
+        const userCredentials = `username=${user.username}&password=${user.password}`;
+        (async function () {
+            try {
+                const res = await login(userCredentials);
+                console.log(res);
+                if (res.data.error === 1) {
+                    setInvalidMessageHidden(false);
+                    throw "Invalid login.";
+                } else {
+                    setInvalidMessageHidden(true);
+                    setAuthorized(true);
+                    history.push('/home');
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        })();
+
     }
 
     const onError = (err) => {
@@ -78,9 +110,10 @@ const Login = ({ strings }) => {
     return (
         <Container>
             <Form onSubmit={handleSubmit(onSubmit, onError)}>
-                <Controller name="username" defaultValue="" control={control} render={({ field }) => (<InputField type="text" value={field.value} onChange={field.onChange} onBlur={field.onBlur} text={strings.page.login.username} />)} />
-                <Controller name="password" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.login.password} />)} />
-                <LoginButton disabled={!isValid} htmlType="submit">Prijavi se</LoginButton>
+                <Controller name="username" defaultValue="" control={control} render={({ field }) => (<InputField type="text" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.login.username} />)} />
+                <Controller name="password" defaultValue="" control={control} render={({ field }) => (<InputField type="text" password="password" onChange={field.onChange} value={field.value} onBlur={field.onBlur} text={strings.page.login.password} />)} />
+                <ErrorMessage hidden={invalidMessageHidden}>{strings.page.login.invalidLoginMessage}</ErrorMessage>
+                <LoginButton disabled={!isValid} htmlType="submit">{strings.page.login.signIn}</LoginButton>
             </Form>
         </Container>
     );

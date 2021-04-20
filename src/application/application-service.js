@@ -40,6 +40,14 @@ export const trimServiceStatus = (message) => {
     return message.substring(0, message.indexOf('-')).trim();
 }
 
+export const login = async (obj) => {
+    return api.service().post('authenticate?pretty=1', obj,{
+        headers : {
+            'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+    })
+};
+
 export const getColorByServiceStatus = (status) => {
 
     if(status.includes("OK")){
@@ -48,7 +56,7 @@ export const getColorByServiceStatus = (status) => {
     else if(status.includes("WARNING")){
         return "orange";
     }
-    else if(status.includes("CRITICAL")){
+    else if(status.includes("CRITICAL") || status.includes("not found")){
         return "red";
     }
 

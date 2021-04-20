@@ -14,8 +14,9 @@ const FormBox = ({control, fields, manageCheck}) => {
 
     return (
         <Container>
-            {fields.map(inputField => {
+            {fields.map((inputField,index) => {
                 return <Controller 
+                key={index}
                 name={inputField.name}
                 defaultValue="" 
                 control={control} 
@@ -27,9 +28,10 @@ const FormBox = ({control, fields, manageCheck}) => {
                     onBlur={field.onBlur}
                     checks={inputField.checks}
                     manageCheckClick={manageCheck}
-                    text={inputField.text} />)} 
-                    key={Math.random()}/>
-            })}
+                    text={inputField.text} 
+                    key={Math.random()}
+                    selectOptions={inputField.options}/>
+            )}></Controller>})}
         </Container>
     );
 };

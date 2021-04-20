@@ -37,48 +37,43 @@ const SelectS = styled(Select)`
         width: 28rem;
         border: .05rem solid gainsboro;
         border-radius: 1rem;
-        display: flex;
-        flex-direction: row;
-        height: 3.5rem;
+        height: 2.5rem;
+        overflow: hidden;
         .ant-select-selector {
-            width: 90%;
+            height: 2.5rem;
+            border: none;
+            outline: none;
             .ant-select-selection-search {
-                position: relative;
                 .ant-select-selection-search-input {
-                    width: 24rem;
-                    height: 2.5rem;
+                    height: 2rem;
                     outline: none;
                     border: none;
-                    position: absolute;
-                    top: .5rem;
-                    left: .5rem;
+                    background-color:red;
+                   
                 }
+            }
+            .ant-select-selection-item {
+                display: flex;
+                align-items: center;
+                font-size: 1.2rem;
+            }
         }
-    }
-    .ant-select-arrow {
-        width: 3.5rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        .ant-select-arrow {
+            width: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
    
 `;
 
 const DropDownClass = css`
-    background-color: white;
-    border: .05rem solid gainsboro;
-    z-index: 1000;
+        font-size: 1.2rem;
 `;
 
 const RadioS = styled(Radio)`
         &.ant-radio-wrapper {
             font-size: 1.2rem;
-            .ant-radio {
-                margin-right: .3rem;
-            }
-
-            cursor: pointer;
-
             span {
                 &:last-child {
                     padding-bottom: .25rem;
@@ -93,10 +88,11 @@ const RadioG = styled(Radio.Group)`
     }
 `;
 
-const InputField = ({ name, text, onBlur, onChange, value, type, checks, manageCheckClick }) => {
+const InputField = ({ name, text, onBlur, onChange, value, type, checks, password, selectOptions }) => {
 
 
     const [radioGValue, setRadioGValue] = useState(parseInt(value));
+    let [selectValue, setSelectValue] = useState(null);
 
     const onRadioChange = (event) => {
         console.log('radio checked', event.target.value);
@@ -105,38 +101,24 @@ const InputField = ({ name, text, onBlur, onChange, value, type, checks, manageC
 
     let input = null;
 
-    const opt = [
-        {
-            value: "Marko",
-            key: 1
-        },
-        {
-            value: "Janko",
-            key: 2
-        },
-        {
-            value: "Zarko",
-            key: 3
-        }
-    ]
-
     function onChangeS(value) {
-        console.log(`selected ${value}`);
-      }
+        setSelectValue(value);
+    }
+
 
     switch (type) {
         case "text":
-            input = <StyledInput type="text" value={value} onChange={onChange} onBlur={onBlur} />;
+            input = <StyledInput type={password} value={value} onChange={onChange} onBlur={onBlur} />;
             break;
         case "select":
             input = <SelectS
                 name={name}
                 optionFilterProp="children"
-                value={value}
+                value={selectValue}
                 dropdownClassName={DropDownClass}
                 dropdownMatchSelectWidth={true}
                 onChange={onChangeS}
-                options={opt}>
+                options={selectOptions}>
             </SelectS>
             break;
         case "check":
@@ -148,10 +130,6 @@ const InputField = ({ name, text, onBlur, onChange, value, type, checks, manageC
             break;
         default:
             break;
-        // input = <CheckContainer>
-        //     {checks.map(check => { return <Check onClick={manageCheckClick} key={check.key} text={check.value} /> })}
-        // </CheckContainer>
-
     }
 
 

@@ -15,8 +15,8 @@ const SpinnerBlock = styled(Flex)`
     position: absolute;
     justify-content: center;
     width: 100%;
-    height: 12rem%;
-    top: 30rem;
+    height: 12rem;
+    top: 40%;
     margin: 0 auto;
 `;
 
