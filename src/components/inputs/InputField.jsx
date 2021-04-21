@@ -25,6 +25,7 @@ const UnitStyledInput = styled(Input)`
         }
         .ant-input-group-addon {
             font-size: 1.2rem;
+            background-color: gainsboro;
         }
     }  
 }
