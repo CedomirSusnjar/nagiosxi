@@ -3,6 +3,7 @@ import { Flex } from 'reflexbox/styled-components';
 import { useEffect, useState } from 'react';
 import { getServiceByName } from '../../application/application-service';
 import BounceLoader from "react-spinners/BounceLoader";
+import { withLocalizeStrings } from '../../languages/Localize';
 
 const Container = styled(Flex)`
     height: 45%;
@@ -17,6 +18,7 @@ const Container = styled(Flex)`
     justify-content: center;
     align-items: center;
     flex-direction: row;
+    font-weight: bold;
 `;
 
 const SpinnerBlock = styled(Flex)`
@@ -46,10 +48,9 @@ const Status = styled(Flex)`
     text-align: center;
     padding-right: .5rem;
     align-items: center;
-    font-weight: bold;
 `;
 
-const Signal = ({ color, hostname, service }) => {
+const Signal = ({ strings, color, hostname, service }) => {
 
     let [text, setText] = useState('');
     const [loading, setLoading] = useState(true);
@@ -68,7 +69,7 @@ const Signal = ({ color, hostname, service }) => {
                 setTimeout(function () { setLoading(false); }, 1000);
             } catch (err) {
                 console.log(err);
-                setText('Not configured');
+                setText(strings.page.hosts.notConfigured);
                 setTimeout(function () { setLoading(false); }, 1000);           
             }
 
@@ -91,4 +92,4 @@ const Signal = ({ color, hostname, service }) => {
 
 };
 
-export default Signal;
+export default withLocalizeStrings(Signal);

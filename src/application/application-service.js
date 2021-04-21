@@ -12,6 +12,10 @@ export const addHost = async obj => {
     }
 )};
 
+export const updateHost = async obj => {
+    return api.service().put(`config/host/localhost?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1` + obj);
+};
+
 export const removeHost = async host => {
     return api.service().delete(`config/host/${host}?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1&applyconfig=1`);
 }

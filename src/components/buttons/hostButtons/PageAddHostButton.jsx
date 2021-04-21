@@ -13,6 +13,12 @@ const StyledButton = styled.button`
     background-color: gainsboro;
     font-size: 1.5rem;
     cursor: pointer;
+    color: black;
+    :disabled {
+        cursor: no-drop;
+        background-color: gainsboro;
+        color: white;
+    }
     &: hover {
         background-color: gray;
         color: white;
@@ -20,6 +26,7 @@ const StyledButton = styled.button`
     &: hover[disabled] {
         cursor: no-drop;
         background-color: gainsboro;
+        color: white;
     }
     outline: none;
     height: 3rem;
@@ -29,11 +36,11 @@ const Container = styled(Flex)`
     margin-left: 1rem;
 `;
 
-const PageAddHostButton = ({strings, disabled}) => {
+const PageAddHostButton = ({strings, disabled, text}) => {
 
     return (
         <Container>
-            <StyledButton disabled={disabled}>{strings.buttons.add}</StyledButton>
+            <StyledButton disabled={disabled}>{text}</StyledButton>
         </Container>
     );
 };

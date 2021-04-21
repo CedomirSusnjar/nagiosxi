@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Dashboard from '../../components/dashboard/Dashboard';
 import { Flex } from 'reflexbox/styled-components';
 import BounceLoader from "react-spinners/BounceLoader";
 import { useEffect, useState } from 'react';
@@ -36,24 +35,6 @@ const Board = styled(Flex)`
     flex-direction: column;
 `;
 
-const Message = styled(Flex)`
-    margin-left: 2rem;
-    position: absolute;
-    top: 6rem;
-    font-size: 1.8rem;
-    border: .05rem solid gainsboro;
-    border-radius: 1rem;
-    height: 4rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    align-items: center;
-`;
-
-const BackButton = styled(Flex)`
-    width: 5rem;
-    background-color: red;
-`;
-
 const Header = styled(Flex)`
     flex-direction: row;
     width: 100%;
@@ -75,7 +56,6 @@ const Services = ({ strings }) => {
     let [loading, setLoading] = useState(true);
     let [color] = useState("gainsboro");
     let [serviceToDelete, setServiceToDelete] = useState('');
-    let [servicesExist, setServicesExist] = useState(false);
     const [showModal, setShowModal] = useState(false);
     let [showInfoModal, setShowInfoModal] = useState(false);
 
@@ -117,11 +97,9 @@ const Services = ({ strings }) => {
 
         (async function () {
             try {
-                setServicesExist(false);
                 const res = await getHostServices(hostname);
                 console.log(res.data);
                 setServices(res.data.servicestatus);
-                if (res.data.servicestatus.length !== 0) { setServicesExist(true); }
                 setTimeout(function () { setLoading(false); }, 1000);
             } catch (err) {
                 console.log(err);
@@ -139,22 +117,19 @@ const Services = ({ strings }) => {
         ) : (
             <Board>
                 <Header>
-                    {/* <BackButton /> */}
-                    <Title>{strings.page.services.title + hostname}</Title>
+                    <Title>{hostname + ' - ' + strings.page.services.servicesLabel}</Title>
                 </Header>
                 <ServiceDashboard>
                     <Modal question={strings.modalQuestions.deleteService} show={showModal} confirm={deleteService} decline={doNotDeleteService} />
                     {showInfoModal && <InfoModal show={showInfoModal} decline={closeInfoModal} data={serviceData} />}
-                    {servicesExist ?
-                        (services.map(service => {
+                    {services.map(service => {
                             return <Service
                                 key={service.service_object_id}
                                 data={service}
                                 onDelete={() => showDeleteModal(service.service_description)}
                                 onShowInfo={() => { onShowInfoModal(service) }}
                             />
-                        })) :
-                        (<Message>{strings.page.services.noServices}</Message>)}
+                        })}
                     <AddService hostname={hostname} />
                 </ServiceDashboard >
             </Board>

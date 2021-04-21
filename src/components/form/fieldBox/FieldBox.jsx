@@ -9,21 +9,9 @@ const Container = styled(Flex)`
     border-radius: 2rem;
 `;
 
-const getValue = (name, data) => {
-    let value;
-    data.forEach(prop => {
-        console.log(prop);
-        //console.log(prop[0]);
-        if(prop[0] === name){
-            value = prop[1];
-        }
-    });
-    return value;
-};
+const getValue = (name, data) => {return data[name];};
 
 const FieldBox = ({fields, data}) => {
-
-    data = Object.entries(data);
 
     return (
         <Container>
@@ -34,8 +22,8 @@ const FieldBox = ({fields, data}) => {
                     name={inputField.name}
                     text={inputField.text}
                     value={getValue(inputField.name, data)}
-                    key={Math.random()}
-                    options={inputField.options}
+                    key={inputField.text}
+                    selectOptions={inputField.options}
                     />;
             })}
         </Container>

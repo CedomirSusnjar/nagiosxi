@@ -90,7 +90,7 @@ const Login = ({ strings }) => {
                 console.log(res);
                 if (res.data.error === 1) {
                     setInvalidMessageHidden(false);
-                    throw "Invalid login.";
+                    throw new Error("Invalid login!");
                 } else {
                     setInvalidMessageHidden(true);
                     setAuthorized(true);
@@ -103,9 +103,7 @@ const Login = ({ strings }) => {
 
     }
 
-    const onError = (err) => {
-        console.err(err);
-    }
+    const onError = (err) => { console.err(err);}
 
     return (
         <Container>

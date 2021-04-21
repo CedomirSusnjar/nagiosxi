@@ -4,7 +4,7 @@ import ServiceButtons from '../buttons/serviceButtons/ServiceButtons';
 import ServiceInformation from '../hostInformation/ServiceInformation';
 import { withLocalizeStrings } from '../../languages/Localize';
 import BounceLoader from "react-spinners/BounceLoader";
-import { trimServiceStatus, getColorByServiceStatus} from '../../application/application-service';
+import { getColorByServiceStatus } from '../../application/application-service';
 
 const Container = styled(Flex)`
     border-radius: 2rem;
@@ -23,17 +23,6 @@ const Container = styled(Flex)`
 const ServiceName = styled(Flex)`
     height: 2rem;
     font-size: 1.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-`;
-
-const Description = styled(Flex)`
-    position: absolute;
-    top: 3rem;
-    height: 6rem;
-    width: 100%;
-    font-size: 1rem;
-    text-align: left;
     padding-left: 1rem;
     padding-right: 1rem;
 `;
@@ -61,9 +50,6 @@ const Header = styled(Flex)`
 `;
 
 const Service = ({ data, onDelete, onShowInfo, strings }) => {
-
-
-    let status = trimServiceStatus(data.output);
 
     return (
         <Container>

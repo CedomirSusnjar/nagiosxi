@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 
 const StyledButton = styled(Flex)`
-    height: 33.3%;
+    height: 50%;
     width: 100%;
     position: relative;
     &: hover {

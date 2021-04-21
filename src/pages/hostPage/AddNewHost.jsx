@@ -73,13 +73,12 @@ const Form = styled.form`
 `;
 
 const validationSchema = object().shape({
-    //host_name: string().required().max(5)
-    // address: string().required().max(15),
-    // checkCommand: string().required().max(30),
-    // max_check_attempts: string().required().max(2),
-    // check_period: string().required().max(30),
-    // contacts: string().required().max(30),
-    // notification_interval: string().required().max(30)
+    host_name: string().required(),
+    address: string().required(),
+    max_check_attempts: string().required(),
+    check_period: string().required(),
+    notification_interval: string().required(),
+    notification_period: string().required()
 });
 
 const TabCSS = css`
@@ -107,62 +106,30 @@ const AddNewHost = ({ strings }) => {
     const history = useHistory();
     const [loading, setLoading] = useState(false);
     let [color] = useState("gainsboro");
-    //const [badInput, setBadInput] = useState(false);
     const { formState, control, handleSubmit } = useForm({
         resolver: yupResolver(validationSchema),
         mode: "onChange"
     });
 
-    const manageCheckClick = () => {
-        console.log('click');
-    }
-
     const [tabIndex, setTabIndex] = useState(0);
 
     const { isValid } = formState;
 
-    const onSubmit = (host) => {//axios get params
-       // console.log(host);
-        //setBadInput(false);
+    const onSubmit = (host) => {
         setLoading(true);
-        const obj = `host_name=${host.host_name}`
-            + `&address=${host.address}`
-            + `&check_command=${host.check_command}`
-            + `&check_interval=${host.normal_check_interval}`
-            + `&retry_interval=${host.retry_check_interval}`
-            + `&max_check_attempts=${host.max_check_attempts}`
-            + `&check_period=${host.check_period}`
-            + `&freshness_threshold=${host.freshness_threshold}`
-            + `&event_handler=${host.event_handler}`
-            + `&low_flap_threshold=${host.low_flap_threshold}`
-            + `&high_flap_threshold=${host.high_flap_threshold}`
-            + `&contacts=nagiosadmin`
-            + `&notification_interval=${host.notification_interval}`
-            + `&notification_period=${host.notification_period}`
-            + `&active_checks_enabled=${host.active_checks_enabled}`
-            + `&passive_checks_enabled=${host.passive_checks_enabled}`
-            + `&applyconfig=1`;
 
-        const objj = 
-            `host_name=Malina`
-            + `&host_alias=Malina`
-            + `&address=192.168.17.129`
-            + `&display_name=Malina`
-            + `&check_interval=4`
-            + `&retry_interval=2`
-            + `&check_command=check-host-alive!!!!!!!!`
-            + `&max_check_attempts=5`
-            + `&check_period=24x7`
-            + `&contacts=nagiosadmin`
-            + `&notification_interval=2`
-            + `&notification_period=24x7`
-            + `&flap_detection_enabled=2`
-            + `&freshness_threshold=20`
-            //+ `&active_checks_enabled=2`
-            // + `&passive_checks_enabled=${host.passive_checks_enabled}`
-            + `&applyconfig=1`;
+        let arr = Object.entries(host);
+        let obj = 'contacts=nagiosadmin&applyconfig=1';
 
-            console.log(obj);
+        arr.forEach(prop => {
+            if (prop[1] !== "") {
+                obj += `&${prop[0]}=${prop[1]}`
+            }
+        });
+
+        console.log(obj);
+        obj = obj.replace("normal_check_interval", "check_interval");
+        obj = obj.replace("retry_check_interval", "retry_interval");
 
         (async function () {
             try {
@@ -176,9 +143,7 @@ const AddNewHost = ({ strings }) => {
         })();
     }
 
-    const onError = (err) => {
-        console.log(err);
-    }
+    const onError = (err) => { console.error(err); }
 
     return (
         <Dashboard>
@@ -200,19 +165,14 @@ const AddNewHost = ({ strings }) => {
                                         <Tab>{strings.page.addNewHost.alertSettings}</Tab>
                                         <Tab>{strings.page.addNewHost.miscSettings}</Tab>
                                     </TabList>
-
-                                    <TabPanel>
-                                        <FormBox control={control} fields={commonFields} />
-                                    </TabPanel>
+                                    <TabPanel><FormBox control={control} fields={commonFields} /></TabPanel>
                                     <TabPanel>
                                         <FormSplit>
-                                            <FormBox manageCheck={manageCheckClick} control={control} fields={checkSettings1} />
+                                            <FormBox control={control} fields={checkSettings1} />
                                             <FormBox control={control} fields={checkSettings2} />
                                         </FormSplit>
                                     </TabPanel>
-                                    <TabPanel>
-                                        <FormBox control={control} fields={alertFields} />
-                                    </TabPanel>
+                                    <TabPanel> <FormBox control={control} fields={alertFields} /> </TabPanel>
                                     <TabPanel>
                                         <FormSplit>
                                             <FormBox control={control} fields={miscSettings1} />
@@ -220,7 +180,7 @@ const AddNewHost = ({ strings }) => {
                                         </FormSplit>
                                     </TabPanel>
                                 </Tabs>
-                                <PageAddHostButton disabled={false} htmlType="submit"/>
+                                <PageAddHostButton text={strings.buttons.add} disabled={!isValid} htmlType="submit" />
                             </Form>
                         )}
                     </AddSpace>

@@ -5,18 +5,29 @@ import { Select, Input } from 'antd';
 import { Radio } from 'antd';
 import { useState } from 'react';
 
-const { Option } = Select;
-
 const StyledInput = styled(Input)`
-    &.ant-input {
-        border-radius: 1rem;
-        width: 28rem;
+    width: 28rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+`;
+
+const UnitStyledInput = styled(Input)`
+&.ant-input-group-wrapper {
+    width: 28rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+    .ant-input-wrapper {
         height: 2.5rem;
-        outline: none;
-        border: .1rem solid gainsboro;
-        padding-left: 1rem;
         font-size: 1.2rem;
-    }
+        .ant-input {
+            height: 2.5rem;
+            font-size: 1.2rem;
+        }
+        .ant-input-group-addon {
+            font-size: 1.2rem;
+        }
+    }  
+}
 `;
 
 const Container = styled(Flex)`
@@ -36,7 +47,6 @@ const SelectS = styled(Select)`
     &.ant-select { 
         width: 28rem;
         border: .05rem solid gainsboro;
-        border-radius: 1rem;
         height: 2.5rem;
         overflow: hidden;
         .ant-select-selector {
@@ -56,13 +66,8 @@ const SelectS = styled(Select)`
                 display: flex;
                 align-items: center;
                 font-size: 1.2rem;
+                width: 100%;
             }
-        }
-        .ant-select-arrow {
-            width: 3rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
    
 `;
@@ -88,36 +93,26 @@ const RadioG = styled(Radio.Group)`
     }
 `;
 
-const InputField = ({ name, text, onBlur, onChange, value, type, checks, password, selectOptions }) => {
-
-
-    const [radioGValue, setRadioGValue] = useState(parseInt(value));
-    let [selectValue, setSelectValue] = useState(null);
-
-    const onRadioChange = (event) => {
-        console.log('radio checked', event.target.value);
-        setRadioGValue(event.target.value);
-    };
+const InputField = ({ name, text, onBlur, onChange, value, type, checks, password, selectOptions, unit }) => {
 
     let input = null;
+    const [radioGValue, setRadioGValue] = useState(parseInt(value));
 
-    function onChangeS(value) {
-        setSelectValue(value);
-    }
-
+    const onRadioChange = (event) => { setRadioGValue(event.target.value); };
 
     switch (type) {
         case "text":
-            input = <StyledInput type={password} value={value} onChange={onChange} onBlur={onBlur} />;
+            if(unit) { input = <UnitStyledInput addonAfter={unit} type={password} value={value} onChange={onChange} onBlur={onBlur} />;}
+            else { input = <StyledInput type={password} value={value} onChange={e => { console.log(onChange);onChange(e);}} onBlur={onBlur} />;}
             break;
         case "select":
             input = <SelectS
                 name={name}
                 optionFilterProp="children"
-                value={selectValue}
+                value={value}
                 dropdownClassName={DropDownClass}
                 dropdownMatchSelectWidth={true}
-                onChange={onChangeS}
+                onChange={onChange}
                 options={selectOptions}>
             </SelectS>
             break;

@@ -3,7 +3,7 @@ import { Flex } from 'reflexbox/styled-components';
 
 const StyledButton = styled(Flex)`
     align-items: center;
-    width: 34%;
+    width: 50%;
     justify-content: center;
     align-items: center;
     background-color: gainsboro;

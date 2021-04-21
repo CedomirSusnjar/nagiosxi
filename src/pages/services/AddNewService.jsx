@@ -9,7 +9,7 @@ import { useHistory, useParams } from 'react-router';
 import BounceLoader from "react-spinners/BounceLoader";
 import { useForm } from 'react-hook-form';
 import { object } from "yup";
-//import { string } from "yup";
+import { string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -83,19 +83,20 @@ const AddMessage = styled(Flex)`
 `;
 
 const Form = styled.form`
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    `;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+`;
 
 const validationSchema = object().shape({
-    // hostname: string().required().max(30),
-    // address: string().required().max(15),
-    // checkCommand: string().required().max(30),
-    // max_check_attempts: string().required().max(2),
-    // check_period: string().required().max(30),
-    // contacts: string().required().max(30),
-    // notification_interval: string().required().max(30)
+    host_name: string().required(),
+    service_description: string().required(),
+    max_check_attempts: string().required(),
+    check_period: string().required(),
+    notification_period: string().required(),
+    normal_check_interval: string().required(),
+    retry_check_interval: string().required(),
+    notification_interval: string().required()
 });
 
 const FormSplit = styled(Flex)`
@@ -107,7 +108,6 @@ const AddNewService = ({ strings }) => {
     const history = useHistory();
     const [loading, setLoading] = useState(false);
     let [color] = useState("gainsboro");
-   // const [badInput, setBadInput] = useState(false);
     const { formState, control, handleSubmit } = useForm({
         resolver: yupResolver(validationSchema),
         mode: "onChange"
@@ -118,51 +118,36 @@ const AddNewService = ({ strings }) => {
 
     const { hostname } = useParams();
 
-    const objj = `host_name=Test`
-    + `&service_description=HTTP`
-    + `&check_command=check_http`
-    + `&max_check_attempts=2`
-    + `&check_period=24x7`
-    + `&contacts=nagiosadmin`
-    + `&notification_interval=5`
-    + `&notification_period=24x7`
-    + `&retry_interval=5`
-    + `&check_interval=5`
-    + `&active_checks_enabled=2`
-    + `&applyconfig=1`;
-
-   
-
-    const onSubmit = (service) => {//axios get params
-        //setBadInput(false);
+    const onSubmit = (service) => {
         setLoading(true);
+       
+        let arr = Object.entries(service);
+        let obj = 'contacts=nagiosadmin&applyconfig=1';
 
+        arr.forEach(prop => {
+            if (prop[1] !== "") {
+                obj += `&${prop[0]}=${prop[1]}`
+            }
+        });
 
-        const obj = `host_name=${hostname}`
-    + `&service_description=${service.service_description}`
-    + `&check_command=${service.check_command}`
-    + `&max_check_attempts=${service.max_check_attempts}`
-    + `&check_period=${service.check_period}`
-    + `&contacts=nagiosadmin`
-    + `&notification_interval=${service.notification_interval}`
-    + `&notification_period=${service.notification_period}`
-    + `&retry_interval=${service.retry_check_interval}`
-    + `&check_interval=${service.normal_check_interval}`
-    + `&applyconfig=1`;
-        
+        console.log(obj);
+        obj = obj.replace("normal_check_interval", "check_interval");
+        obj = obj.replace("retry_check_interval", "retry_interval");
+
         (async function () {
             try {
+                console.log(obj);
                 const res = await addService(obj);
-                setTimeout(function () { history.push(`/services/${hostname}`); }, 5000);
                 console.log(res);
+                setTimeout(function () { history.push(`/services/${hostname}`); }, 5000);
             } catch (err) {
-                console.log(err);
+                console.error(err);
                 setLoading(false);
             }
         })();
     }
 
-    const onError = (err) => { console.log(err); }
+    const onError = (err) => { console.error(err); }
 
     return (
         <Dashboard>
@@ -185,7 +170,7 @@ const AddNewService = ({ strings }) => {
                                         <Tab>{strings.page.addNewHost.miscSettings}</Tab>
                                     </TabList>
 
-                                    <TabPanel><FormBox  control={control} fields={commonServiceFields} /></TabPanel>
+                                    <TabPanel><FormBox control={control} fields={commonServiceFields} /></TabPanel>
                                     <TabPanel>
                                         <FormSplit>
                                             <FormBox control={control} fields={checkSettings1} />
@@ -195,7 +180,7 @@ const AddNewService = ({ strings }) => {
                                     <TabPanel><FormBox control={control} fields={alertFields} /></TabPanel>
                                     <TabPanel><FormBox control={control} fields={miscSettings1} /></TabPanel>
                                 </Tabs>
-                                <PageAddHostButton disabled={!isValid} htmlType="submit" />
+                                <PageAddHostButton text={strings.buttons.add} disabled={!isValid} htmlType="submit" />
                             </Form>
                         )}
                     </AddSpace>

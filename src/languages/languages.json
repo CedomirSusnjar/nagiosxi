@@ -6,7 +6,8 @@
         "title": "Mašina - ",
         "lastCheck": "Zadnja provjera:",
         "nextCheck": "Sljedeća provjera:",
-        "statusInfo": "Status info:"
+        "statusInfo": "Status info:",
+        "servicesLabel": "servisi"
       },
       "hosts": {
         "lastCheck": "Zadnja provjera:",
@@ -16,7 +17,8 @@
         "hostAlias": "Alias:",
         "displayName": "Ime za prikaz:",
         "yes": "Da",
-        "no": "Ne"
+        "no": "Ne",
+        "notConfigured": "Nije dodan"
       },
       "home": {
         
@@ -49,11 +51,11 @@
         "activeChecksEnabled": "Aktivna provjera:",
         "passiveChecksEnabled": "Pasivna provjera:",
         "freshnessThreshold": "Prag svježine:",
-        "checkFreshness": "check freshness",
-        "eventHandler": "eventHandler:",
-        "eventHandlerEnabled": "eventHandlerEnabled:",
-        "lowFlapThreshold": "lowFlapThreshold:",
-        "highFlapThreshold": "highFlapThreshold:",
+        "checkFreshness": "Provjeri svježinu:",
+        "eventHandler": "Handler događaja:",
+        "eventHandlerEnabled": "Omogući handler događaja:",
+        "lowFlapThreshold": "Donji prag:",
+        "highFlapThreshold": "Gornji prag:",
         "firstNotificationDelay": "Vrijeme do prvog obavjestenja:",
         "maxCheckAttempts": "Maksimalan broj pokušaja:",
         "checkPeriod": "Period provjere:",
@@ -61,12 +63,12 @@
         "notificationInterval": "Interval obavještenja:",
         "notificationPeriod": "Period obavještenja:",
         "applyconfig": "Primjeni konfiguraciju:",
-        "processPerfData": "Process Perf data:",
+        "processPerfData": "Obradi podatke performansi:",
         "flapDetectionEnabled": "flap detection enabled:",
         "flapDetectionOptions": "flap detection options:",
         "retainStatusInformation": "retain status information:",
         "retainNoStatusInformation": "retain no status information:",
-        "eventHandlerOptions": "event handler options:",
+        "eventHandlerOptions": "Opcije handler događaja:",
         "notificationOptions": "Opcije obavještenja:",
         "notificationEnabled": "Obavještenja uključena:",
         "stalkingOptions": "Opcije praćenja:",
@@ -132,7 +134,8 @@
       "details": "Detalji"
     },
     "buttons": {
-      "add": "Dodaj"
+      "add": "Dodaj",
+      "update": "Ažuriraj"
     },
     "footer": {
       "text": "Razvoj grafičkog okruženja za Nagios XI. Nadzor mrežnih servisa."

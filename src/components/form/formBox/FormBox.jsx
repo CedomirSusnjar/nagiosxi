@@ -10,7 +10,13 @@ const Container = styled(Flex)`
     border-radius: 2rem;
 `;
 
-const FormBox = ({control, fields, manageCheck}) => {
+const getValue = (name, data) => {
+    if(data){
+        return data[name];
+    }return "";
+};
+
+const FormBox = ({control, fields, data}) => {
 
     return (
         <Container>
@@ -18,7 +24,7 @@ const FormBox = ({control, fields, manageCheck}) => {
                 return <Controller 
                 key={index}
                 name={inputField.name}
-                defaultValue="" 
+                defaultValue={getValue(inputField.name, data)} 
                 control={control} 
                 render={({ field }) => 
                 (<InputField 
@@ -27,10 +33,11 @@ const FormBox = ({control, fields, manageCheck}) => {
                     value={field.value} 
                     onBlur={field.onBlur}
                     checks={inputField.checks}
-                    manageCheckClick={manageCheck}
                     text={inputField.text} 
-                    key={Math.random()}
-                    selectOptions={inputField.options}/>
+                    key={inputField.name}
+                    selectOptions={inputField.options}
+                    unit={inputField.unit}
+                    />
             )}></Controller>})}
         </Container>
     );
