@@ -7,7 +7,8 @@
         "lastCheck": "Zadnja provjera:",
         "nextCheck": "Sljedeća provjera:",
         "statusInfo": "Status info:",
-        "servicesLabel": "servisi"
+        "servicesLabel": "servisi",
+        "allServices": "Svi servisi"
       },
       "hosts": {
         "lastCheck": "Zadnja provjera:",
@@ -18,10 +19,12 @@
         "displayName": "Ime za prikaz:",
         "yes": "Da",
         "no": "Ne",
-        "notConfigured": "Nije dodan"
+        "notConfigured": "Nije dodan",
+        "allHosts": "Sve mašine"
       },
       "home": {
-        
+        "hostsNum": "Broj mašina:",
+        "hostgroups": "Grupe mašina"
       },
       "toolbar": {
        "homepage": "Početna",

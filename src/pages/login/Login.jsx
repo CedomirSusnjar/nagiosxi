@@ -87,7 +87,6 @@ const Login = ({ strings }) => {
         (async function () {
             try {
                 const res = await login(userCredentials);
-                console.log(res);
                 if (res.data.error === 1) {
                     setInvalidMessageHidden(false);
                     throw new Error("Invalid login!");

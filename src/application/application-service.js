@@ -4,6 +4,14 @@ export const getAllHosts = async () => {
     return api.service().get('objects/hoststatus?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1');
 };
 
+export const getHostByName = async (hostname) => {
+    return api.service().get(`objects/hoststatus?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1&host_name=${hostname}`);
+};
+
+export const getAllHostgroups = async () => {
+    return api.service().get(`config/hostgroup?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1`);
+};
+
 export const addHost = async obj => {
     return api.service().post('config/host?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1', obj, {
         headers : {
@@ -38,11 +46,11 @@ export const addService = async obj => {
 
 export const removeService = async (service, host) => {
     return api.service().delete(`config/service?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1&host_name=${host}&service_description=${service}&applyconfig=1`);
-}
+};
 
-export const trimServiceStatus = (message) => {
-    return message.substring(0, message.indexOf('-')).trim();
-}
+export const getHostgroupHosts = async (hostgroup) => {
+    return api.service().get(`config/hostgroup?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1&hostgroup_name=${hostgroup}`);
+};
 
 export const login = async (obj) => {
     return api.service().post('authenticate?pretty=1', obj,{
@@ -51,6 +59,14 @@ export const login = async (obj) => {
         }
     })
 };
+
+export const getAllServices = async () => {
+    return api.service().get(`objects/servicestatus?apikey=oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo&pretty=1`);
+};
+
+export const trimServiceStatus = (message) => {
+    return message.substring(0, message.indexOf('-')).trim();
+}
 
 export const getColorByServiceStatus = (status) => {
 

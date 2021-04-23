@@ -1,12 +1,11 @@
 import React from 'react';
-import HostPage from '../hostPage/HostPage';
+import HostGroupSection from '../../components/hostGroup/HostGroupSection';
 
-const Home = (props) => {
+const Home = () => {
 
     return (
-        <HostPage/>
-    );
-
+        <HostGroupSection />
+    )
 };
 
 export default Home;

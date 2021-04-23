@@ -172,10 +172,10 @@ const InfoModal = ({ strings, show, confirm, isHost, decline, question, data }) 
                     setLoading(false);
                 }
             })();
-            
-            decline();
-        }
 
+
+        }
+        decline();
     }
 
     const onError = (err) => { console.error(err); }

@@ -8,6 +8,7 @@ import { useApplicationStateValue } from '../application/Application';
 import SecureRoute from './SecureRoute';
 import AddNewHost from '../pages/hostPage/AddNewHost';
 import AddNewService from '../pages/services/AddNewService';
+import AllServices from '../pages/services/AllServices';
 
 const MRouter = () => {
 
@@ -17,8 +18,10 @@ const MRouter = () => {
         <Switch>
             <SecureRoute exact authorized={authorized} path="/hosts/add" component={AddNewHost} />
             <SecureRoute exact authorized={authorized} path="/:hostname/services/add" component={AddNewService} />
-            <SecureRoute authorized={authorized} path="/hosts" component={HostPage} />
+            <SecureRoute authorized={authorized} path="/hosts/:hostgroup" component={HostPage} />
+            <SecureRoute authorized={authorized} path="/hosts/" component={HostPage} />
             <SecureRoute authorized={authorized} path="/services/:hostname" component={Services} />
+            <SecureRoute authorized={authorized} path="/services" component={AllServices} />
             <SecureRoute authorized={authorized} path="/home" component={Home} />
             <Route path="/" component={Login} />
         </Switch>

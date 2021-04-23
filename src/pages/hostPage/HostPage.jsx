@@ -5,11 +5,13 @@ import Host from '../../components/host/Host';
 import BounceLoader from "react-spinners/BounceLoader";
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
-import { getAllHosts, removeHost } from '../../application/application-service';
+import { getAllHosts, removeHost, getHostgroupHosts, getHostByName } from '../../application/application-service';
 import Modal from '../../components/modal/Modal';
 import { withLocalizeStrings } from '../../languages/Localize';
 import InfoModal from '../../components/modal/InfoModal';
 import UpdateModal from '../../components/modal/UpdateModal';
+import { useParams } from 'react-router';
+import Title from '../../components/title/Title';
 
 const SpinnerBlock = styled(Flex)`
     position: absolute;
@@ -18,6 +20,13 @@ const SpinnerBlock = styled(Flex)`
     height: 12rem;
     top: 40%;
     margin: 0 auto;
+`;
+
+const Board = styled(Flex)`
+    position: absolute;
+    top: 6rem;
+    width: 100%;
+    flex-wrap: wrap;
 `;
 
 let hostData = null;
@@ -32,6 +41,7 @@ const HostPage = ({ strings }) => {
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     let [hostnameToDelete, setHostnameToDelete] = useState('');
 
+    const { hostgroup } = useParams();
 
     const showDeleteModal = (hostname) => {
         setHostnameToDelete(hostname);
@@ -66,25 +76,43 @@ const HostPage = ({ strings }) => {
 
     const onDeleteHandler = (hostName) => {
         removeHost(hostName).then(res => {
-            console.log(res);
             setHosts(hosts.filter(host => host.host_name !== hostName));
             setShowModal(false);
         });
     }
 
     useEffect(() => {
-        (async function () {
-            try {
-                const res = await getAllHosts();
-                console.log(res.data.hoststatus);
-                setHosts(res.data.hoststatus);
-                setTimeout(function () { setLoading(false); }, 500);
-            } catch (err) {
-                console.log(err);
-                setLoading(false);
-            }
-        })();
-    }, []);
+        if (hostgroup) {
+            (async function () {
+                try {
+                    const res = await getHostgroupHosts(hostgroup);
+                    let hostsNames = res.data[0].members;
+                    let hostsTemp = [];
+                    hostsNames.forEach(async hostName => {
+                        const hostRes = await getHostByName(hostName);
+                        hostsTemp.push(hostRes.data.hoststatus[0]);
+                    });
+                    setHosts(hostsTemp);
+                    setTimeout(function () { setLoading(false); }, 500);
+                } catch (err) {
+                    console.log(err);
+                    setLoading(false);
+                }
+            })();
+        } else {
+            (async function () {
+                try {
+                    const res = await getAllHosts();
+                    setHosts(res.data.hoststatus);
+                    setTimeout(function () { setLoading(false); }, 500);
+                } catch (err) {
+                    console.log(err);
+                    setLoading(false);
+                }
+            })();
+        }
+
+    }, [hostgroup]);
 
     return (
         loading ? (
@@ -93,18 +121,21 @@ const HostPage = ({ strings }) => {
             </SpinnerBlock>
         ) : (
             <Dashboard>
-                {showModal && <Modal question={strings.modalQuestions.deleteHost} show={showModal} confirm={deleteHost} decline={doNotDeleteHost} />}
-                {showInfoModal && <InfoModal isHost={true} show={showInfoModal} decline={closeInfoModal} data={hostData} />}
-                {hosts.map(data => {
-                    return <Host
-                        key={data.host_object_id}
-                        data={data}
-                        onDeleteHandler={() => { showDeleteModal(data.host_name) }}
-                        onShowInfoHandler={() => { onShowInfoModal(data) }}
-                        onShowUpdateHandler={() => { onShowUpdateModal(data) }}
-                    />
-                })}
-                <AddHost />
+                <Title text={hostgroup ? `${hostgroup}` : strings.page.hosts.allHosts} />
+                <Board>
+                    {showModal && <Modal question={strings.modalQuestions.deleteHost} show={showModal} confirm={deleteHost} decline={doNotDeleteHost} />}
+                    {showInfoModal && <InfoModal isHost={true} show={showInfoModal} decline={closeInfoModal} data={hostData} />}
+                    {hosts.map(data => {
+                        return <Host
+                            key={data.host_object_id}
+                            data={data}
+                            onDeleteHandler={() => { showDeleteModal(data.host_name) }}
+                            onShowInfoHandler={() => { onShowInfoModal(data) }}
+                            onShowUpdateHandler={() => { onShowUpdateModal(data) }}
+                        />
+                    })}
+                    <AddHost />
+                </Board>
             </Dashboard>
         )
     );

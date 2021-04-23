@@ -136,9 +136,7 @@ const AddNewService = ({ strings }) => {
 
         (async function () {
             try {
-                console.log(obj);
                 const res = await addService(obj);
-                console.log(res);
                 setTimeout(function () { history.push(`/services/${hostname}`); }, 5000);
             } catch (err) {
                 console.error(err);

@@ -134,7 +134,6 @@ const AddNewHost = ({ strings }) => {
         (async function () {
             try {
                 const res = await addHost(obj);
-                console.log(res);
                 setTimeout(function () { history.push("/hosts"); }, 5000);
             } catch (err) {
                 console.log(err);

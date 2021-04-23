@@ -82,11 +82,9 @@ const Services = ({ strings }) => {
         (async function () {
             try {
                 const response = await removeService(service, hostname);
-                console.log(response);
                 let servicesTemp = services.filter(e => e.service_description !== service);
                 setServices(servicesTemp);
                 setShowModal(false);
-                console.log(service);
             } catch (err) {
                 console.error(err);
             }
@@ -98,7 +96,6 @@ const Services = ({ strings }) => {
         (async function () {
             try {
                 const res = await getHostServices(hostname);
-                console.log(res.data);
                 setServices(res.data.servicestatus);
                 setTimeout(function () { setLoading(false); }, 1000);
             } catch (err) {
