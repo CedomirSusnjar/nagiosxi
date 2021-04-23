@@ -1,0 +1,99 @@
+import styled from 'styled-components';
+import { Flex } from 'reflexbox/styled-components';
+import Dashboard from '../../components/dashboard/Dashboard';
+import { useEffect, useState } from 'react';
+import { getAllServices } from '../../application/application-service';
+import BounceLoader from "react-spinners/BounceLoader";
+import { withLocalizeStrings } from '../../languages/Localize';
+import Title from '../../components/title/Title';
+
+const ServiceContainer = styled(Flex)`
+    flex-direction: row;
+    width: 95%;
+    height: 3.5rem;
+    margin-left: 2rem;
+    font-size: 1.4rem;
+    border-top: .05rem solid gainsboro;
+    border-left: .05rem solid gainsboro;
+    border-right: .05rem solid gainsboro;
+    :last-child {
+        border-bottom: .05rem solid gainsboro;
+    }
+`;
+
+const SpinnerBlock = styled(Flex)`
+    position: absolute;
+    justify-content: center;
+    width: 100%;
+    height: 12rem;
+    top: 40%;
+    margin: 0 auto;
+`;
+
+const Board = styled(Flex)`
+    position: absolute;
+    top: 7rem;
+    flex-direction: column;
+    width: 100%;
+    flex-wrap: wrap;
+`;
+
+const OutputData = styled(Flex)`
+    width: 40%;
+    font-size: 1.1rem;
+    padding-left: .2rem;
+    align-items: center;
+`;
+
+const ServiceData = styled(Flex)`
+    width: 15%;
+    padding-left: .2rem;
+    border-right: .05rem solid gainsboro;
+    align-items: center;
+`;
+
+const AllServices = ({strings}) => {
+
+    let [services, setServices] = useState(null);
+    let [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+
+        (async function () {
+            try {
+                const res = await getAllServices();
+                setServices(res.data.servicestatus);
+                setTimeout(function(){setLoading(false);},1000);
+            } catch (err) {
+                console.error(err);
+            }
+        })();
+
+    }, []);
+
+    return (
+        loading ? (
+            <SpinnerBlock>
+                <BounceLoader color="gainsboro" loading={loading} size={120} />
+            </SpinnerBlock>
+        ) : (
+            <Dashboard>
+                <Title text={strings.page.services.allServices}/>
+                <Board>
+                    {services.map(service => {
+                        return <ServiceContainer key={service.service_object_id}>
+                            <ServiceData>{service.host_name}</ServiceData>
+                            <ServiceData>{service.display_name}</ServiceData>
+                            <ServiceData>{service.last_check}</ServiceData>
+                            <ServiceData>{service.next_check}</ServiceData>
+                            <OutputData>{service.output}</OutputData>
+                        </ServiceContainer>;
+                    })
+                    }
+                </Board>
+            </Dashboard >
+        )
+    );
+};
+
+export default withLocalizeStrings(AllServices);
