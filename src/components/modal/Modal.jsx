@@ -81,12 +81,16 @@ const Button = styled(Flex)`
 
 const Modal = ({strings, show, confirm, decline, question}) => {
 
+    const stopPropagation = (event) => {
+        event.stopPropagation();
+    }
+
     return (
         show && ( <>
             <Backdrop />{//nece da se klikne pozadina, mozda nesto oko z-indexa, nez
             }
             <Container onClick={decline}>
-                <ModalContainer>
+                <ModalContainer onClick={stopPropagation}>
                     <Question>{question}</Question>
                     <Buttons>
                         <Button onClick={confirm}>{strings.page.hosts.yes}</Button>

@@ -104,7 +104,7 @@ const InputField = ({ name, text, onBlur, onChange, value, type, checks, passwor
     switch (type) {
         case "text":
             if(unit) { input = <UnitStyledInput addonAfter={unit} type={password} value={value} onChange={onChange} onBlur={onBlur} />;}
-            else { input = <StyledInput type={password} value={value} onChange={e => { console.log(onChange);onChange(e);}} onBlur={onBlur} />;}
+            else { input = <StyledInput type={password} value={value} onChange={onChange} onBlur={onBlur} />;}
             break;
         case "select":
             input = <SelectS

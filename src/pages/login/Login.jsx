@@ -70,8 +70,7 @@ const validationSchema = object().shape({
 const Login = ({ strings }) => {
 
     const history = useHistory();
-    const { setAuthorized } = useApplicationStateValue();
-
+    const { setAuthorized, setUsername } = useApplicationStateValue();
     const { formState, control, handleSubmit } = useForm({
         resolver: yupResolver(validationSchema),
         mode: "onChange"
@@ -93,6 +92,7 @@ const Login = ({ strings }) => {
                 } else {
                     setInvalidMessageHidden(true);
                     setAuthorized(true);
+                    setUsername(res.data.username);
                     history.push('/home');
                 }
             } catch (err) {

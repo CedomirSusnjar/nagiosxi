@@ -2,14 +2,16 @@ import React, {useState} from 'react';
 import {withLocalizeStrings} from '../languages/Localize';
 
 const defaultState = {
-    backdrop: null,
     loading: null,
-    authorized: null
+    authorized: null,
+    username: null
 }
 
 const defaultActions = {
     setAuthorized: () => {},
-    setLoading: () => {}
+    setLoading: () => {},
+    setUsername: () => {},
+    setApikey: () => {}
 }
 
 export const ApplicationContext = React.createContext({
@@ -23,12 +25,18 @@ const ApplicationProvider = ({strings, children}) => {
 
     const [authorized,setAuthorized] = useState(false);
     const [loading,setLoading] = useState(false);
-
+    const [username,setUsername] = useState('');
+    const [apikey, setApikey] = useState('');
+    
     const state = {
         authorized,
         loading,
+        username,
+        apikey,
         setAuthorized,
-        setLoading
+        setLoading,
+        setUsername, 
+        setApikey
     };
 
     return (

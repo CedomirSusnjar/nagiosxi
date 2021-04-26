@@ -7,7 +7,6 @@ const StyledNavigationLink = styled.a`
     font-size: 1.5rem;
     min-width: 8rem;
     display: inline-block;
-    text-align: center;
     border-radius: .5rem;
     cursor: pointer;
     &: hover {
@@ -16,10 +15,10 @@ const StyledNavigationLink = styled.a`
     }
 `;
 
-const NavigationLink = ({text, onClick}) => {
+const NavigationLink = ({text, onClick, style}) => {
 
     return (
-        <StyledNavigationLink onClick={onClick}>{text}</StyledNavigationLink>
+        <StyledNavigationLink style={style} onClick={onClick}>{text}</StyledNavigationLink>
     );
 
 };

@@ -14,6 +14,7 @@ const Container = styled(Flex)`
     height: 100%;
     width: 90%;
     position: relative;
+    background-color: white;
 `;
 
 const HostName = styled(Flex)`

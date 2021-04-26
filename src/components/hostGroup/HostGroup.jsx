@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
-import HostInformation from '../hostInformation/HostInformation';
 import { useHistory } from 'react-router';
 import { strings, withLocalizeStrings } from '../../languages/Localize';
 
@@ -17,27 +16,8 @@ const Container = styled(Flex)`
     padding-top: 1.5rem;
     position: relative;
     cursor: pointer;
-`;
-
-const HGHostsNum = styled(Flex)`
-    width: 100%;
-    height: 15%;
-    text-align: left;
-    padding-left: 1rem;
-    justify-content: center;
-    font-size: 2.2rem;
-    font-weight: bold;
-`;
-
-const HGNumContainer = styled(Flex)`
-    flex-direction: column;
-    position: absolute;
-    bottom: 2rem;
-    width: 100%;
-`;
-
-const HGNumLabel = styled(Flex)`
-    justify-content: center;
+    z-index: 1000;
+    background-color: white;
 `;
 
 const HGName = styled(Flex)`
@@ -58,7 +38,8 @@ const HGAlias = styled(Flex)`
 const HostsContainer = styled(Flex)`
     flex-wrap: wrap;
     width: 100%;
-    padding: 1.5rem;
+    padding-left: 1.5rem;
+    padding-top: .5rem;
 `;
 
 const Host = styled(Flex)`
@@ -75,6 +56,8 @@ const HostName = styled(Flex)`
 const HGHosts = styled(Flex)`
     width: 100%;
     padding-left: 1.5rem;
+    font-size: 1.2rem;
+    padding-top: .5rem;
 `;
 
 const HostGroup = ({name, alias, hosts}) => {
@@ -89,7 +72,7 @@ const HostGroup = ({name, alias, hosts}) => {
         <Container onClick={onClickHandler}>
             <HGName>{name}</HGName>
             <HGAlias>{alias}</HGAlias>
-            <HGHosts>{strings.page.home.hosts}</HGHosts>
+            <HGHosts>{`${strings.page.home.hosts} (${hosts.length})`}</HGHosts>
             <HostsContainer>
                 {hosts.map(host => {
                     return <Host key={host}><HostName>{host}</HostName></Host>

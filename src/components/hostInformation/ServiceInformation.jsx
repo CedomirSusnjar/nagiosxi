@@ -5,6 +5,7 @@ const Container = styled(Flex)`
     justify-content: left;
     margin-top: .1rem;
     flex-direction: row;
+    max-height: 8rem;
 `;
 
 const Property = styled.label`
@@ -20,6 +21,8 @@ const Value = styled.label`
     word-wrap: break-word;
     text-align: left;
     margin-right: .4rem;
+    overflow: auto;
+
 `;
 
 const ServiceInformation = ({ text, value }) => {

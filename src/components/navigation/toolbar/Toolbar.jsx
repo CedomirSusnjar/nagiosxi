@@ -16,17 +16,12 @@ const Container = styled(Flex)`
 `;
 
 const Space = styled(Flex)`
-    flex-grow: 1;
-`;
-
-const SignInOut = styled(NavigationLink)`
-    position: absolute;
-    top:0;
+    width: 55%;
 `;
 
 const Toolbar = ({strings}) => {
 
-    let { authorized, setAuthorized} = useApplicationStateValue();
+    let { authorized, setAuthorized, username} = useApplicationStateValue();
 
     let history = useHistory();//text underline sa history location pathname includes 
 
@@ -47,7 +42,7 @@ const Toolbar = ({strings}) => {
             <NavigationLink onClick={() => {onClickHandler("/hosts")}} text={strings.page.toolbar.hosts}/>
             <NavigationLink onClick={() => {onClickHandler("/services")}} text={strings.page.toolbar.services}/>
             <Space /> 
-            <SignInOut onClick={onLogOut} text="Odjava"/>
+            <NavigationLink style={{position: "absolute",right: "2rem"}} onClick={onLogOut} text={`${strings.page.toolbar.logout} (${username})`}/>
             </>}
         </Container>
     );

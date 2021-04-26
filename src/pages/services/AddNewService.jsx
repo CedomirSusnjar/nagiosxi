@@ -14,6 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { css } from '@emotion/css';
+import ErrorModal from '../../components/modal/ErrorModal';
 import FormBox from '../../components/form/formBox/FormBox';
 import { commonServiceFields, checkSettings1, checkSettings2, alertFields, miscSettings1 } from '../../common/config/nagios-field-names';
 
@@ -107,6 +108,7 @@ const AddNewService = ({ strings }) => {
 
     const history = useHistory();
     const [loading, setLoading] = useState(false);
+    let [showErrorModal, setShowErrorModal] = useState(false);
     let [color] = useState("gainsboro");
     const { formState, control, handleSubmit } = useForm({
         resolver: yupResolver(validationSchema),
@@ -120,7 +122,7 @@ const AddNewService = ({ strings }) => {
 
     const onSubmit = (service) => {
         setLoading(true);
-       
+
         let arr = Object.entries(service);
         let obj = 'contacts=nagiosadmin&applyconfig=1';
 
@@ -137,6 +139,10 @@ const AddNewService = ({ strings }) => {
         (async function () {
             try {
                 const res = await addService(obj);
+                if(res.data.error === "Authenticiation failed."){
+                    setShowErrorModal(true);
+                    throw Error("Auth failed.");
+                }
                 setTimeout(function () { history.push(`/services/${hostname}`); }, 5000);
             } catch (err) {
                 console.error(err);
@@ -144,6 +150,11 @@ const AddNewService = ({ strings }) => {
             }
         })();
     }
+
+    const closeErrorModal = () => {
+        setShowErrorModal(false);
+        history.push(`/services/${hostname}`);
+    };
 
     const onError = (err) => { console.error(err); }
 
@@ -159,27 +170,30 @@ const AddNewService = ({ strings }) => {
                                 <BounceLoader color={color} loading={loading} size={120} />
                             </SpinnerBlock>
                         ) : (
-                            <Form onSubmit={handleSubmit(onSubmit, onError)}>
-                                <Tabs className={TabCSS} selectedIndex={tabIndex} onSelect={index => setTabIndex(index)}>
-                                    <TabList>
-                                        <Tab>{strings.page.addNewHost.commonSettings}</Tab>
-                                        <Tab>{strings.page.addNewHost.checkSettings}</Tab>
-                                        <Tab>{strings.page.addNewHost.alertSettings}</Tab>
-                                        <Tab>{strings.page.addNewHost.miscSettings}</Tab>
-                                    </TabList>
+                            <>
+                                {showErrorModal && <ErrorModal show={showErrorModal} text={strings.page.hosts.permissionDenied} decline={closeErrorModal} />}
+                                <Form onSubmit={handleSubmit(onSubmit, onError)}>
+                                    <Tabs className={TabCSS} selectedIndex={tabIndex} onSelect={index => setTabIndex(index)}>
+                                        <TabList>
+                                            <Tab>{strings.page.addNewHost.commonSettings}</Tab>
+                                            <Tab>{strings.page.addNewHost.checkSettings}</Tab>
+                                            <Tab>{strings.page.addNewHost.alertSettings}</Tab>
+                                            <Tab>{strings.page.addNewHost.miscSettings}</Tab>
+                                        </TabList>
 
-                                    <TabPanel><FormBox control={control} fields={commonServiceFields} /></TabPanel>
-                                    <TabPanel>
-                                        <FormSplit>
-                                            <FormBox control={control} fields={checkSettings1} />
-                                            <FormBox control={control} fields={checkSettings2} />
-                                        </FormSplit>
-                                    </TabPanel>
-                                    <TabPanel><FormBox control={control} fields={alertFields} /></TabPanel>
-                                    <TabPanel><FormBox control={control} fields={miscSettings1} /></TabPanel>
-                                </Tabs>
-                                <PageAddHostButton text={strings.buttons.add} disabled={!isValid} htmlType="submit" />
-                            </Form>
+                                        <TabPanel><FormBox control={control} fields={commonServiceFields} /></TabPanel>
+                                        <TabPanel>
+                                            <FormSplit>
+                                                <FormBox control={control} fields={checkSettings1} />
+                                                <FormBox control={control} fields={checkSettings2} />
+                                            </FormSplit>
+                                        </TabPanel>
+                                        <TabPanel><FormBox control={control} fields={alertFields} /></TabPanel>
+                                        <TabPanel><FormBox control={control} fields={miscSettings1} /></TabPanel>
+                                    </Tabs>
+                                    <PageAddHostButton text={strings.buttons.add} disabled={!isValid} htmlType="submit" />
+                                </Form>
+                            </>
                         )}
                     </AddSpace>
                 </AddBoard>

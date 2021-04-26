@@ -127,7 +127,7 @@ const validationSchema = object().shape({
     // notification_period: string().required()
 });
 
-const InfoModal = ({ strings, show, confirm, isHost, decline, question, data }) => {
+const InfoModal = ({ strings, show, confirm, isHost, decline, question, data, showErrorModal,  }) => {
 
     let [loading, setLoading] = useState(true);
     const [tabIndex, setTabIndex] = useState(0);
@@ -135,6 +135,7 @@ const InfoModal = ({ strings, show, confirm, isHost, decline, question, data }) 
         resolver: yupResolver(validationSchema),
         mode: "onChange"
     });
+    
     const stopPropagation = (event) => {
         event.stopPropagation();
     }
@@ -166,14 +167,15 @@ const InfoModal = ({ strings, show, confirm, isHost, decline, question, data }) 
             (async function () {
                 try {
                     const res = await updateHost(obj);
-                    console.log(res);
+                    if(res.data.error === "Authenticiation failed."){
+                        showErrorModal(true);
+                        throw Error("Auth failed.");
+                    }
                 } catch (err) {
                     console.log(err);
                     setLoading(false);
                 }
             })();
-
-
         }
         decline();
     }

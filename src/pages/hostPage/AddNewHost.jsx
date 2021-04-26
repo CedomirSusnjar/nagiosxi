@@ -15,6 +15,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { css } from '@emotion/css';
 import 'react-tabs/style/react-tabs.css';
 import FormBox from '../../components/form/formBox/FormBox';
+import ErrorModal from '../../components/modal/ErrorModal';
 import { commonFields, checkSettings1, checkSettings2, alertFields, miscSettings1, miscSettings2 } from '../../common/config/nagios-field-names';
 
 const Board = styled(Flex)`
@@ -106,6 +107,7 @@ const AddNewHost = ({ strings }) => {
     const history = useHistory();
     const [loading, setLoading] = useState(false);
     let [color] = useState("gainsboro");
+    let [showErrorModal, setShowErrorModal] = useState(false);
     const { formState, control, handleSubmit } = useForm({
         resolver: yupResolver(validationSchema),
         mode: "onChange"
@@ -134,15 +136,24 @@ const AddNewHost = ({ strings }) => {
         (async function () {
             try {
                 const res = await addHost(obj);
+                if(res.data.error === "Authenticiation failed."){
+                    setShowErrorModal(true);
+                    throw Error("Auth failed.");
+                }
                 setTimeout(function () { history.push("/hosts"); }, 5000);
             } catch (err) {
-                console.log(err);
+                console.error(err);
                 setLoading(false);
             }
         })();
     }
 
-    const onError = (err) => { console.error(err); }
+    const onError = (err) => { console.error(err); };
+
+    const closeErrorModal = () => {
+        setShowErrorModal(false);
+        history.push('/hosts');
+    };
 
     return (
         <Dashboard>
@@ -156,6 +167,8 @@ const AddNewHost = ({ strings }) => {
                                 <BounceLoader color={color} loading={loading} size={120} />
                             </SpinnerBlock>
                         ) : (
+                            <>
+                            {showErrorModal && <ErrorModal show={showErrorModal} text={strings.page.hosts.permissionDenied} decline={closeErrorModal}/>}
                             <Form onSubmit={handleSubmit(onSubmit, onError)}>
                                 <Tabs className={TabCSS} selectedIndex={tabIndex} onSelect={index => setTabIndex(index)}>
                                     <TabList>
@@ -181,6 +194,7 @@ const AddNewHost = ({ strings }) => {
                                 </Tabs>
                                 <PageAddHostButton text={strings.buttons.add} disabled={!isValid} htmlType="submit" />
                             </Form>
+                            </>
                         )}
                     </AddSpace>
                 </AddBoard>

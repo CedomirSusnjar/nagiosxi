@@ -9,6 +9,7 @@ import Service from '../../components/service/Service';
 import { getHostServices, removeService } from '../../application/application-service';
 import AddService from '../../components/service/AddService';
 import InfoModal from '../../components/modal/InfoModal';
+import ErrorModal from '../../components/modal/ErrorModal';
 
 const Title = styled(Flex)`
     width: 100%;
@@ -58,6 +59,7 @@ const Services = ({ strings }) => {
     let [serviceToDelete, setServiceToDelete] = useState('');
     const [showModal, setShowModal] = useState(false);
     let [showInfoModal, setShowInfoModal] = useState(false);
+    let [showErrorModal, setShowErrorModal] = useState(false);
 
     const { hostname } = useParams();
 
@@ -65,6 +67,8 @@ const Services = ({ strings }) => {
         setServiceToDelete(service);
         setShowModal(true);
     }
+
+    const closeErrorModal = () => { setShowErrorModal(false);}
 
     const deleteService = () => { onDeleteHandler(serviceToDelete); }
 
@@ -81,7 +85,12 @@ const Services = ({ strings }) => {
 
         (async function () {
             try {
-                const response = await removeService(service, hostname);
+                const res = await removeService(service, hostname);
+                if(res.data.error === "Authenticiation failed."){
+                    setShowErrorModal(true);
+                    setShowModal(false);
+                    throw Error("Auth failed.");
+                }
                 let servicesTemp = services.filter(e => e.service_description !== service);
                 setServices(servicesTemp);
                 setShowModal(false);
@@ -119,14 +128,15 @@ const Services = ({ strings }) => {
                 <ServiceDashboard>
                     <Modal question={strings.modalQuestions.deleteService} show={showModal} confirm={deleteService} decline={doNotDeleteService} />
                     {showInfoModal && <InfoModal show={showInfoModal} decline={closeInfoModal} data={serviceData} />}
+                    {showErrorModal && <ErrorModal closeInfoModal={closeInfoModal} show={showErrorModal} text={strings.page.hosts.permissionDenied} decline={closeErrorModal} />}
                     {services.map(service => {
-                            return <Service
-                                key={service.service_object_id}
-                                data={service}
-                                onDelete={() => showDeleteModal(service.service_description)}
-                                onShowInfo={() => { onShowInfoModal(service) }}
-                            />
-                        })}
+                        return <Service
+                            key={service.service_object_id}
+                            data={service}
+                            onDelete={() => showDeleteModal(service.service_description)}
+                            onShowInfo={() => { onShowInfoModal(service) }}
+                        />
+                    })}
                     <AddService hostname={hostname} />
                 </ServiceDashboard >
             </Board>

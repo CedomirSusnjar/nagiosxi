@@ -4,6 +4,9 @@
       "services": {
         "noServices": "Ne postoje konfigurisani servisi za ovu mašinu.",
         "title": "Mašina - ",
+        "hostName": "Mašina",
+        "serviceName": "Servis",
+        "output": "Status",
         "lastCheck": "Zadnja provjera:",
         "nextCheck": "Sljedeća provjera:",
         "statusInfo": "Status info:",
@@ -20,16 +23,19 @@
         "yes": "Da",
         "no": "Ne",
         "notConfigured": "Nije dodan",
-        "allHosts": "Sve mašine"
+        "allHosts": "Sve mašine",
+        "permissionDenied": "Neautorizovana operacija!"
       },
       "home": {
         "hostsNum": "Broj mašina:",
-        "hostgroups": "Grupe mašina"
+        "hostgroups": "Grupe mašina",
+        "hosts": "Mašine"
       },
       "toolbar": {
        "homepage": "Početna",
        "hosts": "Mašine",
-       "services": "Servisi"
+       "services": "Servisi",
+       "logout": "Odjava"
       },
       "login": {
         "username": "Korisničko ime:",
@@ -146,6 +152,9 @@
     "modalQuestions": {
       "deleteHost": "Da li ste sigurni da želite obrisati odabranu mašinu?",
       "deleteService": "Da li ste sigurni da želite obrisati odabrani servis?"
+    },
+    "errorMessages": {
+      "authFailed": "Ova stranica je nedostupna za korisnika " 
     }
   }
 }

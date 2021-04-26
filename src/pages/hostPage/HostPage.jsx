@@ -7,9 +7,9 @@ import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 import { getAllHosts, removeHost, getHostgroupHosts, getHostByName } from '../../application/application-service';
 import Modal from '../../components/modal/Modal';
+import ErrorModal from '../../components/modal/ErrorModal';
 import { withLocalizeStrings } from '../../languages/Localize';
 import InfoModal from '../../components/modal/InfoModal';
-import UpdateModal from '../../components/modal/UpdateModal';
 import { useParams } from 'react-router';
 import Title from '../../components/title/Title';
 
@@ -35,11 +35,11 @@ const HostPage = ({ strings }) => {
 
     const [hosts, setHosts] = useState(null);
     const [loading, setLoading] = useState(true);
-    let [color] = useState("gainsboro");
+    let [color] = useState('gainsboro');
     const [showModal, setShowModal] = useState(false);
     const [showInfoModal, setShowInfoModal] = useState(false);
-    const [showUpdateModal, setShowUpdateModal] = useState(false);
     let [hostnameToDelete, setHostnameToDelete] = useState('');
+    let [showErrorModal, setShowErrorModal] = useState(false);
 
     const { hostgroup } = useParams();
 
@@ -53,17 +53,8 @@ const HostPage = ({ strings }) => {
         setShowInfoModal(true);
     }
 
-    const onShowUpdateModal = (data) => {
-        hostData = { ...data }
-        setShowUpdateModal(true);
-    }
-
     const closeInfoModal = () => {
         setShowInfoModal(false);
-    }
-
-    const closeUpdateModal = () => {
-        setShowUpdateModal(false);
     }
 
     const deleteHost = () => {
@@ -74,19 +65,34 @@ const HostPage = ({ strings }) => {
         setShowModal(false);
     }
 
-    const onDeleteHandler = (hostName) => {
-        removeHost(hostName).then(res => {
-            setHosts(hosts.filter(host => host.host_name !== hostName));
-            setShowModal(false);
-        });
+    const closeErrorModal = () => {
+        setShowErrorModal(false);
     }
+
+    const onDeleteHandler = (hostName) => {
+        (async function () {
+            try {
+                const res = await removeHost(hostName);
+                if (res.data.error === "Authenticiation failed.") {
+                    setShowErrorModal(true);
+                    setShowModal(false);
+                    throw Error("Auth failed!");
+                }
+                setHosts(hosts.filter(host => host.host_name !== hostName));
+                setShowModal(false);
+            } catch (err) {
+                console.error(err);
+            }
+        })();
+    };
 
     useEffect(() => {
         if (hostgroup) {
             (async function () {
                 try {
                     const res = await getHostgroupHosts(hostgroup);
-                    let hostsNames = res.data[0].members;
+                    console.log(res);
+                    let hostsNames = res.data[0].members ? res.data[0].members : [];
                     let hostsTemp = [];
                     hostsNames.forEach(async hostName => {
                         const hostRes = await getHostByName(hostName);
@@ -124,14 +130,14 @@ const HostPage = ({ strings }) => {
                 <Title text={hostgroup ? `${hostgroup}` : strings.page.hosts.allHosts} />
                 <Board>
                     {showModal && <Modal question={strings.modalQuestions.deleteHost} show={showModal} confirm={deleteHost} decline={doNotDeleteHost} />}
-                    {showInfoModal && <InfoModal isHost={true} show={showInfoModal} decline={closeInfoModal} data={hostData} />}
+                    {showInfoModal && <InfoModal showErrorModal={setShowErrorModal} isHost={true} show={showInfoModal} decline={closeInfoModal} data={hostData} />}
+                    {showErrorModal && <ErrorModal closeInfoModal={closeInfoModal} show={showErrorModal} text={strings.page.hosts.permissionDenied} decline={closeErrorModal}/>}
                     {hosts.map(data => {
                         return <Host
                             key={data.host_object_id}
                             data={data}
                             onDeleteHandler={() => { showDeleteModal(data.host_name) }}
                             onShowInfoHandler={() => { onShowInfoModal(data) }}
-                            onShowUpdateHandler={() => { onShowUpdateModal(data) }}
                         />
                     })}
                     <AddHost />

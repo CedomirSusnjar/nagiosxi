@@ -19,6 +19,10 @@ const ServiceContainer = styled(Flex)`
     :last-child {
         border-bottom: .05rem solid gainsboro;
     }
+    :first-child {
+        background-color: gainsboro;
+        font-weight: bold;
+    }
 `;
 
 const SpinnerBlock = styled(Flex)`
@@ -45,6 +49,14 @@ const OutputData = styled(Flex)`
     align-items: center;
 `;
 
+const OutputDataProp = styled(Flex)`
+    width: 40%;
+    font-size: 1.1rem;
+    padding-left: .2rem;
+    align-items: center;
+    font-size: 1.4rem;
+`;
+
 const ServiceData = styled(Flex)`
     width: 15%;
     padding-left: .2rem;
@@ -52,7 +64,7 @@ const ServiceData = styled(Flex)`
     align-items: center;
 `;
 
-const AllServices = ({strings}) => {
+const AllServices = ({ strings }) => {
 
     let [services, setServices] = useState(null);
     let [loading, setLoading] = useState(true);
@@ -63,7 +75,7 @@ const AllServices = ({strings}) => {
             try {
                 const res = await getAllServices();
                 setServices(res.data.servicestatus);
-                setTimeout(function(){setLoading(false);},1000);
+                setTimeout(function () { setLoading(false); }, 1000);
             } catch (err) {
                 console.error(err);
             }
@@ -78,8 +90,15 @@ const AllServices = ({strings}) => {
             </SpinnerBlock>
         ) : (
             <Dashboard>
-                <Title text={strings.page.services.allServices}/>
+                <Title text={strings.page.services.allServices} />
                 <Board>
+                    <ServiceContainer>
+                        <ServiceData>{strings.page.services.hostName}</ServiceData>
+                        <ServiceData>{strings.page.services.serviceName}</ServiceData>
+                        <ServiceData>{strings.page.services.lastCheck}</ServiceData>
+                        <ServiceData>{strings.page.services.nextCheck}</ServiceData>
+                        <OutputDataProp>{strings.page.services.output}</OutputDataProp>
+                    </ServiceContainer>
                     {services.map(service => {
                         return <ServiceContainer key={service.service_object_id}>
                             <ServiceData>{service.host_name}</ServiceData>
