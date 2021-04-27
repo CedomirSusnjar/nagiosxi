@@ -55,12 +55,11 @@ const Signal = ({ strings, color, hostname, service }) => {
     let [text, setText] = useState('');
     const [loading, setLoading] = useState(true);
 
-    const trimServiceStatus = (message) => {
-        return message.substring(0, message.indexOf('-')).trim();
-    }
+    const notConfigured = strings.page.hosts.notConfigured;
+
+    const trimServiceStatus = (message) => { return message.substring(0, message.indexOf('-')).trim();}
 
     useEffect(() => {
-
         (async function () {
             try {
                 const response = await getServiceByName(service, hostname);
@@ -68,14 +67,13 @@ const Signal = ({ strings, color, hostname, service }) => {
                 setText(trimServiceStatus(message));
                 setTimeout(function () { setLoading(false); }, 1000);
             } catch (err) {
-                console.log(err);
-                setText(strings.page.hosts.notConfigured);
+                console.error(err);
+                setText(notConfigured);
                 setTimeout(function () { setLoading(false); }, 1000);           
             }
-
         })();
 
-    }, []);
+    }, [hostname, service, notConfigured]);
 
     return (
         loading ? (

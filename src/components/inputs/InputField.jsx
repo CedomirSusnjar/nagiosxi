@@ -4,6 +4,7 @@ import { css } from '@emotion/css';
 import { Select, Input } from 'antd';
 import { Radio } from 'antd';
 import { useState } from 'react';
+import { basicColor } from '../../common/config/config';
 
 const StyledInput = styled(Input)`
     width: 28rem;
@@ -25,7 +26,7 @@ const UnitStyledInput = styled(Input)`
         }
         .ant-input-group-addon {
             font-size: 1.2rem;
-            background-color: gainsboro;
+            background-color: ${basicColor};
         }
     }  
 }
@@ -47,7 +48,7 @@ const SelectS = styled(Select)`
 
     &.ant-select { 
         width: 28rem;
-        border: .05rem solid gainsboro;
+        border: .05rem solid ${basicColor};
         height: 2.5rem;
         overflow: hidden;
         .ant-select-selector {
@@ -127,7 +128,6 @@ const InputField = ({ name, text, onBlur, onChange, value, type, checks, passwor
         default:
             break;
     }
-
 
     return (
         <Container>

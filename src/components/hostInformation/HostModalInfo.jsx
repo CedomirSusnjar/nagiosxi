@@ -13,7 +13,6 @@ const Property = styled.label`
     font-size: 1.3rem;
     width: 50%;
     padding-top: .5rem;
-    
     word-wrap: break-word;
 `;
 

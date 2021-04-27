@@ -9,15 +9,14 @@ const Container = styled(Flex)`
     width: 100%;
 `;
 
-const HostButtons = ({onDeleteHandler, onShowInfoHandler, onUpdateHandler}) => {
+const HostButtons = ({ onDeleteHandler, onShowInfoHandler }) => {
 
     return (
         <Container>
-            <HostButton onClick={onDeleteHandler} icon={deleteIcon} style={{borderBottom: ".1rem solid silver"}}/>
-            {/* <HostButton onClick={onUpdateHandler} icon={pencilIcon} style={{borderBottom: ".05rem solid silver",borderTop: ".05rem solid silver"}}/> */}
+            <HostButton onClick={onDeleteHandler} icon={deleteIcon} style={{ borderBottom: ".1rem solid silver" }} />
             <HostButton onClick={onShowInfoHandler} icon={settingIcon} />
         </Container>
     );
 };
 
-export default HostButtons;  
+export default HostButtons;

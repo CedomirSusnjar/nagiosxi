@@ -10,9 +10,7 @@ const Container = styled(Flex)`
 `;
 
 const Title = ({text}) => {
-    return (
-        <Container>{text}</Container>
-    );
+    return ( <Container>{text}</Container>);
 };
 
 export default Title;

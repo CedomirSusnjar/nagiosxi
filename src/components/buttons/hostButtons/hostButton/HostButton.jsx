@@ -13,8 +13,8 @@ const StyledButton = styled(Flex)`
 const Icon = styled(Flex)`
     background-image: url(${props => props.icon});
     background-repeat: no-repeat;
-    width: 16px;
-    height: 16px;
+    width: 1.6rem;
+    height: 1.6rem;
     position: absolute;
     top: 45%;
     left: 25%;

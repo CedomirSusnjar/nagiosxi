@@ -5,6 +5,7 @@ import ServiceInformation from '../hostInformation/ServiceInformation';
 import { withLocalizeStrings } from '../../languages/Localize';
 import BounceLoader from "react-spinners/BounceLoader";
 import { getColorByServiceStatus } from '../../application/application-service';
+import { basicColor } from '../../common/config/config';
 
 const Container = styled(Flex)`
     border-radius: 2rem;
@@ -14,7 +15,7 @@ const Container = styled(Flex)`
     min-width: 12rem;
     margin: 1.5rem;
     box-shadow: none;
-    border: .1rem solid gainsboro;
+    border: .1rem solid ${basicColor};
     position: relative;  
     overflow: hidden;
     justify-content: center;

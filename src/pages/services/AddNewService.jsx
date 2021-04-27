@@ -16,6 +16,7 @@ import 'react-tabs/style/react-tabs.css';
 import { css } from '@emotion/css';
 import ErrorModal from '../../components/modal/ErrorModal';
 import FormBox from '../../components/form/formBox/FormBox';
+import { nagiosAuthFailedMessage, authFailed, spinnerColor, basicColor } from '../../common/config/config';
 import { commonServiceFields, checkSettings1, checkSettings2, alertFields, miscSettings1 } from '../../common/config/nagios-field-names';
 
 const Board = styled(Flex)`
@@ -47,7 +48,7 @@ const TabCSS = css`
         .react-tabs__tab--selected {
         }
     }
-    border-bottom: .05rem solid gainsboro;
+    border-bottom: .05rem solid ${basicColor}
 `;
 
 const AddBoard = styled(Flex)`
@@ -58,7 +59,7 @@ const AddBoard = styled(Flex)`
 const AddSpace = styled(Flex)`
     width: 100%;
     height: 100%;
-    border: .1rem solid gainsboro;
+    border: .1rem solid ${basicColor};
     border-radius: 2rem;
     margin-left: 2rem;
     margin-right: 2rem;
@@ -108,13 +109,13 @@ const AddNewService = ({ strings }) => {
 
     const history = useHistory();
     const [loading, setLoading] = useState(false);
-    let [showErrorModal, setShowErrorModal] = useState(false);
-    let [color] = useState("gainsboro");
     const { formState, control, handleSubmit } = useForm({
         resolver: yupResolver(validationSchema),
         mode: "onChange"
     });
     const [tabIndex, setTabIndex] = useState(0);
+    let [showErrorModal, setShowErrorModal] = useState(false);
+    let [color] = useState(spinnerColor);
 
     const { isValid } = formState;
 
@@ -139,9 +140,9 @@ const AddNewService = ({ strings }) => {
         (async function () {
             try {
                 const res = await addService(obj);
-                if(res.data.error === "Authenticiation failed."){
+                if(res.data.error === nagiosAuthFailedMessage){
                     setShowErrorModal(true);
-                    throw Error("Auth failed.");
+                    throw Error(authFailed);
                 }
                 setTimeout(function () { history.push(`/services/${hostname}`); }, 5000);
             } catch (err) {

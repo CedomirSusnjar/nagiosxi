@@ -12,6 +12,7 @@ import { withLocalizeStrings } from '../../languages/Localize';
 import InfoModal from '../../components/modal/InfoModal';
 import { useParams } from 'react-router';
 import Title from '../../components/title/Title';
+import { nagiosAuthFailedMessage, authFailed, spinnerColor } from '../../common/config/config';
 
 const SpinnerBlock = styled(Flex)`
     position: absolute;
@@ -35,11 +36,11 @@ const HostPage = ({ strings }) => {
 
     const [hosts, setHosts] = useState(null);
     const [loading, setLoading] = useState(true);
-    let [color] = useState('gainsboro');
     const [showModal, setShowModal] = useState(false);
     const [showInfoModal, setShowInfoModal] = useState(false);
     let [hostnameToDelete, setHostnameToDelete] = useState('');
     let [showErrorModal, setShowErrorModal] = useState(false);
+    let [color] = useState(spinnerColor);
 
     const { hostgroup } = useParams();
 
@@ -53,30 +54,22 @@ const HostPage = ({ strings }) => {
         setShowInfoModal(true);
     }
 
-    const closeInfoModal = () => {
-        setShowInfoModal(false);
-    }
+    const closeInfoModal = () => { setShowInfoModal(false);}
 
-    const deleteHost = () => {
-        onDeleteHandler(hostnameToDelete);
-    }
+    const deleteHost = () => { onDeleteHandler(hostnameToDelete);}
 
-    const doNotDeleteHost = () => {
-        setShowModal(false);
-    }
+    const doNotDeleteHost = () => { setShowModal(false);}
 
-    const closeErrorModal = () => {
-        setShowErrorModal(false);
-    }
+    const closeErrorModal = () => { setShowErrorModal(false);}
 
     const onDeleteHandler = (hostName) => {
         (async function () {
             try {
                 const res = await removeHost(hostName);
-                if (res.data.error === "Authenticiation failed.") {
+                if (res.data.error === nagiosAuthFailedMessage) {
                     setShowErrorModal(true);
                     setShowModal(false);
-                    throw Error("Auth failed!");
+                    throw Error(authFailed);
                 }
                 setHosts(hosts.filter(host => host.host_name !== hostName));
                 setShowModal(false);

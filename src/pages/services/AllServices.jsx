@@ -6,6 +6,7 @@ import { getAllServices } from '../../application/application-service';
 import BounceLoader from "react-spinners/BounceLoader";
 import { withLocalizeStrings } from '../../languages/Localize';
 import Title from '../../components/title/Title';
+import { basicColor, spinnerColor } from '../../common/config/config';
 
 const ServiceContainer = styled(Flex)`
     flex-direction: row;
@@ -13,14 +14,14 @@ const ServiceContainer = styled(Flex)`
     height: 3.5rem;
     margin-left: 2rem;
     font-size: 1.4rem;
-    border-top: .05rem solid gainsboro;
-    border-left: .05rem solid gainsboro;
-    border-right: .05rem solid gainsboro;
+    border-top: .05rem solid ${basicColor};
+    border-left: .05rem solid ${basicColor};
+    border-right: .05rem solid ${basicColor};
     :last-child {
-        border-bottom: .05rem solid gainsboro;
+        border-bottom: .05rem solid ${basicColor};
     }
     :first-child {
-        background-color: gainsboro;
+        background-color: ${basicColor};
         font-weight: bold;
     }
 `;
@@ -60,7 +61,7 @@ const OutputDataProp = styled(Flex)`
 const ServiceData = styled(Flex)`
     width: 15%;
     padding-left: .2rem;
-    border-right: .05rem solid gainsboro;
+    border-right: .05rem solid ${basicColor};
     align-items: center;
 `;
 
@@ -86,7 +87,7 @@ const AllServices = ({ strings }) => {
     return (
         loading ? (
             <SpinnerBlock>
-                <BounceLoader color="gainsboro" loading={loading} size={120} />
+                <BounceLoader color={spinnerColor} loading={loading} size={120} />
             </SpinnerBlock>
         ) : (
             <Dashboard>

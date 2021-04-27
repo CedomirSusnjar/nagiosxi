@@ -79,11 +79,7 @@ const Close = styled(Flex)`
 
 const ErrorModal = ({ show, decline, text }) => {
 
-    console.log('error modal');
-
-    const stopPropagation = (event) => {
-        event.stopPropagation();
-    }
+    const stopPropagation = (event) => { event.stopPropagation();}
 
     return (
         show && (<>

@@ -22,7 +22,6 @@ const Value = styled.label`
     text-align: left;
     margin-right: .4rem;
     overflow: auto;
-
 `;
 
 const ServiceInformation = ({ text, value }) => {

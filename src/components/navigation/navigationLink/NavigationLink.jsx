@@ -17,10 +17,8 @@ const StyledNavigationLink = styled.a`
 
 const NavigationLink = ({text, onClick, style}) => {
 
-    return (
-        <StyledNavigationLink style={style} onClick={onClick}>{text}</StyledNavigationLink>
-    );
-
+    return (<StyledNavigationLink style={style} onClick={onClick}>{text}</StyledNavigationLink>);
+    
 };
 
 export default NavigationLink;

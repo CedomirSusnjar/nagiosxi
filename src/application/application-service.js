@@ -14,7 +14,7 @@ export const users = [
     }
 ];
 
-let apiKey = apiKeyAdmin;
+let apiKey = apiKeyUser;
 
 export const getAllHosts = async () => {
     return api.service().get(`objects/hoststatus?apikey=${apiKey}&pretty=1`);
@@ -38,6 +38,10 @@ export const addHost = async obj => {
 
 export const updateHost = async obj => {
     return api.service().put(`config/host/localhost?apikey=${apiKey}&pretty=1` + obj);
+};
+
+export const updateService = async (configName, serviceDescription, obj) => {
+    return api.service().put(`config/service/${configName}/${serviceDescription}?apikey=${apiKey}&pretty=1` + obj);
 };
 
 export const removeHost = async host => {

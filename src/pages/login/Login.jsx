@@ -10,6 +10,7 @@ import InputField from '../../components/inputs/InputField';
 import { login } from '../../application/application-service';
 import { Flex } from 'reflexbox/styled-components';
 import { useState } from 'react';
+import { basicColor } from '../../common/config/config';
 
 const Form = styled.form`
     display: flex;
@@ -33,7 +34,7 @@ const LoginButton = styled.button`
     width: 48rem;
     height: 3rem;
     border-radius: 5rem;
-    border: .1rem solid gainsboro;
+    border: .1rem solid ${basicColor};
     position: absolute;
     bottom: 6rem;
     justify-content: center;

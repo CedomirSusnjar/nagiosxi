@@ -10,6 +10,7 @@ import { getHostServices, removeService } from '../../application/application-se
 import AddService from '../../components/service/AddService';
 import InfoModal from '../../components/modal/InfoModal';
 import ErrorModal from '../../components/modal/ErrorModal';
+import { nagiosAuthFailedMessage, authFailed, spinnerColor } from '../../common/config/config';
 
 const Title = styled(Flex)`
     width: 100%;
@@ -55,7 +56,7 @@ const Services = ({ strings }) => {
 
     let [services, setServices] = useState(null);
     let [loading, setLoading] = useState(true);
-    let [color] = useState("gainsboro");
+    let [color] = useState(spinnerColor);
     let [serviceToDelete, setServiceToDelete] = useState('');
     const [showModal, setShowModal] = useState(false);
     let [showInfoModal, setShowInfoModal] = useState(false);
@@ -86,10 +87,10 @@ const Services = ({ strings }) => {
         (async function () {
             try {
                 const res = await removeService(service, hostname);
-                if(res.data.error === "Authenticiation failed."){
+                if(res.data.error === nagiosAuthFailedMessage){
                     setShowErrorModal(true);
                     setShowModal(false);
-                    throw Error("Auth failed.");
+                    throw Error(authFailed);
                 }
                 let servicesTemp = services.filter(e => e.service_description !== service);
                 setServices(servicesTemp);

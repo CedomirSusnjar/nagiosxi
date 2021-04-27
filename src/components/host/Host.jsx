@@ -7,6 +7,7 @@ import { useState } from 'react';
 import HostButtons from '../buttons/hostButtons/HostButtons';
 import { withLocalizeStrings } from '../../languages/Localize';
 import { trimServiceStatus, getColorByServiceStatus} from '../../application/application-service';
+import { basicColor } from '../../common/config/config';
 
 const Container = styled(Flex)`
     border-radius: 2rem;
@@ -36,7 +37,7 @@ const Status = styled(Flex)`
 `;
 
 const ActionsContainer = styled(Flex)`
-    background-color: gainsboro;
+    background-color: ${basicColor}
     width: 10%;
     border-bottom-right-radius: 2rem;
     border-top-right-radius: 2rem;
@@ -51,7 +52,7 @@ const Content = styled(Flex)`
     margin: 2rem;
     border-radius: 2rem;
     cursor: pointer;
-    border: .05rem solid gainsboro;
+    border: .05rem solid ${basicColor};
     &:hover {
         box-shadow: 0 .5rem 2.2rem -1.2rem rgba(0,0,0,0.75);
     }
@@ -62,17 +63,11 @@ const Host = ({ strings, data, onDeleteHandler, onShowInfoHandler, onShowUpdateH
     const history = useHistory();
     const [action, setActions] = useState(false);
 
-    const onClickHandler = (hostname) => {
-        history.push(`/services/${hostname}`);
-    }
+    const onClickHandler = (hostname) => { history.push(`/services/${hostname}`);}
 
-    const onMouseOverHandler = () => {
-        setActions(true);
-    }
+    const onMouseOverHandler = () => { setActions(true);}
 
-    const onMouseLeaveHandler = () => {
-        setActions(false);
-    }
+    const onMouseLeaveHandler = () => { setActions(false);}
 
     let status = trimServiceStatus(data.output);
 

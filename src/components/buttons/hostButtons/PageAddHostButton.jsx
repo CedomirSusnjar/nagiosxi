@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
-import { withLocalizeStrings } from '../../../languages/Localize';
+import { basicColor } from '../../../common/config/config';
 
 const StyledButton = styled.button`
     margin-left: 1.5rem;
@@ -10,13 +10,13 @@ const StyledButton = styled.button`
     height: 3.5rem;
     justify-content: center;
     align-items: center;
-    background-color: gainsboro;
+    background-color: ${basicColor};
     font-size: 1.5rem;
     cursor: pointer;
     color: black;
     :disabled {
         cursor: no-drop;
-        background-color: gainsboro;
+        background-color: ${basicColor};
         color: white;
     }
     &: hover {
@@ -25,7 +25,7 @@ const StyledButton = styled.button`
     }
     &: hover[disabled] {
         cursor: no-drop;
-        background-color: gainsboro;
+        background-color: ${basicColor};
         color: white;
     }
     outline: none;
@@ -36,7 +36,7 @@ const Container = styled(Flex)`
     margin-left: 1rem;
 `;
 
-const PageAddHostButton = ({strings, disabled, text}) => {
+const PageAddHostButton = ({ disabled, text }) => {
 
     return (
         <Container>
@@ -45,4 +45,4 @@ const PageAddHostButton = ({strings, disabled, text}) => {
     );
 };
 
-export default withLocalizeStrings(PageAddHostButton);
+export default PageAddHostButton;

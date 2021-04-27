@@ -10,13 +10,10 @@ const SecureRoute = ({authorized, path, component:Component, exact}) => {
             if(!authorized) {
                 push('/login');
             }
-    }, [authorized]);
+    }, [authorized, push]);
 
-    if(authorized){
-        render = <Route exact={exact} path={path} component={Component} />
-    }else {
-        render = null;
-    }
+    if(authorized) { render = <Route exact={exact} path={path} component={Component} />}
+    else { render = null;}
 
     return render;
 

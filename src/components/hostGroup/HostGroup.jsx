@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import { Flex } from 'reflexbox/styled-components';
 import { useHistory } from 'react-router';
 import { strings, withLocalizeStrings } from '../../languages/Localize';
+import { basicColor } from '../../common/config/config';
 
 const Container = styled(Flex)`
     width: 25rem;
     height: 20rem;
-    border: .05rem solid gainsboro;
+    border: .05rem solid ${basicColor};
     margin: 1.5rem;
     border-radius: 2rem;
     &:hover {
@@ -64,9 +65,7 @@ const HostGroup = ({name, alias, hosts}) => {
 
     const history = useHistory();
 
-    const onClickHandler = () => {
-        history.push(`hosts/${name}`);
-    };
+    const onClickHandler = () => { history.push(`hosts/${name}`); };
 
     return (
         <Container onClick={onClickHandler}>
@@ -80,7 +79,6 @@ const HostGroup = ({name, alias, hosts}) => {
             </HostsContainer>
         </Container>
     );
-
 };
 
 export default withLocalizeStrings(HostGroup);

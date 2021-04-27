@@ -154,7 +154,7 @@
       "deleteService": "Da li ste sigurni da želite obrisati odabrani servis?"
     },
     "errorMessages": {
-      "authFailed": "Ova stranica je nedostupna za korisnika " 
+      "authFailed": "Sadržaj ove stranice je nedostupan za korisnika " 
     }
   }
 }

@@ -12,8 +12,8 @@ import { object } from "yup";
 import { string } from "yup";
 import { commonFields, commonServiceFields, checkSettings1, checkSettings2, alertFields, miscSettings1, miscSettings2 } from '../../common/config/nagios-field-names';
 import PageAddHostButton from '../buttons/hostButtons/PageAddHostButton';
-import { updateHost } from '../../application/application-service';
-import { useHistory } from 'react-router';
+import { updateHost, updateService } from '../../application/application-service';
+import { nagiosAuthFailedMessage, authFailed, basicColor } from '../../common/config/config';
 
 const ModalContainer = styled(Flex)`
     flex-direction: column;
@@ -99,7 +99,7 @@ const TabCSS = css`
         .react-tabs__tab--selected {
         }
     }
-    border-bottom: .05rem solid gainsboro;
+    border-bottom: .05rem solid ${basicColor};
     z-index: 1000;
 `;
 
@@ -119,39 +119,37 @@ const Form = styled.form`
 `;
 
 const validationSchema = object().shape({
-    // host_name: string().required(),
-    // address: string().required(),
-    // max_check_attempts: string().required(),
-    // check_period: string().required(),
-    // notification_interval: string().required(),
-    // notification_period: string().required()
+    host_name: string().required(),
+    address: string().required(),
+    max_check_attempts: string().required(),
+    check_period: string().required(),
+    notification_interval: string().required(),
+    notification_period: string().required()
 });
 
-const InfoModal = ({ strings, show, confirm, isHost, decline, question, data, showErrorModal,  }) => {
+const InfoModal = ({ strings, show, isHost, decline, data, showErrorModal,  }) => {
 
-    let [loading, setLoading] = useState(true);
+    let [ , setLoading] = useState(true);
     const [tabIndex, setTabIndex] = useState(0);
-    const { setValue, formState, control, handleSubmit } = useForm({
+    const { formState, control, handleSubmit } = useForm({
         resolver: yupResolver(validationSchema),
         mode: "onChange"
     });
     
-    const stopPropagation = (event) => {
-        event.stopPropagation();
-    }
-
-    const history = useHistory();
+    const stopPropagation = (event) => { event.stopPropagation();}
 
     let common = null;
+
+    let {isValid}  = formState;
 
     if (isHost) { common = commonFields; }
     else common = commonServiceFields;
 
-    const onSubmit = (host) => {
+    const onSubmit = (objectToUpdate) => {
         if (isHost) {
             setLoading(true);
 
-            let arr = Object.entries(host);
+            let arr = Object.entries(objectToUpdate);
             let obj = 'contacts=nagiosadmin&applyconfig=1';
 
             arr.forEach(prop => {
@@ -160,23 +158,49 @@ const InfoModal = ({ strings, show, confirm, isHost, decline, question, data, sh
                 }
             });
 
-            console.log(obj);
             obj = obj.replace("normal_check_interval", "check_interval");
             obj = obj.replace("retry_check_interval", "retry_interval");
 
             (async function () {
                 try {
                     const res = await updateHost(obj);
-                    if(res.data.error === "Authenticiation failed."){
+                    if(res.data.error === nagiosAuthFailedMessage){
                         showErrorModal(true);
-                        throw Error("Auth failed.");
+                        throw Error(authFailed);
                     }
                 } catch (err) {
-                    console.log(err);
+                    console.error(err);
+                    setLoading(false);
+                }
+            })();
+        } else {
+            setLoading(true);
+            let arr = Object.entries(objectToUpdate);
+            let obj = 'contacts=nagiosadmin&applyconfig=1';
+
+            arr.forEach(prop => {
+                if (prop[1] !== "") {
+                    obj += `&${prop[0]}=${prop[1]}`
+                }
+            });
+
+            obj = obj.replace("normal_check_interval", "check_interval");
+            obj = obj.replace("retry_check_interval", "retry_interval");
+
+            (async function () {
+                try {
+                    const res = await updateService(objectToUpdate.host_name, objectToUpdate.service_description, obj);
+                    if(res.data.error === nagiosAuthFailedMessage){
+                        showErrorModal(true);
+                        throw Error(authFailed);
+                    }
+                } catch (err) {
+                    console.error(err);
                     setLoading(false);
                 }
             })();
         }
+
         decline();
     }
 
@@ -219,9 +243,8 @@ const InfoModal = ({ strings, show, confirm, isHost, decline, question, data, sh
                                 </FormSplit>
                             </TabPanel>
                         </Tabs>
-                        <UpdateButton text={strings.buttons.update} htmlType="submit" disabled={false} />
+                        <UpdateButton text={strings.buttons.update} htmlType="submit" disabled={!isValid} />
                     </Form>
-
                 </ModalContainer>
             </Container>
         </>

@@ -5,10 +5,11 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { getAllHostgroups } from '../../application/application-service';
 import BounceLoader from "react-spinners/BounceLoader";
-import { strings, withLocalizeStrings } from '../../languages/Localize';
+import { withLocalizeStrings } from '../../languages/Localize';
 import Title from '../title/Title';
 import Dashboard from '../dashboard/Dashboard';
 import { useApplicationStateValue } from '../../application/Application';
+import { nagiosAuthFailedMessage, authFailed, spinnerColor } from '../../common/config/config';
 
 const List = styled(Flex)`
     flex-direction: row;
@@ -50,25 +51,23 @@ const HostGroupSection = ({strings}) => {
         (async function () {
             try {
                 const res = await getAllHostgroups();
-                console.log(res);
-                if(res.data.error === "Authenticiation failed."){
+                if(res.data.error === nagiosAuthFailedMessage){
                     setAutfailed(true);
-                    throw Error("Auth failed");
+                    throw Error(authFailed);
                 }
                 setHostgroups(res.data);
                 setTimeout(function () { setHostgroupLoading(false); }, 1000);
             } catch (err) {
                 setHostgroupLoading(false);
-                console.log(err);
+                console.error(err);
             }
         })();
-
     }, []);
 
     return (
         hostgroupLoading ? (
             <SpinnerBlock>
-                <BounceLoader color="gainsboro" loading={hostgroupLoading} size={120} />
+                <BounceLoader color={spinnerColor} loading={hostgroupLoading} size={120} />
             </SpinnerBlock>
         ) : (
             <Dashboard>
@@ -91,9 +90,7 @@ const HostGroupSection = ({strings}) => {
                 )}
             </Dashboard >
         )
-
     );
-
 };
 
 export default withLocalizeStrings(HostGroupSection);
