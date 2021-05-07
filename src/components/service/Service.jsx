@@ -15,7 +15,7 @@ const Container = styled(Flex)`
     min-width: 12rem;
     margin: 1.5rem;
     box-shadow: none;
-    border: .1rem solid ${basicColor};
+    border: .2rem solid ${basicColor};
     position: relative;  
     overflow: hidden;
     justify-content: center;

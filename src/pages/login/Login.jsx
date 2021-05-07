@@ -7,7 +7,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputField from '../../components/inputs/InputField';
-import { login } from '../../application/application-service';
+import { login, getApikey } from '../../application/application-service';
 import { Flex } from 'reflexbox/styled-components';
 import { useState } from 'react';
 import { basicColor } from '../../common/config/config';
@@ -91,6 +91,7 @@ const Login = ({ strings }) => {
                     setInvalidMessageHidden(false);
                     throw new Error("Invalid login!");
                 } else {
+                    await getApikey(res.data.username);
                     setInvalidMessageHidden(true);
                     setAuthorized(true);
                     setUsername(res.data.username);

@@ -11,7 +11,7 @@ const Container = styled(Flex)`
     width: 20rem;
     margin: 1.5rem;
     cursor: pointer;
-    border: .05rem solid ${basicColor};
+    border: .2rem solid ${basicColor};
     box-shadow: none;
     &: hover {
         box-shadow: 0 .5rem 2.2rem -1.2rem rgba(0,0,0,0.75);

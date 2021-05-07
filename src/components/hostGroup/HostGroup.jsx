@@ -7,7 +7,7 @@ import { basicColor } from '../../common/config/config';
 const Container = styled(Flex)`
     width: 25rem;
     height: 20rem;
-    border: .05rem solid ${basicColor};
+    border: .2rem solid ${basicColor};
     margin: 1.5rem;
     border-radius: 2rem;
     &:hover {

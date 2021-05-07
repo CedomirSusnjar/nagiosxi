@@ -1,20 +1,10 @@
-import api from '../common/base-service/base-service';
+import {baseService as api} from '../common/base-service/base-service';
+import {apikeyService} from '../common/base-service/base-service';
 
 const apiKeyUser = 'ArKL8XgHbQTdqvHnOePVhbY2YDaIXOdo5C2VWttJQCqr3nkAnZqTvTr6bq55vqm9';
 const apiKeyAdmin = 'oPsQN6A9cPBZICKNpvF0Zhp9DJqbEUb2hhRHWvhUCM9e7ejb2ZdCWGbB7W0ZGjmo';
 
-export const users = [
-    {
-        username: 'nagiosadmin',
-        apikey: apiKeyAdmin
-    },
-    {
-        username: 'cedosusnjar',
-        apikkey: apiKeyUser
-    }
-];
-
-let apiKey = apiKeyUser;
+var apiKey = '';
 
 export const getAllHosts = async () => {
     return api.service().get(`objects/hoststatus?apikey=${apiKey}&pretty=1`);
@@ -70,6 +60,11 @@ export const removeService = async (service, host) => {
 
 export const getHostgroupHosts = async (hostgroup) => {
     return api.service().get(`config/hostgroup?apikey=${apiKey}&pretty=1&hostgroup_name=${hostgroup}`);
+};
+
+export const getApikey = async (username) => {
+    const res = await apikeyService.service().get(`${username}`);
+    apiKey = res.data;
 };
 
 export const login = async (obj) => {

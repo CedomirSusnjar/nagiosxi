@@ -37,7 +37,7 @@ const Status = styled(Flex)`
 `;
 
 const ActionsContainer = styled(Flex)`
-    background-color: ${basicColor}
+    background-color: ${basicColor};
     width: 10%;
     border-bottom-right-radius: 2rem;
     border-top-right-radius: 2rem;
